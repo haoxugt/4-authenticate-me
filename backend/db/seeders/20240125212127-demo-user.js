@@ -12,25 +12,46 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await User.bulkCreate([
       {
-        email: 'demo@user.io',
-        username: 'Demo-lition',
-        firstName: 'Demo',
-        lastName: 'User',
-        hashedPassword: bcrypt.hashSync('password')
+        email: 'robertcrawley@downtonabbey.com',
+        username: 'RobertCrawley',
+        firstName: 'Robert',
+        lastName: 'Crawley',
+        hashedPassword: bcrypt.hashSync('RobertCrawley')
       },
       {
-        email: 'user1@user.io',
-        username: 'FakeUser1',
-        firstName: 'Fake',
-        lastName: 'Usera',
-        hashedPassword: bcrypt.hashSync('password2')
+        email: 'coracrawley@downtonabbey.com',
+        username: 'CoraCrawley',
+        firstName: 'Cora',
+        lastName: 'Crawley',
+        hashedPassword: bcrypt.hashSync('CoraCrawley')
       },
       {
-        email: 'user2@user.io',
-        username: 'FakeUser2',
-        firstName: 'Fake',
-        lastName: 'Userb',
-        hashedPassword: bcrypt.hashSync('password3')
+        email: 'marycrawley@downtonabbey.com',
+        username: 'MaryCrawley',
+        firstName: 'Mary',
+        lastName: 'Crawley',
+        hashedPassword: bcrypt.hashSync('MaryCrawley')
+      },
+      {
+        email: 'matthewcrawley@machesterlawyer.org',
+        username: 'MatthewCrawley',
+        firstName: 'Matthew',
+        lastName: 'Crawley',
+        hashedPassword: bcrypt.hashSync('MatthewCrawley')
+      },
+      {
+        email: 'edithppelham@brancastercastle.com',
+        username: 'EdithPelham',
+        firstName: 'Edith',
+        lastName: 'Pelham',
+        hashedPassword: bcrypt.hashSync('EdithPelham')
+      },
+      {
+        email: 'henryttalbot@downtonabbey.com',
+        username: 'HenryTalbot',
+        firstName: 'Henry',
+        lastName: 'Talbot',
+        hashedPassword: bcrypt.hashSync('HenryTalbot')
       }
     ], { validate: true });
   },
