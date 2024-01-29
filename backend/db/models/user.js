@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       });
+
+      User.belongsToMany(models.Spot, {
+        through: models.Booking,
+        foreignKey: 'userId',
+        otherKey: 'spotId'
+      });
     }
   }
   User.init({
