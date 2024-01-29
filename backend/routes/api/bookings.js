@@ -6,7 +6,7 @@ const { Booking, Spot } = require('../../db/models');
 // const bcrypt = require('bcryptjs');
 
 router.get('/', async (req, res) => {
-    const bookings = await Booking.unscoped().findAll();
+    const bookings = await Booking.findAll();
     res.json(bookings);
 });
 
