@@ -56,7 +56,7 @@ const spot_spotImages = [
         preview: true
       },
       {
-        url: "https://rm12filereader.rentmanager.com/files/get/?EID=uptownrp&FKey=T1I4T3F6TStjS1U9S3pTdXYvUHE1eEpDVkx2dzhVOXZtdz09OXdOQ3Z3MnpldVNEbU9sd1VtaW9yTWFDaWFpM1BRNyt5VHJhb0NhbjRoS2hNOXRGaytTRkc4dFVlTmNrRGsxRWsvdnh5MmhMS0VGS2xwSndlQjViYzZ2Q3F6aFYvZ1VVaGpPSExHS2lJV3BrR2JnUW5GTEdJbWlwaWU2bHpvWlRkaU4yeWtkcUJPRVh1V1orZ3R6WFd1azE2ZFY3UDdSQ3BJeEhNazJMbEx3L3c0N1Q4NWlyVU1zZWFOVE5QOWdh",
+        url: "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/67401658_10217524323771380_1151310900460781568_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=755d08&_nc_ohc=y_4v8sw7RKoAX89wHJ8&_nc_ht=scontent-sjc3-1.xx&oh=00_AfBlIKwEoKW-eIgtrxz-M3lKCa6SIk_tPc25v5CxgOid6w&oe=65DE2F7A",
         preview: false
       }
     ]
