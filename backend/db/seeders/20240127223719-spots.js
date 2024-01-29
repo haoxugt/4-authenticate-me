@@ -57,7 +57,7 @@ const ownerSpots = [
     spots: [
       {
         address: "2448 Auburn Ave",
-        city: "Cincinnati ",
+        city: "Cincinnati",
         state: "Ohio",
         country: "United States of America",
         lat: 39.126768,
@@ -89,24 +89,7 @@ const ownerSpots = [
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-    // try {
-    //   await Spot.bulkCreate(spots,
-    //     {
-    //       validate: true
-    //     });
-    // } catch (err) {
-    //   console.error(err);
-    //   throw err;
-    // };
+
     for (let ownerIdx = 0; ownerIdx < ownerSpots.length; ownerIdx++) {
       const { ownerUsername, spots } = ownerSpots[ownerIdx];
       const owner = await User.findOne({ where: { username: ownerUsername } });
@@ -118,12 +101,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+
     options.tableName = 'Spots';
     const spotList = ownerSpots.reduce(
       (acc, owner) => [...acc, ...owner.spots],

@@ -61,5 +61,7 @@ router.post('/', validateSignup, async (req, res, next) => {
     return res.json({
         user: safeUser
     });
-})
+});
+
+
 module.exports = router;
