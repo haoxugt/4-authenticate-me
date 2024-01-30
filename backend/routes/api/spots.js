@@ -48,6 +48,18 @@ const validateSpotInput = [
     handleValidationErrors
 ];
 
+const validateReviewInput = [
+    check('review')
+        .notEmpty()
+        .withMessage('Review text is required.'),
+    check('stars')
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5.')
+        .notEmpty()
+        .withMessage('Stars input is required.'),
+    handleValidationErrors
+];
+
 // optional validator middleware
 // (req, res, next) => {
 //     if (req.body.state === undefined) {
@@ -82,25 +94,6 @@ async function getSpotsInfo(spots) {
     return spots;
 }
 
-async function checkAuthorization(req, res, next) {
-    const spot = await Spot.findByPk(req.params.spotId);
-    if (spot) {
-        if (req.user.id !== spot.ownerId) {
-            const err = new Error('Authorization by the owner required');
-            err.title = 'Authorization required';
-            err.errors = { message: 'Forbidden' };
-            err.status = 403;
-            return next(err);
-        } else {
-            next();
-        }
-    } else {
-        const err = new Error("Spot couldn't be found");
-        err.title = "Bad request";
-        err.status = 404;
-        next(err);
-    }
-};
 
 async function getReviewsInfo(reviews, includeSpot) {
     for (let reviewIdx = 0; reviewIdx < reviews.length; reviewIdx++) {
@@ -123,10 +116,32 @@ async function getReviewsInfo(reviews, includeSpot) {
         }
     }
     return reviews;
-}
+};
+
+// middlewares
+async function checkAuthorization(req, res, next) {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (spot) {
+        if (req.user.id !== spot.ownerId) {
+            const err = new Error('Authorization by the owner required');
+            err.title = 'Authorization required';
+            err.errors = { message: 'Forbidden' };
+            err.status = 403;
+            return next(err);
+        } else {
+            next();
+        }
+    } else {
+        const err = new Error("Spot couldn't be found");
+        err.title = "Bad request";
+        err.status = 404;
+        next(err);
+    }
+};
+
 async function validateSpotId(req, res, next) {
     const spot = await Spot.findByPk(req.params.spotId);
-    if (spot){
+    if (spot) {
         next();
     } else {
         const err = new Error("Spot couldn't be found");
@@ -134,7 +149,25 @@ async function validateSpotId(req, res, next) {
         err.status = 404;
         next(err);
     };
-}
+};
+
+async function hasReview(req, res, next) {
+    const review = await Review.findOne({
+        where: {
+            spotId: parseInt(req.params.spotId),
+            userId: req.user.id
+        }
+    });
+    if (review) {
+        const err = new Error("User already has a review for this spot");
+        err.title = "Bad request";
+        err.errors = { message: 'User already has a review for this spot' };
+        err.status = 500;
+        next(err);
+    } else {
+        next();
+    }
+};
 
 // routers
 
@@ -193,6 +226,21 @@ router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
         }
     ], { validate: true });
     res.status(201).json(spot[0]);
+});
+
+router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validateReviewInput, async (req, res) => {
+    const { review, stars } = req.body;
+    const spotId = parseInt(req.params.spotId);
+    let newReview = await Review.bulkCreate([
+        {
+           spotId,
+           userId: req.user.id,
+           review,
+           stars
+        }
+    ], { validate: true });
+
+    res.status(201).json(newReview);
 });
 
 router.post('/:spotId/images', requireAuth, checkAuthorization, async (req, res) => {
