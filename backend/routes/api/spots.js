@@ -58,6 +58,8 @@ const validateSpotInput = [
 //         throw err;
 //     } else { next(); }
 // },
+
+// helper functions
 async function getSpotsInfo(spots) {
     for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
         const spot = spots[spotIdx];
@@ -100,6 +102,42 @@ async function checkAuthorization(req, res, next) {
     }
 };
 
+async function getReviewsInfo(reviews, includeSpot) {
+    for (let reviewIdx = 0; reviewIdx < reviews.length; reviewIdx++) {
+        const review = reviews[reviewIdx];
+        const user = await review.getUser({ attributes: ["id", "firstName", "lastName"] });
+        reviews[reviewIdx].dataValues.User = user;
+
+        if (includeSpot) {
+            const spot = await review.getSpot({ attributes: { exclude: ["createdAt", "updatedAt"] } });
+            const previewImage = await spot.getSpotImages({ attributes: ["url"] });
+            spot.dataValues.previewImage = previewImage[0].url
+            reviews[reviewIdx].dataValues.Spot = spot;
+        }
+
+        const images = await review.getReviewImages({ attributes: ["id", "url"] });
+        if (images.length) {
+            reviews[reviewIdx].dataValues.ReviewImages = images;
+        } else {
+            reviews[reviewIdx].dataValues.ReviewImages = null;
+        }
+    }
+    return reviews;
+}
+async function validateSpotId(req, res, next) {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (spot){
+        next();
+    } else {
+        const err = new Error("Spot couldn't be found");
+        err.title = "Bad request";
+        err.status = 404;
+        next(err);
+    };
+}
+
+// routers
+
 router.get('/', async (req, res) => {
 
     let spots = await Spot.findAll();
@@ -112,6 +150,17 @@ router.get('/current', requireAuth, async (req, res, next) => {
     let spots = await user.getSpots();
     spots = await getSpotsInfo(spots);
     res.json(spots);
+});
+
+router.get('/:spotId/reviews', validateSpotId, async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    let reviews = await spot.getReviews();
+    if (reviews.length) {
+        reviews = await getReviewsInfo(reviews, false);
+    } else {
+        reviews = "none";
+    }
+    res.json({ Reviews: reviews });
 });
 
 router.get('/:spotId', async (req, res, next) => {
@@ -132,6 +181,8 @@ router.get('/:spotId', async (req, res, next) => {
         next(err);
     }
 });
+
+
 
 router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
