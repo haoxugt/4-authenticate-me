@@ -50,7 +50,7 @@ router.post('/', validateSignup, async (req, res, next) => {
         hashedPassword
     });
     console.log("222222222222", user.hashedPassword);
-    console.log("333333333333", user.hashedPassword);
+    console.log("333333333333", (user.hashedPassword).toString());
 
     const safeUser = {
         id: user.id,
