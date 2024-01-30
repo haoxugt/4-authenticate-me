@@ -6,33 +6,7 @@ const { Op } = require('sequelize');
 const { Spot, SpotImage, Review } = require('../../db/models');
 const bcrypt = require('bcryptjs');
 
-router.get('/', async (req, res) => {
-    // const spots = await Spot.findByPk(2);
-    // const reviews = await spots.getReviews({
-    //     attributes: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
-    // });
-    // const previewImage = await spots.getSpotImages({ where: { preview: true } });
-    // // res.json(reviews);
-    // console.log(reviews);
-    // res.json({
-    //     ...spots.toJSON(),
-    //     avgRating: reviews[0].dataValues.avgRating,
-    //     previewImage: previewImage[0].url
-    // });
-    // const spots = await Spot.findAll({
-    //     include: [{model: Review}, {model: SpotImage, where: {preview: true}}]
-    // });
-    // for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
-    //     const spot = spots[spotIdx];
-    //     let avgRating = spot.Reviews.reduce((acc, curr) => acc + curr.stars, 0);
-    //     avgRating /= spot.Reviews.length;
-    //     let previewImage  = spot.SpotImages[0].url;
-    //     spots[spotIdx].dataValues.avgRating = avgRating;
-    //     spots[spotIdx].dataValues.previewImage = previewImage;
-    //     delete spots[spotIdx].dataValues.Reviews;
-    //     delete spots[spotIdx].dataValues.SpotImages;
-    // }
-    const spots = await Spot.findAll();
+async function getSpots(spots) {
     for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
         const spot = spots[spotIdx];
         const reviews = await spot.getReviews();
@@ -43,8 +17,38 @@ router.get('/', async (req, res) => {
         spots[spotIdx].dataValues.avgRating = avgRating;
         spots[spotIdx].dataValues.previewImage = previewImage;
     }
-    // console.log(spots[0])
+    return spots;
+
+}
+
+router.get('/', async (req, res) => {
+
+    let spots = await Spot.findAll();
+    spots = await getSpots(spots);
     res.json(spots)
+});
+
+router.get('/current', async (req, res, next) => {
+    const { user } = req;
+    if (user) {
+        const safeUser = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+        };
+        let spots = await user.getSpots();
+        spots = await getSpots(spots);
+        return res.json(spots);
+    } else {
+        // return res.status(400).json({ "message": "Need log in" });
+        const err = new Error("Need log in")
+        err.status = 401;
+        next(err);
+    }
+
+
 });
 
 router.delete('/:id', async (req, res) => {
