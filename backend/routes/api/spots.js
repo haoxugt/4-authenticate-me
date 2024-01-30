@@ -182,8 +182,7 @@ router.put('/:spotId', requireAuth, checkAuthorization,
 router.delete('/:spotId', requireAuth, checkAuthorization, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
     await spot.destroy();
-    const spotImages = await SpotImage.findAll();
-    res.json(spotImages);
+    res.json({ message: "Successfully deleted" });
 })
 
 
