@@ -5,6 +5,7 @@ const sequelize = require('sequelize');
 const { Op } = require('sequelize');
 const { Spot, SpotImage, Review } = require('../../db/models');
 const bcrypt = require('bcryptjs');
+const { requireAuth } = require('../../utils/auth');
 
 async function getSpots(spots) {
     for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
@@ -28,26 +29,11 @@ router.get('/', async (req, res) => {
     res.json(spots)
 });
 
-router.get('/current', async (req, res, next) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
-    if (user) {
-        const safeUser = {
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            username: user.username,
-        };
-        let spots = await user.getSpots();
-        spots = await getSpots(spots);
-        return res.json(spots);
-    } else {
-        // return res.status(400).json({ "message": "Need log in" });
-        const err = new Error("Need log in")
-        err.status = 401;
-        next(err);
-    }
-
+    let spots = await user.getSpots();
+    spots = await getSpots(spots);
+    res.json(spots);
 
 });
 
