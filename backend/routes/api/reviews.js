@@ -11,15 +11,15 @@ const { requireAuth } = require('../../utils/auth');
 async function getReviewsInfo(reviews) {
     for (let reviewIdx = 0; reviewIdx < reviews.length; reviewIdx++) {
         const review = reviews[reviewIdx];
-        const user = await review.getUser({attributes: ["id", "firstName", "lastName"] });
+        const user = await review.getUser({ attributes: ["id", "firstName", "lastName"] });
         reviews[reviewIdx].dataValues.User = user;
 
-        const spot = await review.getSpot({attributes: {exclude: ["createdAt", "updatedAt"]} });
-        const previewImage = await spot.getSpotImages({ attributes: ["url"]});
+        const spot = await review.getSpot({ attributes: { exclude: ["createdAt", "updatedAt"] } });
+        const previewImage = await spot.getSpotImages({ attributes: ["url"] });
         spot.dataValues.previewImage = previewImage[0].url
         reviews[reviewIdx].dataValues.Spot = spot;
 
-        const images = await review.getReviewImages({attributes: ["id", "url"] });
+        const images = await review.getReviewImages({ attributes: ["id", "url"] });
         if (images.length) {
             reviews[reviewIdx].dataValues.ReviewImages = images;
         } else {
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
     //     include: [{model: User}, {model: Spot}]
     // });
     const reviews = await Review.findAll();
-    res.json({Reviews: reviews});
+    res.json({ Reviews: reviews });
 });
 
 router.get('/review-images', async (req, res) => {
@@ -44,11 +44,15 @@ router.get('/review-images', async (req, res) => {
     res.json(images);
 });
 
-router.get('/current', requireAuth, async(req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
     let reviews = await user.getReviews();
-    reviews = await getReviewsInfo(reviews);
-    res.json({Reviews: reviews});
+    if (reviews.length) {
+        reviews = await getReviewsInfo(reviews);
+    } else {
+        reviews = "none";
+    }
+    res.json({ Reviews: reviews });
 });
 
 
