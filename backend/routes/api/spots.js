@@ -161,8 +161,26 @@ router.post('/:spotId/images', requireAuth, checkAuthorization, async (req, res)
     }
 });
 
-router.delete('/:id', async (req, res) => {
-    const spot = await Spot.findByPk(req.params.id);
+router.put('/:spotId', requireAuth, checkAuthorization,
+    validateSpotInput, async (req, res) => {
+        const { address, city, state, country, lat, lng, name, description, price } = req.body;
+        const spot = await Spot.findByPk(req.params.spotId);
+        spot.address = address;
+        spot.city = city;
+        spot.state = state;
+        spot.country = country;
+        spot.lat = lat;
+        spot.lng = lng;
+        spot.name = name;
+        spot.description = description;
+        spot.price = price;
+        res.json(spot);
+    }
+);
+
+
+router.delete('/:spotId', requireAuth, checkAuthorization, async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
     await spot.destroy();
     const spotImages = await SpotImage.findAll();
     res.json(spotImages);
