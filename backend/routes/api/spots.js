@@ -58,7 +58,7 @@ const validateSpotInput = [
 //         throw err;
 //     } else { next(); }
 // },
-async function getSpots(spots) {
+async function getSpotsInfo(spots) {
     for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
         const spot = spots[spotIdx];
         const reviews = await spot.getReviews();
@@ -103,14 +103,14 @@ async function checkAuthorization(req, res, next) {
 router.get('/', async (req, res) => {
 
     let spots = await Spot.findAll();
-    spots = await getSpots(spots);
+    spots = await getSpotsInfo(spots);
     res.json(spots)
 });
 
 router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     let spots = await user.getSpots();
-    spots = await getSpots(spots);
+    spots = await getSpotsInfo(spots);
     res.json(spots);
 });
 
