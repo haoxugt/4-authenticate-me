@@ -48,28 +48,57 @@ const validateSpotInput = [
     handleValidationErrors
 ];
 
+// optional validator middleware
 // (req, res, next) => {
 //     if (req.body.state === undefined) {
-//         const err = new Error("State is required.");
+//         const err = new Error("Bad request.");
 //         err.title = "Bad request."
 //         err.status = 400;
-//         err.path = "state";
+//         err.errors = { "state": "State is required." };
 //         throw err;
-//     } else { next();}
+//     } else { next(); }
 // },
 async function getSpots(spots) {
     for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
         const spot = spots[spotIdx];
         const reviews = await spot.getReviews();
-        let avgRating = reviews.reduce((acc, curr) => acc + curr.stars, 0);
-        avgRating /= reviews.length;
+        if (reviews.length) {
+            let avgRating = reviews.reduce((acc, curr) => acc + curr.stars, 0);
+            avgRating /= reviews.length;
+            spots[spotIdx].dataValues.avgRating = avgRating;
+        } else {
+            spots[spotIdx].dataValues.avgRating = null;
+        }
         const img = await spot.getSpotImages({ where: { preview: true } });
-        const previewImage = img[0].url;
-        spots[spotIdx].dataValues.avgRating = avgRating;
-        spots[spotIdx].dataValues.previewImage = previewImage;
+        if (img.length) {
+            const previewImage = img[0].url;
+            spots[spotIdx].dataValues.previewImage = previewImage;
+        } else {
+            spots[spotIdx].dataValues.previewImage = null;
+        }
     }
     return spots;
 }
+
+async function checkAuthorization(req, res, next) {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (spot) {
+        if (req.user.id !== spot.ownerId) {
+            const err = new Error('Authorization by the owner required');
+            err.title = 'Authorization required';
+            err.errors = { message: 'Forbidden' };
+            err.status = 403;
+            return next(err);
+        } else {
+            next();
+        }
+    } else {
+        const err = new Error("Spot couldn't be found");
+        err.title = "Bad request";
+        err.status = 404;
+        next(err);
+    }
+};
 
 router.get('/', async (req, res) => {
 
@@ -113,6 +142,23 @@ router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
         }
     ], { validate: true });
     res.status(201).json(spot[0]);
+});
+
+router.post('/:spotId/images', requireAuth, checkAuthorization, async (req, res) => {
+    const { url, preview } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+    console.log(spot)
+    if (spot) {
+        const spotImage = await spot.createSpotImage({
+            url, preview
+        });
+        res.json(spotImage);
+    } else {
+        const err = new Error("Spot couldn't be found");
+        err.title = "Bad request";
+        err.status = 404;
+        next(err);
+    }
 });
 
 router.delete('/:id', async (req, res) => {
