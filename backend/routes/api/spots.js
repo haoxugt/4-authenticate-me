@@ -3,7 +3,7 @@ const router = express.Router();
 const sequelize = require('sequelize');
 
 const { Op } = require('sequelize');
-const { Spot, SpotImage, Review } = require('../../db/models');
+const { User, Spot, SpotImage, Review } = require('../../db/models');
 const bcrypt = require('bcryptjs');
 const { requireAuth } = require('../../utils/auth');
 
@@ -34,7 +34,25 @@ router.get('/current', requireAuth, async (req, res, next) => {
     let spots = await user.getSpots();
     spots = await getSpots(spots);
     res.json(spots);
+});
 
+router.get('/:spotId', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId, {
+        include: [
+            {model: SpotImage, attributes: ["id", "url", "preview"]},
+            {model: User, attributes: ["id", "firstName", "lastName"]}
+        ]
+    });
+    if (spot) {
+        spot.dataValues.Owner = spot.dataValues.User;
+        delete spot.dataValues.User;
+        res.json(spot);
+    } else {
+        const err = new Error("Spot couldn't be found");
+        err.title = "Bad request";
+        err.status = 404;
+        next(err);
+    }
 });
 
 router.delete('/:id', async (req, res) => {
