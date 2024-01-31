@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 const { User, Spot, SpotImage, Review, Booking } = require('../../db/models');
 const bcrypt = require('bcryptjs');
 
-const { check } = require('express-validator');
+const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
@@ -57,6 +57,30 @@ const validateReviewInput = [
         .withMessage('Stars must be an integer from 1 to 5.')
         .notEmpty()
         .withMessage('Stars input is required.'),
+    handleValidationErrors
+];
+
+const validateBookingInput = [
+    check('startDate')
+        .isAfter((new Date()).toString())
+        .withMessage('startDate cannot be in the past.')
+        .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        .withMessage('startDate is an invalid date.')
+        .notEmpty()
+        .withMessage('startDate is required.'),
+    check('endDate')
+        .custom((value, { req }) => {
+            // console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
+            if (new Date(req.body.startDate).toString() !== 'Invalid Date')
+                return new Date(value) > new Date(req.body.startDate);
+            else
+                return true;
+        })
+        .withMessage('endDate cannot be on or before startDate.')
+        .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        .withMessage('endDate is an invalid date.')
+        .notEmpty()
+        .withMessage('endDate is required.'),
     handleValidationErrors
 ];
 
@@ -169,6 +193,62 @@ async function hasReview(req, res, next) {
     }
 };
 
+// Booking conflic check
+async function checkBookingConflict(req, res, next) {
+    const filteredBookingByStartDate = await Booking.findOne({
+        where: {
+            startDate: {
+                [Op.lte]: req.body.startDate
+            },
+            endDate: {
+                [Op.gt]: req.body.startDate
+            }
+        }
+    });
+
+    const filteredBookingByEndDate = await Booking.findOne({
+        where: {
+            startDate: {
+                [Op.lt]: req.body.endDate
+            },
+            endDate: {
+                [Op.gte]: req.body.endDate
+            }
+        }
+    });
+
+    const filteredBookingOverlap = await Booking.findOne({
+        where: {
+            startDate: {
+                [Op.gte]: req.body.startDate
+            },
+            endDate: {
+                [Op.lte]: req.body.endDate
+            }
+        }
+    });
+
+    if (filteredBookingByStartDate || filteredBookingByEndDate || filteredBookingOverlap) {
+        const err = new Error("Sorry, this spot is already booked for the specified dates");
+        err.title = "Bad request";
+        err.status = 403;
+        err.errors = {}
+        if (filteredBookingByStartDate) {
+            err.errors.startDate = "Start date conflicts with an existing booking";
+        }
+        if (filteredBookingByEndDate) {
+            err.errors.endDate = "End date conflicts with an existing booking";
+        }
+        if (filteredBookingOverlap) {
+            err.errors.bookingConflict = "Part of your stay has already been booked.";
+        }
+        next(err);
+    } else {
+        next();
+    }
+
+};
+
 // routers
 
 router.get('/', async (req, res) => {
@@ -205,13 +285,13 @@ router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) =>
     if (req.user.id !== spot.ownerId) {
         filter.attributes = ["spotId", "startDate", "endDate"]
     } else {
-        filter.include = {model: User, attributes: ["id", "firstName", "lastName"]}
+        filter.include = { model: User, attributes: ["id", "firstName", "lastName"] }
     }
     const bookings = await Booking.findAll({
-        where: {spotId: parseInt(req.params.spotId)},
+        where: { spotId: parseInt(req.params.spotId) },
         ...filter
     });
-    res.json({ Bookings: bookings});
+    res.json({ Bookings: bookings });
 });
 
 router.get('/:spotId', async (req, res, next) => {
@@ -251,10 +331,10 @@ router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validate
     const spotId = parseInt(req.params.spotId);
     let newReview = await Review.bulkCreate([
         {
-           spotId,
-           userId: req.user.id,
-           review,
-           stars
+            spotId,
+            userId: req.user.id,
+            review,
+            stars
         }
     ], { validate: true });
 
@@ -277,6 +357,32 @@ router.post('/:spotId/images', requireAuth, checkAuthorization, async (req, res)
         next(err);
     }
 });
+
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', requireAuth, validateSpotId,
+    validateBookingInput, checkBookingConflict, async (req, res, next) => {
+
+        const { startDate, endDate } = req.body;
+        const spotId = parseInt(req.params.spotId);
+        const spot = await Spot.findByPk(spotId);
+        const ownerId = spot.ownerId;
+        if (req.user.id === ownerId) {
+            const err = new Error("You cannot book the spot you own.");
+            err.title = "Bad request";
+            err.errors = { message: "You cannot book the spot you own." };
+            err.status = 403;
+            next(err);
+        } else {
+            const newBooking = await Booking.bulkCreate([{
+                spotId,
+                userId: req.user.id,
+                startDate,
+                endDate
+            }], { validate: true });
+            res.json(newBooking[0]);
+        }
+
+    });
 
 router.put('/:spotId', requireAuth, checkAuthorization,
     validateSpotInput, async (req, res) => {
