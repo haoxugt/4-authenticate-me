@@ -3,7 +3,7 @@ const router = express.Router();
 const sequelize = require('sequelize');
 
 const { Op } = require('sequelize');
-const { User, Spot, SpotImage, Review } = require('../../db/models');
+const { User, Spot, SpotImage, Review, Booking } = require('../../db/models');
 const bcrypt = require('bcryptjs');
 
 const { check } = require('express-validator');
@@ -194,6 +194,24 @@ router.get('/:spotId/reviews', validateSpotId, async (req, res) => {
         reviews = "none";
     }
     res.json({ Reviews: reviews });
+});
+
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) => {
+    const filter = {};
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    // check if the owner of the spot
+    if (req.user.id !== spot.ownerId) {
+        filter.attributes = ["spotId", "startDate", "endDate"]
+    } else {
+        filter.include = {model: User, attributes: ["id", "firstName", "lastName"]}
+    }
+    const bookings = await Booking.findAll({
+        where: {spotId: parseInt(req.params.spotId)},
+        ...filter
+    });
+    res.json({ Bookings: bookings});
 });
 
 router.get('/:spotId', async (req, res, next) => {
