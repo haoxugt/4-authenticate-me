@@ -42,6 +42,19 @@ const validateReviewImageInput = [
     handleValidationErrors
 ];
 
+const validateReviewInput = [
+    check('review')
+        .notEmpty()
+        .withMessage('Review text is required.'),
+    check('stars')
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5.')
+        .notEmpty()
+        .withMessage('Stars input is required.'),
+    handleValidationErrors
+];
+
+
 // middlewares
 // need to be refactored
 async function validateReviewId(req, res, next) {
@@ -54,10 +67,8 @@ async function validateReviewId(req, res, next) {
         err.errors = { message: "Review couldn't be found" };
         err.status = 404;
         next(err);
-    };
-
-};
-
+    }
+}
 
 async function checkAuthorization(req, res, next) {
     const review = await Review.findByPk(req.params.reviewId);
@@ -86,13 +97,13 @@ async function validateReviewId(req, res, next) {
 };
 
 async function checkMaxNumOfReviewImages(req, res, next) {
-    const imgNum = await ReviewImage.count({ where: {reviewId: req.params.reviewId} });
+    const imgNum = await ReviewImage.count({ where: { reviewId: req.params.reviewId } });
     if (imgNum < 10) {
         next();
     } else {
         const err = new Error("Maximum number of images for this resource was reached");
         err.title = "Bad request";
-        err.errors = { message: "Maximum number of images for this resource was reached"};
+        err.errors = { message: "Maximum number of images for this resource was reached" };
         err.status = 403;
         next(err);
     };
@@ -128,24 +139,44 @@ router.get('/current', requireAuth, async (req, res) => {
 });
 
 // Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', requireAuth, validateReviewId,
-    checkAuthorization, checkMaxNumOfReviewImages, validateReviewImageInput, async (req, res) => {
-        const { url } = req.body;
-        const reviewId = parseInt(req.params.reviewId);
-        const newImg = await ReviewImage.bulkCreate([
-            {
-                reviewId,
-                url
-            }
-        ], { validate: true });
-        const reviewImage = {
-           id: newImg[0].id,
-           url: newImg[0].url
+router.post('/:reviewId/images', requireAuth, validateReviewId, checkAuthorization, checkMaxNumOfReviewImages, validateReviewImageInput, async (req, res) => {
+    const { url } = req.body;
+    const reviewId = parseInt(req.params.reviewId);
+    const newImg = await ReviewImage.bulkCreate([
+        {
+            reviewId,
+            url
         }
-        res.json(reviewImage);
+    ], { validate: true });
+    const reviewImage = {
+        id: newImg[0].id,
+        url: newImg[0].url
+    }
+    res.json(reviewImage);
 
+
+});
+
+// Edit a Review
+router.put('/:reviewId', requireAuth, validateReviewId,
+    checkAuthorization, validateReviewInput,
+    async (req, res) => {
+        const { review, stars } = req.body;
+        const reviewToEdit = await Review.findByPk(req.params.reviewId);
+        reviewToEdit.review = review;
+        reviewToEdit.stars = stars;
+        // const spotId = reviewToEdit.spotId;
+        // let newReview = await Review.bulkCreate([
+        //     {
+        //        spotId,
+        //        userId: req.user.id,
+        //        review,
+        //        stars
+        //     }
+        // ], { validate: true });
+
+        res.json(reviewToEdit);
 
     });
-
 
 module.exports = router;
