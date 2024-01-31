@@ -162,7 +162,7 @@ router.put('/:reviewId', requireAuth, validateReviewId,
     checkAuthorization, validateReviewInput,
     async (req, res) => {
         const { review, stars } = req.body;
-        const reviewToEdit = await Review.findByPk(req.params.reviewId);
+        let reviewToEdit = await Review.findByPk(req.params.reviewId);
         reviewToEdit.review = review;
         reviewToEdit.stars = stars;
         // const spotId = reviewToEdit.spotId;
@@ -174,7 +174,7 @@ router.put('/:reviewId', requireAuth, validateReviewId,
         //        stars
         //     }
         // ], { validate: true });
-
+        await reviewToEdit.save();
         res.json(reviewToEdit);
 
     });

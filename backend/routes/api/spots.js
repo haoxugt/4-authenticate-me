@@ -261,6 +261,9 @@ router.get('/', async (req, res) => {
 router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     let spots = await user.getSpots();
+    console.log(spots);
+    let spots2 = await Spot.findAll({where: {ownerId: req.user.id}});
+    console.log(spots2);
     spots = await getSpotsInfo(spots);
     res.json(spots);
 });
@@ -384,6 +387,8 @@ router.post('/:spotId/bookings', requireAuth, validateSpotId,
 
     });
 
+
+// Edit a Spot
 router.put('/:spotId', requireAuth, checkAuthorization,
     validateSpotInput, async (req, res) => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -397,6 +402,7 @@ router.put('/:spotId', requireAuth, checkAuthorization,
         spot.name = name;
         spot.description = description;
         spot.price = price;
+        await spot.save();
         res.json(spot);
     }
 );
