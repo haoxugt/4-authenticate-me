@@ -197,6 +197,7 @@ async function hasReview(req, res, next) {
 async function checkBookingConflict(req, res, next) {
     const filteredBookingByStartDate = await Booking.findOne({
         where: {
+            spotId: parseInt(req.params.spotId),
             startDate: {
                 [Op.lte]: req.body.startDate
             },
@@ -208,6 +209,7 @@ async function checkBookingConflict(req, res, next) {
 
     const filteredBookingByEndDate = await Booking.findOne({
         where: {
+            spotId: parseInt(req.params.spotId),
             startDate: {
                 [Op.lt]: req.body.endDate
             },
@@ -219,6 +221,7 @@ async function checkBookingConflict(req, res, next) {
 
     const filteredBookingOverlap = await Booking.findOne({
         where: {
+            spotId: parseInt(req.params.spotId),
             startDate: {
                 [Op.gte]: req.body.startDate
             },
