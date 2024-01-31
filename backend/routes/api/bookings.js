@@ -58,6 +58,7 @@ async function getBookingsInfo(bookings) {
 }
 
 // middlewares
+// check booking maker ONLY
 async function checkAuthorization(req, res, next) {
     const booking = await Booking.findByPk(req.params.bookingId);
 
@@ -72,6 +73,22 @@ async function checkAuthorization(req, res, next) {
     }
 
 };
+
+// Check spot owner or booking maker
+async function checkAuthorizationBySpotOwnerOrUser(req, res, next) {
+    const booking = await Booking.findByPk(req.params.bookingId);
+    const spot = await Spot.findByPk(booking.spotId);
+
+    if (req.user.id !== booking.userId && req.user.id !== spot.ownerId) {
+        const err = new Error('Authorization by the booking maker or spot\'s owner required');
+        err.title = 'Authorization required';
+        err.errors = { message: 'Forbidden' };
+        err.status = 403;
+        return next(err);
+    } else {
+        next();
+    }
+}
 
 async function validateBookingId(req, res, next) {
     const booking = await Booking.findByPk(req.params.bookingId);
@@ -100,6 +117,20 @@ async function checkOldBooking(req, res, next) {
         next();
     };
 };
+
+// Check if booking already started
+async function checkBookingStart(req, res, next) {
+    const booking = await Booking.findByPk(req.params.bookingId);
+    if (new Date(booking.startDate) < new Date()) {
+        const err = new Error("Bookings that have been started can't be deleted");
+        err.title = "Bad request";
+        err.errors = { message: "Bookings that have been started can't be deleted" };
+        err.status = 403;
+        next(err);
+    } else {
+        next();
+    }
+}
 
 // Booking conflic check
 async function checkBookingConflict(req, res, next) {
@@ -198,5 +229,16 @@ router.put('/:bookingId', requireAuth, validateBookingId,
         res.json(bookingToEdit);
     });
 
+
+// Delete a Booking
+router.delete('/:bookingId', requireAuth, validateBookingId,
+checkAuthorizationBySpotOwnerOrUser, checkBookingStart,
+async(req, res) => {
+    const booking = await Booking.findByPk(req.params.bookingId);
+    await booking.destroy();
+    res.json({
+        "message": "Successfully deleted"
+    });
+} )
 
 module.exports = router;

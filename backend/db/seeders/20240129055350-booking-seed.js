@@ -61,6 +61,26 @@ const spotBookings = [
       }
     ]
   },
+  {
+    spotName: "Downton Abbey",
+    bookings: [
+      {
+        username: "MatthewCrawley",
+        startDate: "2024-01-01",
+        endDate: "2024-03-10"
+      }
+    ]
+  },
+  {
+    spotName: "Downton Abbey",
+    bookings: [
+      {
+        username: "MatthewCrawley",
+        startDate: "2024-05-10",
+        endDate: "2024-05-20"
+      }
+    ]
+  }
 ];
 
 /** @type {import('sequelize-cli').Migration} */
