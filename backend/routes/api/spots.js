@@ -78,22 +78,22 @@ const validateBookingInput = [
     check('startDate')
         .isAfter((new Date()).toString())
         .withMessage('startDate cannot be in the past.')
-        // .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
-        .isDate()
+        .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        // .isDate()
         .withMessage('startDate is an invalid date.')
         .notEmpty()
         .withMessage('startDate is required.'),
     check('endDate')
         .custom((value, { req }) => {
-            // console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
+            console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
             if (new Date(req.body.startDate).toString() !== 'Invalid Date')
                 return new Date(value) > new Date(req.body.startDate);
             else
                 return true;
         })
         .withMessage('endDate cannot be on or before startDate.')
-        // .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
-        .isDate()
+        .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        // .isDate()
         .withMessage('endDate is an invalid date.')
         .notEmpty()
         .withMessage('endDate is required.'),
