@@ -134,9 +134,10 @@ async function checkBookingStart(req, res, next) {
 
 // Booking conflic check
 async function checkBookingConflict(req, res, next) {
+    const booking = await Booking.findByPk(req.params.bookingId);
     const filteredBookingByStartDate = await Booking.findOne({
         where: {
-            spotId: parseInt(req.params.spotId),
+            spotId: parseInt(booking.spotId),
             id: {
                 [Op.ne]: parseInt(req.params.bookingId)
             },
@@ -151,7 +152,7 @@ async function checkBookingConflict(req, res, next) {
 
     const filteredBookingByEndDate = await Booking.findOne({
         where: {
-            spotId: parseInt(req.params.spotId),
+            spotId: parseInt(booking.spotId),
             id: {
                 [Op.ne]: parseInt(req.params.bookingId)
             },
@@ -166,7 +167,7 @@ async function checkBookingConflict(req, res, next) {
 
     const filteredBookingOverlap = await Booking.findOne({
         where: {
-            spotId: parseInt(req.params.spotId),
+            spotId: parseInt(booking.spotId),
             id: {
                 [Op.ne]: parseInt(req.params.bookingId)
             },
