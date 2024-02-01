@@ -197,21 +197,15 @@ async function getReviewsInfo(reviews, includeSpot) {
 // middlewares
 async function checkAuthorization(req, res, next) {
     const spot = await Spot.findByPk(req.params.spotId);
-    if (spot) {
-        if (req.user.id !== spot.ownerId) {
-            const err = new Error('Authorization by the owner required');
-            err.title = 'Authorization required';
-            err.errors = { message: 'Forbidden' };
-            err.status = 403;
-            return next(err);
-        } else {
-            next();
-        }
+
+    if (req.user.id !== spot.ownerId) {
+        const err = new Error('Forbidden. Authorization by the spot owner required');
+        err.title = 'Authorization required';
+        // err.errors = { message: 'Forbidden' };
+        err.status = 403;
+        return next(err);
     } else {
-        const err = new Error("Spot couldn't be found");
-        err.title = "Bad request";
-        err.status = 404;
-        next(err);
+        next();
     }
 };
 
@@ -464,21 +458,16 @@ router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validate
     res.status(201).json(newReview);
 });
 
-router.post('/:spotId/images', requireAuth, checkAuthorization, async (req, res) => {
+router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
     const { url, preview } = req.body;
     const spot = await Spot.findByPk(req.params.spotId);
-    console.log(spot)
-    if (spot) {
-        const spotImage = await spot.createSpotImage({
-            url, preview
-        });
-        res.json(spotImage);
-    } else {
-        const err = new Error("Spot couldn't be found");
-        err.title = "Bad request";
-        err.status = 404;
-        next(err);
-    }
+
+
+    const spotImage = await spot.createSpotImage({
+        url, preview
+    });
+    res.json(spotImage);
+
 });
 
 // Create a Booking from a Spot based on the Spot's id
@@ -509,7 +498,7 @@ router.post('/:spotId/bookings', requireAuth, validateSpotId,
 
 
 // Edit a Spot
-router.put('/:spotId', requireAuth, checkAuthorization,
+router.put('/:spotId', requireAuth, validateSpotId, checkAuthorization,
     validateSpotInput, async (req, res) => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
         const spot = await Spot.findByPk(req.params.spotId);
@@ -528,7 +517,7 @@ router.put('/:spotId', requireAuth, checkAuthorization,
 );
 
 
-router.delete('/:spotId', requireAuth, checkAuthorization, async (req, res) => {
+router.delete('/:spotId', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
     await spot.destroy();
     res.json({ message: "Successfully deleted" });
