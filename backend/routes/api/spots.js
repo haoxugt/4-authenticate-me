@@ -12,15 +12,23 @@ const { requireAuth } = require('../../utils/auth');
 
 const validateSpotInput = [
     check('address')
+        .isString()
+        .withMessage('Address must be a string.')
         .notEmpty()
         .withMessage('Street address is required.'),
     check('city')
+        .isString()
+        .withMessage('City must be a string.')
         .notEmpty()
         .withMessage('City is required.'),
     check('state')
+        .isString()
+        .withMessage('State must be a string.')
         .notEmpty()
         .withMessage('State is required.'),
     check('country')
+        .isString()
+        .withMessage('Country must be a string.')
         .notEmpty()
         .withMessage('Country is required.'),
     check('lat')
@@ -30,14 +38,18 @@ const validateSpotInput = [
         .withMessage('Latitude is required.'),
     check('lng')
         .isFloat({ min: -180, max: 180 })
-        .withMessage('Longitude  must be within -180 and 180.')
+        .withMessage('Longitude must be within -180 and 180.')
         .notEmpty()
         .withMessage('Longitude is required.'),
     check('name')
+        .isString()
+        .withMessage('Name must be a string.')
         .notEmpty()
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters.'),
     check('description')
+        .isString()
+        .withMessage('Description must be a string.')
         .notEmpty()
         .withMessage('Description is required.'),
     check('price')
@@ -50,6 +62,8 @@ const validateSpotInput = [
 
 const validateReviewInput = [
     check('review')
+        .isString()
+        .withMessage('Review must be a string.')
         .notEmpty()
         .withMessage('Review text is required.'),
     check('stars')
@@ -64,7 +78,8 @@ const validateBookingInput = [
     check('startDate')
         .isAfter((new Date()).toString())
         .withMessage('startDate cannot be in the past.')
-        .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        // .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        .isDate()
         .withMessage('startDate is an invalid date.')
         .notEmpty()
         .withMessage('startDate is required.'),
@@ -77,10 +92,47 @@ const validateBookingInput = [
                 return true;
         })
         .withMessage('endDate cannot be on or before startDate.')
-        .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        // .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
+        .isDate()
         .withMessage('endDate is an invalid date.')
         .notEmpty()
         .withMessage('endDate is required.'),
+    handleValidationErrors
+];
+
+const validateQueryInput = [
+    check('page')
+        .optional()
+        .isInt({ min: 1, max: 10 })
+        .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+        .optional()
+        .isInt({ min: 1, max: 20 })
+        .withMessage('Size must be greater than or equal to 1'),
+    check('minLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Minimum latitude is invalid, must be within -90 and 90.'),
+    check('maxLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Maximum latitude is invalid, must be within -90 and 90.'),
+    check('maxLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Maximum longitude  is invalid, must be within -180 and 180.'),
+    check('minLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Minimum longitude  is invalid, must be within -180 and 180.'),
+    check('minPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    check('maxPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage('Maximum price must be greater than or equal to 0'),
     handleValidationErrors
 ];
 
@@ -253,19 +305,77 @@ async function checkBookingConflict(req, res, next) {
 };
 
 // routers
+// Get all spots
+router.get('/', validateQueryInput, async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    let queryObj = {
+        where: {}
+    };
+    page = page === undefined ? 1 : parseInt(page);
+    size = size === undefined ? 20 : parseInt(size);
+    queryObj.limit = size;
+    queryObj.offset = size * (page - 1);
 
-router.get('/', async (req, res) => {
+    if (minLat !== undefined && maxLat !== undefined) {
+        queryObj.where.lat = {
+            [Op.gte]: minLat,
+            [Op.lte]: maxLat
+        }
+    } else if (minLat !== undefined) {
+        queryObj.where.lat = {
+            [Op.gte]: minLat
+        }
+    } else if (maxLat !== undefined) {
+        queryObj.where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
 
-    let spots = await Spot.findAll();
+    if (minLng !== undefined && maxLng !== undefined) {
+        queryObj.where.lng = {
+            [Op.gte]: minLng,
+            [Op.lte]: maxLng
+        }
+    } else if (minLng !== undefined) {
+        queryObj.where.lng = {
+            [Op.gte]: minLng
+        }
+    } else if (maxLng !== undefined) {
+        queryObj.where.lng = {
+            [Op.lte]: maxLng
+        }
+    }
+
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        queryObj.where.price = {
+            [Op.gte]: minPrice,
+            [Op.lte]: maxPrice
+        }
+    } else if (minPrice !== undefined) {
+        queryObj.where.price = {
+            [Op.gte]: minPrice
+        }
+    } else if (maxPrice !== undefined) {
+        queryObj.where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
+    let spots = await Spot.findAll(queryObj);
     spots = await getSpotsInfo(spots);
-    res.json(spots)
+
+    res.json({
+        Spots: spots,
+        page,
+        size
+    })
 });
 
 router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     let spots = await user.getSpots();
     console.log(spots);
-    let spots2 = await Spot.findAll({where: {ownerId: req.user.id}});
+    let spots2 = await Spot.findAll({ where: { ownerId: req.user.id } });
     console.log(spots2);
     spots = await getSpotsInfo(spots);
     res.json(spots);

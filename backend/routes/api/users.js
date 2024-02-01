@@ -12,10 +12,14 @@ const router = express.Router();
 const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Email must be a string.')
         .isEmail()
         .withMessage('Please provide a valid email.'),
     check('username')
         .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('username must be a string.')
         .isLength({ min: 4 })
         .withMessage('Please provide a username with at least 4 characters.'),
     check('username')
@@ -24,14 +28,20 @@ const validateSignup = [
         .withMessage('Username cannot be an email.'),
     check('firstName')
         .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('First name must be a string.')
         .isAlpha()
         .withMessage('Please provide a valid alphabetical first name.'),
     check('lastName')
         .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Last name must be a string.')
         .isAlpha()
         .withMessage('Please provide a valid alphabetical last name.'),
     check('password')
         .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Password must be a string.')
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
