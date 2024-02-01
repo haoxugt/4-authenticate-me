@@ -157,14 +157,14 @@ async function getSpotsInfo(spots) {
             avgRating /= reviews.length;
             spots[spotIdx].dataValues.avgRating = avgRating;
         } else {
-            spots[spotIdx].dataValues.avgRating = null;
+            spots[spotIdx].dataValues.avgRating = "none";
         }
         const img = await spot.getSpotImages({ where: { preview: true } });
         if (img.length) {
             const previewImage = img[0].url;
             spots[spotIdx].dataValues.previewImage = previewImage;
         } else {
-            spots[spotIdx].dataValues.previewImage = null;
+            spots[spotIdx].dataValues.previewImage = "none";
         }
     }
     return spots;
@@ -188,7 +188,7 @@ async function getReviewsInfo(reviews, includeSpot) {
         if (images.length) {
             reviews[reviewIdx].dataValues.ReviewImages = images;
         } else {
-            reviews[reviewIdx].dataValues.ReviewImages = null;
+            reviews[reviewIdx].dataValues.ReviewImages = "none";
         }
     }
     return reviews;
@@ -378,7 +378,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     let spots2 = await Spot.findAll({ where: { ownerId: req.user.id } });
     console.log(spots2);
     spots = await getSpotsInfo(spots);
-    res.json(spots);
+    res.json({ Spots: spots });
 });
 
 router.get('/:spotId/reviews', validateSpotId, async (req, res) => {
@@ -410,23 +410,30 @@ router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) =>
     res.json({ Bookings: bookings });
 });
 
-router.get('/:spotId', async (req, res, next) => {
+// Get details of a Spot from an id
+router.get('/:spotId', validateSpotId, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId, {
         include: [
             { model: SpotImage, attributes: ["id", "url", "preview"] },
             { model: User, attributes: ["id", "firstName", "lastName"] }
         ]
     });
-    if (spot) {
-        spot.dataValues.Owner = spot.dataValues.User;
-        delete spot.dataValues.User;
-        res.json(spot);
+
+    spot.dataValues.Owner = spot.dataValues.User;
+    delete spot.dataValues.User;
+
+    // get reviews
+    const spotReviews = await spot.getReviews();
+    spot.dataValues.numReviews = spotReviews.length;
+
+    if (spotReviews.length) {
+        const avgStarRating = spotReviews.reduce((acc, curr) => acc + curr.stars, 0) / spotReviews.length;
+        spot.dataValues.avgStarRating = avgStarRating;
     } else {
-        const err = new Error("Spot couldn't be found");
-        err.title = "Bad request";
-        err.status = 404;
-        next(err);
+        spot.dataValues.avgStarRating = "none";
     }
+    res.json(spot);
+
 });
 
 
