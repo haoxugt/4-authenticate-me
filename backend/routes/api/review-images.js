@@ -16,7 +16,7 @@ async function validateReviewImageId(req, res, next) {
         const err = new Error("Review Image couldn't be found");
         err.title = "Bad request";
         err.status = 404;
-        err.errors = { message: "Review Image couldn't be found" };
+        // err.errors = { message: "Review Image couldn't be found" };
         next(err);
     };
 };
@@ -27,9 +27,9 @@ async function checkAuthorization(req, res, next) {
     const review = await Review.findByPk(reviewImage.reviewId);
 
     if (req.user.id !== review.userId) {
-        const err = new Error('Authorization by the reviewer required');
+        const err = new Error('Forbidden. Authorization by the reviewer required');
         err.title = 'Authorization required';
-        err.errors = { message: 'Forbidden' };
+        // err.errors = { message: 'Forbidden' };
         err.status = 403;
         return next(err);
     } else {

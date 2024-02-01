@@ -16,7 +16,7 @@ async function validateSpotImageId(req, res, next) {
         const err = new Error("Spot Image couldn't be found");
         err.title = "Bad request";
         err.status = 404;
-        err.errors = { message: "Spot Image couldn't be found" };
+        // err.errors = { message: "Spot Image couldn't be found" };
         next(err);
     };
 };

@@ -23,6 +23,7 @@ async function getReviewsInfo(reviews) {
         } else {
             spot.dataValues.previewImage = "none";
         }
+        delete spot.dataValues.description;
         reviews[reviewIdx].dataValues.Spot = spot;
 
         const images = await review.getReviewImages({ attributes: ["id", "url"] });
@@ -77,9 +78,9 @@ async function validateReviewId(req, res, next) {
 async function checkAuthorization(req, res, next) {
     const review = await Review.findByPk(req.params.reviewId);
     if (req.user.id !== review.userId) {
-        const err = new Error('Authorization by the user required');
+        const err = new Error('Forbidden. Authorization by the reviewer required');
         err.title = 'Authorization required';
-        err.errors = { message: 'Forbidden' };
+        // err.errors = { message: 'Forbidden' };
         err.status = 403;
         return next(err);
     } else {
@@ -107,7 +108,7 @@ async function checkMaxNumOfReviewImages(req, res, next) {
     } else {
         const err = new Error("Maximum number of images for this resource was reached");
         err.title = "Bad request";
-        err.errors = { message: "Maximum number of images for this resource was reached" };
+        // err.errors = { message: "Maximum number of images for this resource was reached" };
         err.status = 403;
         next(err);
     };
@@ -144,6 +145,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, validateReviewId, checkAuthorization, checkMaxNumOfReviewImages, validateReviewImageInput, async (req, res) => {
+    console.log("-----------------here")
     const { url } = req.body;
     const reviewId = parseInt(req.params.reviewId);
     const newImg = await ReviewImage.bulkCreate([

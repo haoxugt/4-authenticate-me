@@ -63,9 +63,9 @@ async function checkAuthorization(req, res, next) {
     const booking = await Booking.findByPk(req.params.bookingId);
 
     if (req.user.id !== booking.userId) {
-        const err = new Error('Authorization by the user required');
+        const err = new Error('Forbidden. Authorization by the user required');
         err.title = 'Authorization required';
-        err.errors = { message: 'Forbidden' };
+        // err.errors = { message: 'Forbidden' };
         err.status = 403;
         return next(err);
     } else {
@@ -80,9 +80,9 @@ async function checkAuthorizationBySpotOwnerOrUser(req, res, next) {
     const spot = await Spot.findByPk(booking.spotId);
 
     if (req.user.id !== booking.userId && req.user.id !== spot.ownerId) {
-        const err = new Error('Authorization by the booking maker or spot\'s owner required');
+        const err = new Error('Forbidden. Authorization by the booking maker or spot\'s owner required');
         err.title = 'Authorization required';
-        err.errors = { message: 'Forbidden' };
+        // err.errors = { message: 'Forbidden' };
         err.status = 403;
         return next(err);
     } else {
@@ -98,7 +98,7 @@ async function validateBookingId(req, res, next) {
         const err = new Error("Booking couldn't be found");
         err.title = "Bad request";
         err.status = 404;
-        err.errors = { message: "Booking couldn't be found" };
+        // err.errors = { message: "Booking couldn't be found" };
         next(err);
     };
 };
@@ -145,7 +145,7 @@ async function checkBookingConflict(req, res, next) {
                 [Op.lte]: req.body.startDate
             },
             endDate: {
-                [Op.gt]: req.body.startDate
+                [Op.gte]: req.body.startDate
             }
         }
     });
@@ -157,7 +157,7 @@ async function checkBookingConflict(req, res, next) {
                 [Op.ne]: parseInt(req.params.bookingId)
             },
             startDate: {
-                [Op.lt]: req.body.endDate
+                [Op.lte]: req.body.endDate
             },
             endDate: {
                 [Op.gte]: req.body.endDate
@@ -172,16 +172,16 @@ async function checkBookingConflict(req, res, next) {
                 [Op.ne]: parseInt(req.params.bookingId)
             },
             startDate: {
-                [Op.gte]: req.body.startDate
+                [Op.gt]: req.body.startDate
             },
             endDate: {
-                [Op.lte]: req.body.endDate
+                [Op.lt]: req.body.endDate
             }
         }
     });
 
     if (filteredBookingByStartDate || filteredBookingByEndDate || filteredBookingOverlap) {
-        const err = new Error("Sorry, this spot is already booked for the specified dates");
+        const err = new Error("Bad Request");
         err.title = "Bad request";
         err.status = 403;
         err.errors = {}

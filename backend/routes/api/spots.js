@@ -84,6 +84,8 @@ const validateBookingInput = [
         .notEmpty()
         .withMessage('startDate is required.'),
     check('endDate')
+        .isAfter((new Date()).toString())
+        .withMessage('endDate cannot be in the past.')
         .custom((value, { req }) => {
             console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
             if (new Date(req.body.startDate).toString() !== 'Invalid Date')
@@ -231,7 +233,7 @@ async function hasReview(req, res, next) {
     if (review) {
         const err = new Error("User already has a review for this spot");
         err.title = "Bad request";
-        err.errors = { message: 'User already has a review for this spot' };
+        // err.errors = { message: 'User already has a review for this spot' };
         err.status = 500;
         next(err);
     } else {
@@ -248,7 +250,7 @@ async function checkBookingConflict(req, res, next) {
                 [Op.lte]: req.body.startDate
             },
             endDate: {
-                [Op.gt]: req.body.startDate
+                [Op.gte]: req.body.startDate
             }
         }
     });
@@ -257,7 +259,7 @@ async function checkBookingConflict(req, res, next) {
         where: {
             spotId: parseInt(req.params.spotId),
             startDate: {
-                [Op.lt]: req.body.endDate
+                [Op.lte]: req.body.endDate
             },
             endDate: {
                 [Op.gte]: req.body.endDate
@@ -269,10 +271,10 @@ async function checkBookingConflict(req, res, next) {
         where: {
             spotId: parseInt(req.params.spotId),
             startDate: {
-                [Op.gte]: req.body.startDate
+                [Op.gt]: req.body.startDate
             },
             endDate: {
-                [Op.lte]: req.body.endDate
+                [Op.lt]: req.body.endDate
             }
         }
     });
@@ -479,9 +481,9 @@ router.post('/:spotId/bookings', requireAuth, validateSpotId,
         const spot = await Spot.findByPk(spotId);
         const ownerId = spot.ownerId;
         if (req.user.id === ownerId) {
-            const err = new Error("You cannot book the spot you own.");
-            err.title = "Bad request";
-            err.errors = { message: "You cannot book the spot you own." };
+            const err = new Error("Forbidden. You cannot book the spot you own.");
+            err.title = "Authorization required";
+            // err.errors = { message: "You cannot book the spot you own." };
             err.status = 403;
             next(err);
         } else {
