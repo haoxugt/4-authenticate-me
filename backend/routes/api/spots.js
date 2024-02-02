@@ -304,7 +304,7 @@ async function checkBookingConflict(req, res, next) {
 // Get all spots
 router.get('/', validateQueryInput, async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-    // console.log("----------", page, typeof page)
+
     let queryObj = {
         where: {}
     };
@@ -416,7 +416,7 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
             { model: User, attributes: ["id", "firstName", "lastName"] }
         ]
     });
-    // console.log(spot)
+
     spot.dataValues.Owner = spot.dataValues.User;
     delete spot.dataValues.User;
 
@@ -525,7 +525,7 @@ router.put('/:spotId', requireAuth, validateSpotId, checkAuthorization,
     }
 );
 
-
+// Delete a Spot
 router.delete('/:spotId', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
     await spot.destroy();

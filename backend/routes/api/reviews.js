@@ -61,19 +61,6 @@ const validateReviewInput = [
 
 
 // middlewares
-// need to be refactored
-// async function validateReviewId(req, res, next) {
-//     const review = await Review.findByPk(req.params.reviewId);
-//     if (review) {
-//         next();
-//     } else {
-//         const err = new Error("Review couldn't be found");
-//         err.title = "Bad request";
-//         err.errors = { message: "Review couldn't be found" };
-//         err.status = 404;
-//         next(err);
-//     }
-// }
 
 async function checkAuthorization(req, res, next) {
     const review = await Review.findByPk(req.params.reviewId);
@@ -118,16 +105,12 @@ async function checkMaxNumOfReviewImages(req, res, next) {
 // routers
 
 router.get('/', async (req, res) => {
-    // const reviews = await Review.findByPk(1, {
-    //     include: [{model: User}, {model: Spot}]
-    // });
+
     const reviews = await Review.findAll();
     res.json({ Reviews: reviews });
 });
 
 router.get('/review-images', async (req, res) => {
-    // const review = await Review.findByPk(1);
-    // await review.destroy()
     const images = await ReviewImage.findAll();
     res.json(images);
 });
@@ -170,15 +153,7 @@ router.put('/:reviewId', requireAuth, validateReviewId,
         let reviewToEdit = await Review.findByPk(req.params.reviewId);
         reviewToEdit.review = review;
         reviewToEdit.stars = stars;
-        // const spotId = reviewToEdit.spotId;
-        // let newReview = await Review.bulkCreate([
-        //     {
-        //        spotId,
-        //        userId: req.user.id,
-        //        review,
-        //        stars
-        //     }
-        // ], { validate: true });
+
         await reviewToEdit.save();
         res.json(reviewToEdit);
 

@@ -25,7 +25,7 @@ async function validateSpotImageId(req, res, next) {
 async function checkAuthorization(req, res, next) {
     const spotImage = await SpotImage.findByPk(req.params.imageId);
     const spot = await Spot.findByPk(spotImage.spotId);
-    // console.log("---------------",typeof req.user.id, typeof spot.ownerId)
+
     if (req.user.id !== spot.ownerId) {
         const err = new Error('Forbidden');
         err.title = 'Authorization required';
@@ -38,6 +38,9 @@ async function checkAuthorization(req, res, next) {
 
 };
 
+
+// routers
+// Get all Spot images
 router.get('/', async (req, res) => {
     const spotImages = await SpotImage.findAll();
     res.json(spotImages);

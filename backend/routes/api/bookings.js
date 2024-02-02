@@ -205,19 +205,13 @@ async function checkBookingConflict(req, res, next) {
 
 // routers
 router.get('/', async (req, res) => {
-    // const user = await User.findByPk(1);
-    // await user.destroy();
     const bookings = await Booking.findAll();
     res.json(bookings);
 });
 
 router.get('/current', requireAuth, async (req, res) => {
-    // const user = await User.findByPk(1);
-    // await user.destroy();
-    // const bookings = await Booking.findAll();
     const { user } = req;
     let bookings = await user.getBookings({ order: [['id']]});
-    // console.log("---------------", bookings[0] instanceof Booking);
     bookings = await getBookingsInfo(bookings);
     res.json({ Bookings: bookings });
 });
