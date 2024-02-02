@@ -402,6 +402,7 @@ router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) =>
     }
     const bookings = await Booking.findAll({
         where: { spotId: parseInt(req.params.spotId) },
+        order: [['id']],
         ...filter
     });
     res.json({ Bookings: bookings });
