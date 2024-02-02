@@ -27,7 +27,7 @@ async function checkAuthorization(req, res, next) {
     const review = await Review.findByPk(reviewImage.reviewId);
 
     if (req.user.id !== review.userId) {
-        const err = new Error('Forbidden. Authorization by the reviewer required');
+        const err = new Error('Forbidden');
         err.title = 'Authorization required';
         // err.errors = { message: 'Forbidden' };
         err.status = 403;

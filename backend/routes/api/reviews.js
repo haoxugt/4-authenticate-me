@@ -39,46 +39,46 @@ async function getReviewsInfo(reviews) {
 const validateReviewImageInput = [
     check('url')
         .isString()
-        .withMessage('Url must be a string.')
+        .withMessage('Url must be a string')
         .notEmpty()
-        .withMessage('Review image url is required.'),
+        .withMessage('Review image url is required'),
     handleValidationErrors
 ];
 
 const validateReviewInput = [
     check('review')
         .isString()
-        .withMessage('Review must be a string.')
+        .withMessage('Review must be a string')
         .notEmpty()
-        .withMessage('Review text is required.'),
+        .withMessage('Review text is required'),
     check('stars')
         .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5.')
+        .withMessage('Stars must be an integer from 1 to 5')
         .notEmpty()
-        .withMessage('Stars input is required.'),
+        .withMessage('Stars input is required'),
     handleValidationErrors
 ];
 
 
 // middlewares
 // need to be refactored
-async function validateReviewId(req, res, next) {
-    const review = await Review.findByPk(req.params.reviewId);
-    if (review) {
-        next();
-    } else {
-        const err = new Error("Review couldn't be found");
-        err.title = "Bad request";
-        err.errors = { message: "Review couldn't be found" };
-        err.status = 404;
-        next(err);
-    }
-}
+// async function validateReviewId(req, res, next) {
+//     const review = await Review.findByPk(req.params.reviewId);
+//     if (review) {
+//         next();
+//     } else {
+//         const err = new Error("Review couldn't be found");
+//         err.title = "Bad request";
+//         err.errors = { message: "Review couldn't be found" };
+//         err.status = 404;
+//         next(err);
+//     }
+// }
 
 async function checkAuthorization(req, res, next) {
     const review = await Review.findByPk(req.params.reviewId);
     if (req.user.id !== review.userId) {
-        const err = new Error('Forbidden. Authorization by the reviewer required');
+        const err = new Error('Forbidden');
         err.title = 'Authorization required';
         // err.errors = { message: 'Forbidden' };
         err.status = 403;
@@ -145,7 +145,6 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, validateReviewId, checkAuthorization, checkMaxNumOfReviewImages, validateReviewImageInput, async (req, res) => {
-    console.log("-----------------here")
     const { url } = req.body;
     const reviewId = parseInt(req.params.reviewId);
     const newImg = await ReviewImage.bulkCreate([

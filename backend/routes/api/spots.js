@@ -13,92 +13,92 @@ const { requireAuth } = require('../../utils/auth');
 const validateSpotInput = [
     check('address')
         .isString()
-        .withMessage('Address must be a string.')
+        .withMessage('Address must be a string')
         .notEmpty()
-        .withMessage('Street address is required.'),
+        .withMessage('Street address is required'),
     check('city')
         .isString()
-        .withMessage('City must be a string.')
+        .withMessage('City must be a string')
         .notEmpty()
-        .withMessage('City is required.'),
+        .withMessage('City is required'),
     check('state')
         .isString()
-        .withMessage('State must be a string.')
+        .withMessage('State must be a string')
         .notEmpty()
-        .withMessage('State is required.'),
+        .withMessage('State is required'),
     check('country')
         .isString()
-        .withMessage('Country must be a string.')
+        .withMessage('Country must be a string')
         .notEmpty()
-        .withMessage('Country is required.'),
+        .withMessage('Country is required'),
     check('lat')
         .isFloat({ min: -90, max: 90 })
-        .withMessage('Latitude must be within -90 and 90.')
+        .withMessage('Latitude must be within -90 and 90')
         .notEmpty()
-        .withMessage('Latitude is required.'),
+        .withMessage('Latitude is required'),
     check('lng')
         .isFloat({ min: -180, max: 180 })
-        .withMessage('Longitude must be within -180 and 180.')
+        .withMessage('Longitude must be within -180 and 180')
         .notEmpty()
-        .withMessage('Longitude is required.'),
+        .withMessage('Longitude is required'),
     check('name')
         .isString()
-        .withMessage('Name must be a string.')
+        .withMessage('Name must be a string')
         .notEmpty()
         .isLength({ max: 50 })
-        .withMessage('Name must be less than 50 characters.'),
+        .withMessage('Name must be less than 50 characters'),
     check('description')
         .isString()
-        .withMessage('Description must be a string.')
+        .withMessage('Description must be a string')
         .notEmpty()
-        .withMessage('Description is required.'),
+        .withMessage('Description is required'),
     check('price')
         .isFloat({ min: 0.01 })
-        .withMessage('Price per day must be a positive number.')
+        .withMessage('Price per day must be a positive number')
         .notEmpty()
-        .withMessage('Price is required.'),
+        .withMessage('Price is required'),
     handleValidationErrors
 ];
 
 const validateReviewInput = [
     check('review')
         .isString()
-        .withMessage('Review must be a string.')
+        .withMessage('Review must be a string')
         .notEmpty()
-        .withMessage('Review text is required.'),
+        .withMessage('Review text is required'),
     check('stars')
         .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5.')
+        .withMessage('Stars must be an integer from 1 to 5')
         .notEmpty()
-        .withMessage('Stars input is required.'),
+        .withMessage('Stars input is required'),
     handleValidationErrors
 ];
 
 const validateBookingInput = [
     check('startDate')
         .isAfter((new Date()).toString())
-        .withMessage('startDate cannot be in the past.')
+        .withMessage('startDate cannot be in the past')
         .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
         // .isDate()
-        .withMessage('startDate is an invalid date.')
+        .withMessage('startDate is an invalid date')
         .notEmpty()
-        .withMessage('startDate is required.'),
+        .withMessage('startDate is required'),
     check('endDate')
         .isAfter((new Date()).toString())
-        .withMessage('endDate cannot be in the past.')
+        .withMessage('endDate cannot be in the past')
         .custom((value, { req }) => {
-            console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
+            // console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
             if (new Date(req.body.startDate).toString() !== 'Invalid Date')
                 return new Date(value) > new Date(req.body.startDate);
             else
                 return true;
         })
-        .withMessage('endDate cannot be on or before startDate.')
+        .withMessage('endDate cannot be on or before startDate')
         .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
         // .isDate()
-        .withMessage('endDate is an invalid date.')
+        .withMessage('endDate is an invalid date')
         .notEmpty()
-        .withMessage('endDate is required.'),
+        .withMessage('endDate is required'),
     handleValidationErrors
 ];
 
@@ -114,19 +114,19 @@ const validateQueryInput = [
     check('minLat')
         .optional()
         .isFloat({ min: -90, max: 90 })
-        .withMessage('Minimum latitude is invalid, must be within -90 and 90.'),
+        .withMessage('Minimum latitude is invalid'),
     check('maxLat')
         .optional()
         .isFloat({ min: -90, max: 90 })
-        .withMessage('Maximum latitude is invalid, must be within -90 and 90.'),
+        .withMessage('Maximum latitude is invalid'),
     check('maxLng')
         .optional()
         .isFloat({ min: -180, max: 180 })
-        .withMessage('Maximum longitude  is invalid, must be within -180 and 180.'),
+        .withMessage('Maximum longitude  is invalid'),
     check('minLng')
         .optional()
         .isFloat({ min: -180, max: 180 })
-        .withMessage('Minimum longitude  is invalid, must be within -180 and 180.'),
+        .withMessage('Minimum longitude  is invalid'),
     check('minPrice')
         .optional()
         .isFloat({ min: 0 })
@@ -201,7 +201,7 @@ async function checkAuthorization(req, res, next) {
     const spot = await Spot.findByPk(req.params.spotId);
 
     if (req.user.id !== spot.ownerId) {
-        const err = new Error('Forbidden. Authorization by the spot owner required');
+        const err = new Error('Forbidden');
         err.title = 'Authorization required';
         // err.errors = { message: 'Forbidden' };
         err.status = 403;
@@ -291,7 +291,7 @@ async function checkBookingConflict(req, res, next) {
             err.errors.endDate = "End date conflicts with an existing booking";
         }
         if (filteredBookingOverlap) {
-            err.errors.bookingConflict = "Part of your stay has already been booked.";
+            err.errors.bookingConflict = "Dates Surround Existing Booking";
         }
         next(err);
     } else {
@@ -304,6 +304,7 @@ async function checkBookingConflict(req, res, next) {
 // Get all spots
 router.get('/', validateQueryInput, async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    // console.log("----------", page, typeof page)
     let queryObj = {
         where: {}
     };
@@ -370,9 +371,9 @@ router.get('/', validateQueryInput, async (req, res) => {
 router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     let spots = await user.getSpots();
-    console.log(spots);
+
     let spots2 = await Spot.findAll({ where: { ownerId: req.user.id } });
-    console.log(spots2);
+
     spots = await getSpotsInfo(spots);
     res.json({ Spots: spots });
 });
@@ -414,7 +415,7 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
             { model: User, attributes: ["id", "firstName", "lastName"] }
         ]
     });
-
+    // console.log(spot)
     spot.dataValues.Owner = spot.dataValues.User;
     delete spot.dataValues.User;
 
@@ -457,7 +458,7 @@ router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validate
         }
     ], { validate: true });
 
-    res.status(201).json(newReview);
+    res.status(201).json(newReview[0]);
 });
 
 router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
@@ -468,7 +469,12 @@ router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization, 
     const spotImage = await spot.createSpotImage({
         url, preview
     });
-    res.json(spotImage);
+
+    res.json({
+        id: spotImage.id,
+        url: spotImage.url,
+        preview: spotImage.preview
+    });
 
 });
 
@@ -481,7 +487,7 @@ router.post('/:spotId/bookings', requireAuth, validateSpotId,
         const spot = await Spot.findByPk(spotId);
         const ownerId = spot.ownerId;
         if (req.user.id === ownerId) {
-            const err = new Error("Forbidden. You cannot book the spot you own.");
+            const err = new Error("Forbidden");
             err.title = "Authorization required";
             // err.errors = { message: "You cannot book the spot you own." };
             err.status = 403;

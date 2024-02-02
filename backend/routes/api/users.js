@@ -13,37 +13,37 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Invalid email.'),
+        .withMessage('Invalid email'),
     check('username')
         .exists({ checkFalsy: true })
         .isString()
-        .withMessage('username must be a string.')
+        .withMessage('Username must be a string')
         .isLength({ min: 4 })
-        .withMessage('Username is required, and with at least 4 characters.'),
+        .withMessage('Username is required'),
     check('username')
         .not()
         .isEmail()
-        .withMessage('Username cannot be an email.'),
+        .withMessage('Username cannot be an email'),
     check('firstName')
         .isAlpha()
-        .withMessage('First name is required, and muse be a valid alphabetical string.')
+        .withMessage('First Name is required')
         .isString()
-        .withMessage('First name must be a string.')
+        .withMessage('First Name must be a string')
         .exists({ checkFalsy: true })
-        .withMessage('First name is required.'),
+        .withMessage('First Name is required'),
     check('lastName')
         .isAlpha()
-        .withMessage('Last name is required, and muse be a valid alphabetical string.')
+        .withMessage('Last Name is required')
         .isString()
-        .withMessage('Last name must be a string.')
+        .withMessage('Last Name must be a string')
         .exists({ checkFalsy: true })
-        .withMessage('Last name is required.'),
+        .withMessage('Last Name is required'),
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.')
+        .withMessage('Password must be 6 characters or more')
         .isString()
-        .withMessage('Password must be a string.'),
+        .withMessage('Password must be a string'),
     handleValidationErrors
 ];
 

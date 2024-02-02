@@ -12,12 +12,14 @@ const { handleValidationErrors } = require('../../utils/validation');
 const validateBookingInput = [
     check('startDate')
         .isAfter((new Date()).toString())
-        .withMessage('startDate cannot be in the past.')
+        .withMessage('startDate cannot be in the past')
         .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
-        .withMessage('startDate is an invalid date.')
+        .withMessage('startDate is an invalid date')
         .notEmpty()
-        .withMessage('startDate is required.'),
+        .withMessage('startDate is required'),
     check('endDate')
+        .isAfter((new Date()).toString())
+        .withMessage('endDate cannot be in the past')
         .custom((value, { req }) => {
             // console.log("-----", value, req.body.startDate, new Date(value), new Date(req.body.startDate))
             if (new Date(req.body.startDate).toString() !== 'Invalid Date')
@@ -25,11 +27,11 @@ const validateBookingInput = [
             else
                 return true;
         })
-        .withMessage('endDate cannot be on or before startDate.')
+        .withMessage('endDate cannot be on or before startDate')
         .custom((value) => { return new Date(value).toString() !== 'Invalid Date' })
-        .withMessage('endDate is an invalid date.')
+        .withMessage('endDate is an invalid date')
         .notEmpty()
-        .withMessage('endDate is required.'),
+        .withMessage('endDate is required'),
     handleValidationErrors
 ];
 
@@ -63,7 +65,7 @@ async function checkAuthorization(req, res, next) {
     const booking = await Booking.findByPk(req.params.bookingId);
 
     if (req.user.id !== booking.userId) {
-        const err = new Error('Forbidden. Authorization by the user required');
+        const err = new Error('Forbidden');
         err.title = 'Authorization required';
         // err.errors = { message: 'Forbidden' };
         err.status = 403;
@@ -80,7 +82,7 @@ async function checkAuthorizationBySpotOwnerOrUser(req, res, next) {
     const spot = await Spot.findByPk(booking.spotId);
 
     if (req.user.id !== booking.userId && req.user.id !== spot.ownerId) {
-        const err = new Error('Forbidden. Authorization by the booking maker or spot\'s owner required');
+        const err = new Error('Forbidden');
         err.title = 'Authorization required';
         // err.errors = { message: 'Forbidden' };
         err.status = 403;
@@ -181,7 +183,7 @@ async function checkBookingConflict(req, res, next) {
     });
 
     if (filteredBookingByStartDate || filteredBookingByEndDate || filteredBookingOverlap) {
-        const err = new Error("Bad Request");
+        const err = new Error("Sorry, this spot is already booked for the specified dates");
         err.title = "Bad request";
         err.status = 403;
         err.errors = {}
@@ -192,7 +194,7 @@ async function checkBookingConflict(req, res, next) {
             err.errors.endDate = "End date conflicts with an existing booking";
         }
         if (filteredBookingOverlap) {
-            err.errors.bookingConflict = "Part of your stay has already been booked.";
+            err.errors.bookingConflict = "Dates Surround Existing Booking";
         }
         next(err);
     } else {
@@ -222,7 +224,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Edit a Booking
 router.put('/:bookingId', requireAuth, validateBookingId,
-    checkAuthorization, checkOldBooking, validateBookingInput,  checkBookingConflict,
+    checkAuthorization, checkOldBooking, validateBookingInput, checkBookingConflict,
     async (req, res) => {
         const { startDate, endDate } = req.body;
         const bookingId = parseInt(req.params.bookingId);
@@ -236,13 +238,13 @@ router.put('/:bookingId', requireAuth, validateBookingId,
 
 // Delete a Booking
 router.delete('/:bookingId', requireAuth, validateBookingId,
-checkAuthorizationBySpotOwnerOrUser, checkBookingStart,
-async(req, res) => {
-    const booking = await Booking.findByPk(req.params.bookingId);
-    await booking.destroy();
-    res.json({
-        "message": "Successfully deleted"
-    });
-} )
+    checkAuthorizationBySpotOwnerOrUser, checkBookingStart,
+    async (req, res) => {
+        const booking = await Booking.findByPk(req.params.bookingId);
+        await booking.destroy();
+        res.json({
+            "message": "Successfully deleted"
+        });
+    })
 
 module.exports = router;

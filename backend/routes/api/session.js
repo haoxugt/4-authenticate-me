@@ -14,10 +14,10 @@ const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Email or username is required.'),
+        .withMessage('Email or username is required'),
     check('password')
         .exists({ checkFalsy: true })
-        .withMessage('Password is required.'),
+        .withMessage('Password is required'),
     handleValidationErrors
 ];
 
@@ -60,7 +60,7 @@ router.post('/', validateLogin, async (req, res, next) => {
 
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
-    return res.json({ message: 'Successfully logout' });
+    return res.json({ message: 'success' });
 }
 );
 

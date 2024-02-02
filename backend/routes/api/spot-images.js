@@ -27,7 +27,7 @@ async function checkAuthorization(req, res, next) {
     const spot = await Spot.findByPk(spotImage.spotId);
     // console.log("---------------",typeof req.user.id, typeof spot.ownerId)
     if (req.user.id !== spot.ownerId) {
-        const err = new Error('Forbidden. Authorization by the spot owner required');
+        const err = new Error('Forbidden');
         err.title = 'Authorization required';
         // err.errors = { message: 'Forbidden' };
         err.status = 403;
