@@ -88,7 +88,7 @@ const spotReviews = [
         stars: 5
       }
     ]
-  },
+  }
 ];
 
 /** @type {import('sequelize-cli').Migration} */
