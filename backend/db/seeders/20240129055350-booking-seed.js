@@ -89,7 +89,6 @@ const spotBookings = [
         startDate: "2024-04-10",
         endDate: "2024-04-20"
       },
-      ,
       {
         username: "HenryTalbot",
         startDate: "2022-04-03",
