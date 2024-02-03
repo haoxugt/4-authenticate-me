@@ -7,34 +7,11 @@ const { Booking, Spot, Review, User, ReviewImage } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+
+const { formatDate, getReviewsInfo } = require('../../utils/subroutines.js')
 // const bcrypt = require('bcryptjs');
 
 // helper functions
-async function getReviewsInfo(reviews) {
-    for (let reviewIdx = 0; reviewIdx < reviews.length; reviewIdx++) {
-        const review = reviews[reviewIdx];
-        const user = await review.getUser({ attributes: ["id", "firstName", "lastName"] });
-        reviews[reviewIdx].dataValues.User = user;
-
-        const spot = await review.getSpot({ attributes: { exclude: ["createdAt", "updatedAt"] } });
-        const previewImage = await spot.getSpotImages({ attributes: ["url"] });
-        if (previewImage.length) {
-            spot.dataValues.previewImage = previewImage[0].url
-        } else {
-            spot.dataValues.previewImage = "none";
-        }
-        delete spot.dataValues.description;
-        reviews[reviewIdx].dataValues.Spot = spot;
-
-        const images = await review.getReviewImages({ attributes: ["id", "url"] });
-        if (images.length) {
-            reviews[reviewIdx].dataValues.ReviewImages = images;
-        } else {
-            reviews[reviewIdx].dataValues.ReviewImages = "none";
-        }
-    }
-    return reviews;
-}
 
 const validateReviewImageInput = [
     check('url')
@@ -115,13 +92,15 @@ router.get('/review-images', async (req, res) => {
     res.json(images);
 });
 
+
+// Get reviews of current user
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
     let reviews = await user.getReviews();
     if (reviews.length) {
-        reviews = await getReviewsInfo(reviews);
+        reviews = await getReviewsInfo(reviews, true);
     } else {
-        reviews = "none";
+        reviews = "None";
     }
     res.json({ Reviews: reviews });
 });
@@ -155,7 +134,9 @@ router.put('/:reviewId', requireAuth, validateReviewId,
         reviewToEdit.stars = stars;
 
         await reviewToEdit.save();
-        res.json(reviewToEdit);
+        let reviewResponse = reviewToEdit.toJSON();
+        reviewResponse = formatDate(reviewResponse);
+        res.json(reviewResponse);
 
     });
 

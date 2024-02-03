@@ -7,6 +7,7 @@ const { User, Booking, Spot } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { formatDate, getBookingsInfo } = require('../../utils/subroutines.js')
 
 
 const validateBookingInput = [
@@ -36,28 +37,7 @@ const validateBookingInput = [
 ];
 
 // helper functions
-async function getBookingsInfo(bookings) {
-    for (let bookingIdx = 0; bookingIdx < bookings.length; bookingIdx++) {
-        const booking = bookings[bookingIdx];
 
-        const spot = await booking.getSpot(
-            {
-                attributes: {
-                    exclude: ["description", "createdAt", "updatedAt"]
-                }
-            });
-        const img = await spot.getSpotImages({ where: { preview: true } });
-        if (img.length) {
-            const previewImage = img[0].url;
-            spot.dataValues.previewImage = previewImage;
-        } else {
-            spot.dataValues.previewImage = null;
-        }
-        bookings[bookingIdx].dataValues.Spot = spot;
-
-    }
-    return bookings;
-}
 
 // middlewares
 // check booking maker ONLY
@@ -213,6 +193,7 @@ router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
     let bookings = await user.getBookings({ order: [['id']]});
     bookings = await getBookingsInfo(bookings);
+
     res.json({ Bookings: bookings });
 });
 
@@ -226,7 +207,9 @@ router.put('/:bookingId', requireAuth, validateBookingId,
         bookingToEdit.startDate = startDate;
         bookingToEdit.endDate = endDate;
         await bookingToEdit.save();
-        res.json(bookingToEdit);
+        let bookingResponse = bookingToEdit.toJSON();
+        bookingResponse = formatDate(bookingResponse);
+        res.json(bookingResponse);
     });
 
 

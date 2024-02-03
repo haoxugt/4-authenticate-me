@@ -83,24 +83,6 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.FLOAT,
       allowNull: false
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      get() {
-        return this.getDataValue('createdAt')
-        .toLocaleString('ISO', { timeZone: 'PST' });
-      }
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      get() {
-        // console.log(this.getDataValue('updatedAt'));
-        // console.log(this.getDataValue('updatedAt').toJSON().substring(0, 19).replace('T', ' '))
-        return this.getDataValue('updatedAt').toJSON().substring(0, 19).replace('T', ' ');
-        // .toISOString({ timeZone: 'PST' });
-      }
     }
   }, {
     sequelize,

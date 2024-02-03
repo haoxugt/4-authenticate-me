@@ -10,6 +10,8 @@ const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
+const { formatDate, getReviewsInfo } = require('../../utils/subroutines.js');
+
 const validateSpotInput = [
     check('address')
         .isString()
@@ -150,51 +152,38 @@ const validateQueryInput = [
 // },
 
 // helper functions
+
+//Format createdAt and updatedAt
+
+// get all spot information
 async function getSpotsInfo(spots) {
+    let spotsRes = [];
     for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
         const spot = spots[spotIdx];
+        spotsRes.push(spot.toJSON());
+        spotsRes[spotIdx] = formatDate(spotsRes[spotIdx]);
+
         const reviews = await spot.getReviews();
         if (reviews.length) {
             let avgRating = reviews.reduce((acc, curr) => acc + curr.stars, 0);
             avgRating /= reviews.length;
-            spots[spotIdx].dataValues.avgRating = avgRating;
+            spotsRes[spotIdx].avgRating = Number(avgRating.toFixed(2));
         } else {
-            spots[spotIdx].dataValues.avgRating = "none";
+            spotsRes[spotIdx].avgRating = "None";
         }
         const img = await spot.getSpotImages({ where: { preview: true } });
         if (img.length) {
             const previewImage = img[0].url;
-            spots[spotIdx].dataValues.previewImage = previewImage;
+            spotsRes[spotIdx].previewImage = previewImage;
         } else {
-            spots[spotIdx].dataValues.previewImage = "none";
+            spotsRes[spotIdx].previewImage = "None";
         }
     }
-    return spots;
+    return spotsRes;
 }
 
 
-async function getReviewsInfo(reviews, includeSpot) {
-    for (let reviewIdx = 0; reviewIdx < reviews.length; reviewIdx++) {
-        const review = reviews[reviewIdx];
-        const user = await review.getUser({ attributes: ["id", "firstName", "lastName"] });
-        reviews[reviewIdx].dataValues.User = user;
 
-        if (includeSpot) {
-            const spot = await review.getSpot({ attributes: { exclude: ["createdAt", "updatedAt"] } });
-            const previewImage = await spot.getSpotImages({ attributes: ["url"] });
-            spot.dataValues.previewImage = previewImage[0].url
-            reviews[reviewIdx].dataValues.Spot = spot;
-        }
-
-        const images = await review.getReviewImages({ attributes: ["id", "url"] });
-        if (images.length) {
-            reviews[reviewIdx].dataValues.ReviewImages = images;
-        } else {
-            reviews[reviewIdx].dataValues.ReviewImages = "none";
-        }
-    }
-    return reviews;
-};
 
 // middlewares
 async function checkAuthorization(req, res, next) {
@@ -368,6 +357,7 @@ router.get('/', validateQueryInput, async (req, res) => {
     })
 });
 
+//Get spots of current user
 router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     let spots = await user.getSpots();
@@ -384,7 +374,7 @@ router.get('/:spotId/reviews', validateSpotId, async (req, res) => {
     if (reviews.length) {
         reviews = await getReviewsInfo(reviews, false);
     } else {
-        reviews = "none";
+        reviews = "None";
     }
     res.json({ Reviews: reviews });
 });
@@ -393,6 +383,7 @@ router.get('/:spotId/reviews', validateSpotId, async (req, res) => {
 router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) => {
     const filter = {};
     const spot = await Spot.findByPk(req.params.spotId);
+    let bookingsResponse = [];
 
     // check if the owner of the spot
     if (req.user.id !== spot.ownerId) {
@@ -405,7 +396,14 @@ router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) =>
         order: [['id']],
         ...filter
     });
-    res.json({ Bookings: bookings });
+    console.log(bookings[0])
+    if (req.user.id !== spot.ownerId) {
+        bookingsResponse = bookings.map((el) => el.toJSON());
+    } else {
+        bookingsResponse = bookings.map((el) => formatDate(el.toJSON()));
+    }
+
+    res.json({ Bookings: bookingsResponse });
 });
 
 // Get details of a Spot from an id
@@ -417,25 +415,30 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
         ]
     });
 
-    spot.dataValues.Owner = spot.dataValues.User;
-    delete spot.dataValues.User;
+    let spotResponse = spot.toJSON();
+
+    spotResponse.Owner = spotResponse.User;
+    delete spotResponse.User;
 
     // get reviews
     const spotReviews = await spot.getReviews();
-    spot.dataValues.numReviews = spotReviews.length;
+
+    spotResponse = formatDate(spotResponse);
+
+    spotResponse.numReviews = spotReviews.length;
 
     if (spotReviews.length) {
         const avgStarRating = spotReviews.reduce((acc, curr) => acc + curr.stars, 0) / spotReviews.length;
-        spot.dataValues.avgStarRating = avgStarRating;
+        spotResponse.avgStarRating = Number(avgStarRating.toFixed(2));
     } else {
-        spot.dataValues.avgStarRating = "none";
+        spotResponse.avgStarRating = "None";
     }
-    res.json(spot);
+    res.json(spotResponse);
 
 });
 
 
-
+// Create a spot
 router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const spot = await Spot.bulkCreate([
@@ -444,9 +447,13 @@ router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
             address, city, state, country, lat, lng, name, description, price
         }
     ], { validate: true });
-    res.status(201).json(spot[0]);
+    let spotResponse = spot[0].toJSON();
+    spotResponse =formatDate(spotResponse);
+    res.status(201).json(spotResponse);
 });
 
+
+// Create a review based on a spot
 router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validateReviewInput, async (req, res) => {
     const { review, stars } = req.body;
     const spotId = parseInt(req.params.spotId);
@@ -459,7 +466,10 @@ router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validate
         }
     ], { validate: true });
 
-    res.status(201).json(newReview[0]);
+    let reviewResponse = newReview[0].toJSON();
+    reviewResponse = formatDate(reviewResponse);
+
+    res.status(201).json(reviewResponse);
 });
 
 router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
@@ -500,7 +510,9 @@ router.post('/:spotId/bookings', requireAuth, validateSpotId,
                 startDate,
                 endDate
             }], { validate: true });
-            res.json(newBooking[0]);
+            let bookingResponse = newBooking[0].toJSON();
+            bookingResponse = formatDate(bookingResponse);
+            res.json(bookingResponse);
         }
 
     });
@@ -521,7 +533,9 @@ router.put('/:spotId', requireAuth, validateSpotId, checkAuthorization,
         spot.description = description;
         spot.price = price;
         await spot.save();
-        res.json(spot);
+        let spotResponse = spot.toJSON();
+        spotResponse = formatDate(spotResponse);
+        res.json(spotResponse);
     }
 );
 

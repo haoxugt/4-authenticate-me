@@ -92,11 +92,11 @@ const ownerSpots = [
         city: "Bampton",
         state: "West Oxfordshire",
         country: "United Kingdom",
-        lat: -40.93,
-        lng: 70.56,
+        lat: 32.05,
+        lng: 32.05,
         name: "Spot6",
         description: "Built in 10-11th century.",
-        price: 20
+        price: 65
       }
     ]
   },
@@ -108,11 +108,11 @@ const ownerSpots = [
         city: "Bampton",
         state: "West Oxfordshire",
         country: "United Kingdom",
-        lat: -40.93,
-        lng: 70.56,
+        lat: 37.5,
+        lng: 37.5,
         name: "Spot7",
         description: "Built in 10-11th century.",
-        price: 20
+        price: 85
       }
     ]
   },
@@ -124,11 +124,11 @@ const ownerSpots = [
         city: "Bampton",
         state: "West Oxfordshire",
         country: "United Kingdom",
-        lat: -40.93,
+        lat: 40.01,
         lng: 70.56,
         name: "Spot8",
         description: "Built in 10-11th century.",
-        price: 20
+        price: 75
       }
     ]
   },
@@ -141,10 +141,10 @@ const ownerSpots = [
         state: "West Oxfordshire",
         country: "United Kingdom",
         lat: -40.93,
-        lng: 70.56,
+        lng: 40.01,
         name: "Spot9",
         description: "Built in 10-11th century.",
-        price: 20
+        price: 55
       }
     ]
   },
@@ -156,11 +156,11 @@ const ownerSpots = [
         city: "Bampton",
         state: "West Oxfordshire",
         country: "United Kingdom",
-        lat: -40.93,
-        lng: 70.56,
+        lat: 31.52,
+        lng: 37.94,
         name: "Spot10",
         description: "Built in 10-11th century.",
-        price: 20
+        price: 45
       }
     ]
   }
