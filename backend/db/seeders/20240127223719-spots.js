@@ -17,10 +17,10 @@ const ownerSpots = [
         city: "Highclere",
         state: "Newbury",
         country: "United Kingdom",
-        lat: 51.326667,
-        lng: -1.361389,
-        name: "Downton Abbey",
-        description: "It is a Grade I listed country house built in 1679.",
+        lat: 50.32,
+        lng: -1.36,
+        name: "Downton Abbey-Spot1",
+        description: "Built in 1679.",
         price: 186.36
       },
       {
@@ -28,10 +28,10 @@ const ownerSpots = [
         city: "London",
         state: "Great London",
         country: "United Kingdom",
-        lat: 51.504722,
-        lng: -0.14,
-        name: "Grantham's House",
-        description: "It is a Grade I listed country house built in 1854.",
+        lat: 20.66,
+        lng: 30,
+        name: "Grantham's House-Spot2",
+        description: "Built in 1854.",
         price: 134.99
       }
     ]
@@ -44,10 +44,10 @@ const ownerSpots = [
         city: "Alnwick",
         state: "Northumberland",
         country: "United Kingdom",
-        lat: 55.4156,
-        lng: -1.7059,
-        name: "Brancaster Castle",
-        description: "It is a Grade I listed country house built in 11th century.",
+        lat: 0.01,
+        lng: -20,
+        name: "Brancaster Castle-Spot3",
+        description: "Built in 11th century.",
         price: 109.99
       }
     ]
@@ -60,10 +60,10 @@ const ownerSpots = [
         city: "Cincinnati",
         state: "Ohio",
         country: "United States of America",
-        lat: 39.126768,
-        lng: -84.507972,
-        name: "Levinson's House",
-        description: "Second owner was Eugene Zimmennan, a steamboat captain during the Civil War.",
+        lat: -20.15,
+        lng: -84.51,
+        name: "Levinson's House-Spot4",
+        description: "Eugene Zimmennan's house.",
         price: 100
       }
     ]
@@ -76,11 +76,91 @@ const ownerSpots = [
         city: "Bampton",
         state: "West Oxfordshire",
         country: "United Kingdom",
-        lat: 51.727778,
-        lng: -1.548889,
-        name: "Crawley's House",
-        description: "It is a Grade I listed country house built in the 10th or 11th century.",
+        lat: -40.93,
+        lng: 70.56,
+        name: "Crawley's House-Spot5",
+        description: "Built in 10-11th century.",
         price: 90
+      }
+    ]
+  },
+  {
+    ownerUsername: "RobertCrawley",
+    spots: [
+      {
+        address: "Spot6 address",
+        city: "Bampton",
+        state: "West Oxfordshire",
+        country: "United Kingdom",
+        lat: -40.93,
+        lng: 70.56,
+        name: "Spot6",
+        description: "Built in 10-11th century.",
+        price: 20
+      }
+    ]
+  },
+  {
+    ownerUsername: "RobertCrawley",
+    spots: [
+      {
+        address: "Spot7 address",
+        city: "Bampton",
+        state: "West Oxfordshire",
+        country: "United Kingdom",
+        lat: -40.93,
+        lng: 70.56,
+        name: "Spot7",
+        description: "Built in 10-11th century.",
+        price: 20
+      }
+    ]
+  },
+  {
+    ownerUsername: "RobertCrawley",
+    spots: [
+      {
+        address: "Spot8 address",
+        city: "Bampton",
+        state: "West Oxfordshire",
+        country: "United Kingdom",
+        lat: -40.93,
+        lng: 70.56,
+        name: "Spot8",
+        description: "Built in 10-11th century.",
+        price: 20
+      }
+    ]
+  },
+  {
+    ownerUsername: "RobertCrawley",
+    spots: [
+      {
+        address: "Spot9 address",
+        city: "Bampton",
+        state: "West Oxfordshire",
+        country: "United Kingdom",
+        lat: -40.93,
+        lng: 70.56,
+        name: "Spot9",
+        description: "Built in 10-11th century.",
+        price: 20
+      }
+    ]
+  },
+  {
+    ownerUsername: "RobertCrawley",
+    spots: [
+      {
+        address: "Spot10 address",
+        city: "Bampton",
+        state: "West Oxfordshire",
+        country: "United Kingdom",
+        lat: -40.93,
+        lng: 70.56,
+        name: "Spot10",
+        description: "Built in 10-11th century.",
+        price: 20
       }
     ]
   }

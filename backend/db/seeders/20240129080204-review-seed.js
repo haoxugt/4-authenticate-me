@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const spotReviews = [
   {
-    spotName: "Downton Abbey",
+    spotName: "Downton Abbey-Spot1",
     reviews: [
       {
         username: "MatthewCrawley",
@@ -25,7 +25,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Brancaster Castle",
+    spotName: "Brancaster Castle-Spot3",
     reviews: [
       {
         username: "RobertCrawley",
@@ -34,13 +34,13 @@ const spotReviews = [
       },
       {
         username: "CoraCrawley",
-        review: "Having delighted experience here.",
+        review: "Delighted experience.",
         stars: 5
       }
     ]
   },
   {
-    spotName: "Crawley's House",
+    spotName: "Crawley's House-Spot5",
     reviews: [
       {
         username: "MaryCrawley",
@@ -55,7 +55,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Grantham's House",
+    spotName: "Grantham's House-Spot2",
     reviews: [
       {
         username: "MatthewCrawley",
@@ -70,7 +70,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Levinson's House",
+    spotName: "Levinson's House-Spot4",
     reviews: [
       {
         username: "HenryTalbot",
@@ -78,7 +78,17 @@ const spotReviews = [
         stars: 3
       }
     ]
-  }
+  },
+  {
+    spotName: "Downton Abbey-Spot1",
+    reviews: [
+      {
+        username: "CoraCrawley",
+        review: "Like home!",
+        stars: 5
+      }
+    ]
+  },
 ];
 
 /** @type {import('sequelize-cli').Migration} */

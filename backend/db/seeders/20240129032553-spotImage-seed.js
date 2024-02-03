@@ -10,62 +10,71 @@ if (process.env.NODE_ENV === 'production') {
 
 const spot_spotImages = [
   {
-    spotName: "Downton Abbey",
+    spotName: "Downton Abbey-Spot1",
     spotImages: [
       {
-        url: "https://www.pbs.org/wgbh/masterpiece/wp-content/uploads/2020/06/downton-abbey-highclere-1920x1080-1.jpg",
+        url: "SpotImage-1.jpg",
         preview: true
       },
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Highclere_Castle.jpg",
+        url: "SpotImage-2.jpg",
         preview: false
       }
     ]
   },
   {
-    spotName: "Grantham's House",
+    spotName: "Grantham's House-Spot2",
     spotImages: [
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Bridgewater_House.jpg/1280px-Bridgewater_House.jpg",
+        url: "SpotImage-3.jpg",
         preview: true
       },
       {
-        url: "https://static.wikia.nocookie.net/downtonabbey/images/7/74/Bridgewater2.jpg/revision/latest?cb=20180822194235",
+        url: "SpotImage-4.jpg",
         preview: false
       }
     ]
   },
   {
-    spotName: "Brancaster Castle",
+    spotName: "Brancaster Castle-Spot3",
     spotImages: [
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alnwick_Castle_in_uk.jpg/1280px-Alnwick_Castle_in_uk.jpg",
+        url: "SpotImage-5.jpg",
         preview: true
       },
       {
-        url: "https://www.alnwickcastle.com/_assets/media/library/9493.jpg",
+        url: "SpotImage-6.jpg",
         preview: false
       }
     ]
   },
   {
-    spotName: "Levinson's House",
+    spotName: "Levinson's House-Spot4",
     spotImages: [
       {
-        url: "https://images1.loopnet.com/i2/v_ieoBtBeIIpBcDF0aVDcK3GrUVnahs5oHp43_DSffs/116/2448-Auburn-Ave-Cincinnati-OH-Primary-Photo-1-LargeHighDefinition.jpg",
+        url: "SpotImage-7.jpg",
         preview: true
       },
       {
-        url: "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/67401658_10217524323771380_1151310900460781568_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=755d08&_nc_ohc=y_4v8sw7RKoAX89wHJ8&_nc_ht=scontent-sjc3-1.xx&oh=00_AfBlIKwEoKW-eIgtrxz-M3lKCa6SIk_tPc25v5CxgOid6w&oe=65DE2F7A",
+        url: "SpotImage-8.jpg",
         preview: false
       }
     ]
   },
   {
-    spotName: "Crawley's House",
+    spotName: "Crawley's House-Spot5",
     spotImages: [
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/The_Rectory-Bampton.JPG/1920px-The_Rectory-Bampton.JPG",
+        url: "SpotImage-9.jpg",
+        preview: true
+      }
+    ]
+  },
+  {
+    spotName: "Crawley's House-Spot5",
+    spotImages: [
+      {
+        url: "SpotImage-10.jpg",
         preview: true
       }
     ]

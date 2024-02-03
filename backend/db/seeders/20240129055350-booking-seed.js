@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const spotBookings = [
   {
-    spotName: "Downton Abbey",
+    spotName: "Downton Abbey-Spot1",
     bookings: [
       {
         username: "MatthewCrawley",
@@ -27,7 +27,7 @@ const spotBookings = [
     ]
   },
   {
-    spotName: "Brancaster Castle",
+    spotName: "Brancaster Castle-Spot3",
     bookings: [
       {
         username: "RobertCrawley",
@@ -42,7 +42,7 @@ const spotBookings = [
     ]
   },
   {
-    spotName: "Crawley's House",
+    spotName: "Crawley's House-Spot5",
     bookings: [
       {
         username: "MaryCrawley",
@@ -52,7 +52,7 @@ const spotBookings = [
     ]
   },
   {
-    spotName: "Grantham's House",
+    spotName: "Grantham's House-Spot2",
     bookings: [
       {
         username: "MatthewCrawley",
@@ -62,7 +62,7 @@ const spotBookings = [
     ]
   },
   {
-    spotName: "Downton Abbey",
+    spotName: "Downton Abbey-Spot1",
     bookings: [
       {
         username: "MatthewCrawley",
@@ -72,12 +72,28 @@ const spotBookings = [
     ]
   },
   {
-    spotName: "Downton Abbey",
+    spotName: "Downton Abbey-Spot1",
     bookings: [
       {
         username: "MatthewCrawley",
         startDate: "2024-05-10",
         endDate: "2024-05-20"
+      }
+    ]
+  },
+  {
+    spotName: "Downton Abbey-Spot1",
+    bookings: [
+      {
+        username: "MatthewCrawley",
+        startDate: "2024-04-10",
+        endDate: "2024-04-20"
+      },
+      ,
+      {
+        username: "HenryTalbot",
+        startDate: "2022-04-03",
+        endDate: "2023-07-07"
       }
     ]
   }
