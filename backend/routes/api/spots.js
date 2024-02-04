@@ -39,6 +39,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     // let spots2 = await Spot.findAll({ where: { ownerId: req.user.id } });
 
     spots = await getSpotsInfo(spots);
+    if (spots.length === 0) spots = "None";
     return res.json({ Spots: spots });
 });
 
@@ -92,6 +93,9 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
 
     let spotResponse = spot.toJSON();
 
+    if (spotResponse.SpotImages.length === 0) {
+        spotResponse.SpotImages = "None";
+    }
     spotResponse.Owner = spotResponse.User;
     delete spotResponse.User;
 

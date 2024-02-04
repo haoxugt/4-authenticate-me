@@ -9,7 +9,7 @@ async function validateSpotId(req, res, next) {
         return next();
     } else {
         const err = new Error("Spot couldn't be found");
-        err.title = "Bad request";
+        err.title = "Not Found";
         err.status = 404;
         return next(err);
     };
@@ -24,7 +24,7 @@ async function validateReviewId(req, res, next) {
         return next();
     } else {
         const err = new Error("Review couldn't be found");
-        err.title = "Bad request";
+        err.title = "Not Found";
         err.status = 404;
         return next(err);
     };
@@ -37,7 +37,7 @@ async function validateBookingId(req, res, next) {
         return next();
     } else {
         const err = new Error("Booking couldn't be found");
-        err.title = "Bad request";
+        err.title = "Not Found";
         err.status = 404;
         // err.errors = { message: "Booking couldn't be found" };
         return next(err);
@@ -53,7 +53,7 @@ async function validateReviewImageId(req, res, next) {
         return next();
     } else {
         const err = new Error("Review Image couldn't be found");
-        err.title = "Bad request";
+        err.title = "Not Found";
         err.status = 404;
         // err.errors = { message: "Review Image couldn't be found" };
         return next(err);
@@ -70,7 +70,7 @@ async function validateSpotImageId(req, res, next) {
         return next();
     } else {
         const err = new Error("Spot Image couldn't be found");
-        err.title = "Bad request";
+        err.title = "Not Found";
         err.status = 404;
         // err.errors = { message: "Spot Image couldn't be found" };
         return next(err);

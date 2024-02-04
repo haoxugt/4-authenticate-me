@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const { User, Spot, Review, ReviewImage, Booking, SpotImage } = require('../db/models');
 //
 
@@ -70,7 +70,7 @@ async function checkDuplicateUser(req, res, next) {
     });
     if (userByUsername) {
         const err = new Error('User already exists');
-        err.title = 'Duplicate user signup';
+        err.title = 'Server Error';
         err.errors = { username: "User with that username already exists" };
         err.status = 500;
         return next(err);
@@ -80,7 +80,7 @@ async function checkDuplicateUser(req, res, next) {
     });
     if (userByEmail) {
         const err = new Error('User already exists');
-        err.title = 'Duplicate user signup';
+        err.title = 'Server Error';
         err.errors = { email: "User with that email already exists" };
         err.status = 500;
         return next(err);
@@ -98,7 +98,7 @@ async function hasReview(req, res, next) {
     });
     if (review) {
         const err = new Error("User already has a review for this spot");
-        err.title = "Bad request";
+        err.title = "Server Error";
         // err.errors = { message: 'User already has a review for this spot' };
         err.status = 500;
         return next(err);
@@ -109,45 +109,33 @@ async function hasReview(req, res, next) {
 
 // Booking conflic check
 async function checkBookingConflict(req, res, next) {
-    const filteredBookingByStartDate = await Booking.findOne({
-        where: {
-            spotId: parseInt(req.params.spotId),
-            startDate: {
-                [Op.lte]: req.body.startDate
-            },
-            endDate: {
-                [Op.gte]: req.body.startDate
-            }
-        }
-    });
+    const where = {
+        startDate: {},
+        endDate: {}
+    };
+    if (req.method === 'PUT' && req.originalUrl.startsWith('/api/bookings/')) {
+        const booking = await Booking.findByPk(req.params.bookingId);
+        where.spotId = parseInt(booking.spotId);
+        where.id = { [Op.ne]: parseInt(req.params.bookingId) };
+    } else if (req.method === 'POST' && req.originalUrl.startsWith('/api/spots/')) {
+        where.spotId = parseInt(req.params.spotId);
+    }
 
-    const filteredBookingByEndDate = await Booking.findOne({
-        where: {
-            spotId: parseInt(req.params.spotId),
-            startDate: {
-                [Op.lte]: req.body.endDate
-            },
-            endDate: {
-                [Op.gte]: req.body.endDate
-            }
-        }
-    });
+    where.startDate = { [Op.lte]: req.body.startDate };
+    where.endDate = { [Op.gte]: req.body.startDate };
+    const filteredBookingByStartDate = await Booking.findOne({ where });
 
-    const filteredBookingOverlap = await Booking.findOne({
-        where: {
-            spotId: parseInt(req.params.spotId),
-            startDate: {
-                [Op.gt]: req.body.startDate
-            },
-            endDate: {
-                [Op.lt]: req.body.endDate
-            }
-        }
-    });
+    where.startDate = { [Op.lte]: req.body.endDate };
+    where.endDate = { [Op.gte]: req.body.endDate };
+    const filteredBookingByEndDate = await Booking.findOne({ where });
+
+    where.startDate = { [Op.gt]: req.body.startDate };
+    where.endDate = { [Op.lt]: req.body.endDate };
+    const filteredBookingOverlap = await Booking.findOne({ where });
 
     if (filteredBookingByStartDate || filteredBookingByEndDate || filteredBookingOverlap) {
         const err = new Error("Sorry, this spot is already booked for the specified dates");
-        err.title = "Bad request";
+        err.title = "Forbidden";
         err.status = 403;
         err.errors = {}
         if (filteredBookingByStartDate) {
@@ -168,81 +156,81 @@ async function checkBookingConflict(req, res, next) {
 
 
 // Booking conflic check
-async function checkBookingConflictEdit(req, res, next) {
-    const booking = await Booking.findByPk(req.params.bookingId);
-    const filteredBookingByStartDate = await Booking.findOne({
-        where: {
-            spotId: parseInt(booking.spotId),
-            id: {
-                [Op.ne]: parseInt(req.params.bookingId)
-            },
-            startDate: {
-                [Op.lte]: req.body.startDate
-            },
-            endDate: {
-                [Op.gte]: req.body.startDate
-            }
-        }
-    });
+// async function checkBookingConflictEdit(req, res, next) {
+//     const booking = await Booking.findByPk(req.params.bookingId);
+//     const filteredBookingByStartDate = await Booking.findOne({
+//         where: {
+//             spotId: parseInt(booking.spotId),
+//             id: {
+//                 [Op.ne]: parseInt(req.params.bookingId)
+//             },
+//             startDate: {
+//                 [Op.lte]: req.body.startDate
+//             },
+//             endDate: {
+//                 [Op.gte]: req.body.startDate
+//             }
+//         }
+//     });
 
-    const filteredBookingByEndDate = await Booking.findOne({
-        where: {
-            spotId: parseInt(booking.spotId),
-            id: {
-                [Op.ne]: parseInt(req.params.bookingId)
-            },
-            startDate: {
-                [Op.lte]: req.body.endDate
-            },
-            endDate: {
-                [Op.gte]: req.body.endDate
-            }
-        }
-    });
+//     const filteredBookingByEndDate = await Booking.findOne({
+//         where: {
+//             spotId: parseInt(booking.spotId),
+//             id: {
+//                 [Op.ne]: parseInt(req.params.bookingId)
+//             },
+//             startDate: {
+//                 [Op.lte]: req.body.endDate
+//             },
+//             endDate: {
+//                 [Op.gte]: req.body.endDate
+//             }
+//         }
+//     });
 
-    const filteredBookingOverlap = await Booking.findOne({
-        where: {
-            spotId: parseInt(booking.spotId),
-            id: {
-                [Op.ne]: parseInt(req.params.bookingId)
-            },
-            startDate: {
-                [Op.gt]: req.body.startDate
-            },
-            endDate: {
-                [Op.lt]: req.body.endDate
-            }
-        }
-    });
+//     const filteredBookingOverlap = await Booking.findOne({
+//         where: {
+//             spotId: parseInt(booking.spotId),
+//             id: {
+//                 [Op.ne]: parseInt(req.params.bookingId)
+//             },
+//             startDate: {
+//                 [Op.gt]: req.body.startDate
+//             },
+//             endDate: {
+//                 [Op.lt]: req.body.endDate
+//             }
+//         }
+//     });
 
-    if (filteredBookingByStartDate || filteredBookingByEndDate || filteredBookingOverlap) {
-        const err = new Error("Sorry, this spot is already booked for the specified dates");
-        err.title = "Bad request";
-        err.status = 403;
-        err.errors = {}
-        if (filteredBookingByStartDate) {
-            err.errors.startDate = "Start date conflicts with an existing booking";
-        }
-        if (filteredBookingByEndDate) {
-            err.errors.endDate = "End date conflicts with an existing booking";
-        }
-        if (filteredBookingOverlap) {
-            err.errors.bookingConflict = "Dates Surround Existing Booking";
-        }
-        return next(err);
-    } else {
-        return next();
-    }
+//     if (filteredBookingByStartDate || filteredBookingByEndDate || filteredBookingOverlap) {
+//         const err = new Error("Sorry, this spot is already booked for the specified dates");
+//         err.title = "Forbidden";
+//         err.status = 403;
+//         err.errors = {}
+//         if (filteredBookingByStartDate) {
+//             err.errors.startDate = "Start date conflicts with an existing booking";
+//         }
+//         if (filteredBookingByEndDate) {
+//             err.errors.endDate = "End date conflicts with an existing booking";
+//         }
+//         if (filteredBookingOverlap) {
+//             err.errors.bookingConflict = "Dates Surround Existing Booking";
+//         }
+//         return next(err);
+//     } else {
+//         return next();
+//     }
 
-};
+// };
 
 // Old booking check
 async function checkOldBooking(req, res, next) {
     const booking = await Booking.findByPk(req.params.bookingId);
     if (new Date(booking.endDate) < new Date()) {
         const err = new Error("Past bookings can't be modified");
-        err.title = "Bad request";
-        err.errors = { message: "Past bookings can't be modified" };
+        err.title = "Forbidden";
+        // err.errors = { message: "Past bookings can't be modified" };
         err.status = 403;
         return next(err);
     } else {
@@ -255,8 +243,8 @@ async function checkBookingStart(req, res, next) {
     const booking = await Booking.findByPk(req.params.bookingId);
     if (new Date(booking.startDate) < new Date()) {
         const err = new Error("Bookings that have been started can't be deleted");
-        err.title = "Bad request";
-        err.errors = { message: "Bookings that have been started can't be deleted" };
+        err.title = "Forbidden";
+        // err.errors = { message: "Bookings that have been started can't be deleted" };
         err.status = 403;
         return next(err);
     } else {
@@ -271,7 +259,7 @@ async function checkMaxNumOfReviewImages(req, res, next) {
         return next();
     } else {
         const err = new Error("Maximum number of images for this resource was reached");
-        err.title = "Bad request";
+        err.title = "Forbidden";
         // err.errors = { message: "Maximum number of images for this resource was reached" };
         err.status = 403;
         return next(err);
@@ -284,7 +272,7 @@ module.exports = {
     checkDuplicateUser,
     hasReview,
     checkBookingConflict,
-    checkBookingConflictEdit,
+    // checkBookingConflictEdit,
     checkOldBooking,
     checkBookingStart,
     checkMaxNumOfReviewImages

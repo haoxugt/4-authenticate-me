@@ -8,7 +8,7 @@ const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors, validateBookingInput} = require('../../utils/validateInput.js');
 const {validateBookingId} = require('../../utils/validateId.js');
-const { checkOldBooking, checkBookingConflictEdit, checkBookingStart } = require('../../utils/othermiddlewares.js');
+const { checkOldBooking, checkBookingConflict, checkBookingStart } = require('../../utils/othermiddlewares.js');
 const { checkAuthorization } = require('../../utils/authorization.js');
 const { formatDate, getBookingsInfo } = require('../../utils/subroutines.js')
 
@@ -31,7 +31,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Edit a Booking
 router.put('/:bookingId', requireAuth, validateBookingId,
-    checkAuthorization, checkOldBooking, validateBookingInput, checkBookingConflictEdit,
+    checkAuthorization, checkOldBooking, validateBookingInput, checkBookingConflict,
     async (req, res) => {
         const { startDate, endDate } = req.body;
         const bookingId = parseInt(req.params.bookingId);
