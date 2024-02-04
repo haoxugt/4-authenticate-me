@@ -3,80 +3,14 @@ const router = express.Router();
 
 const { Op } = require('sequelize');
 const { Booking, Spot, Review, User, ReviewImage } = require('../../db/models');
-// const user = require('../../db/models/user');
+
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, validateReviewId, checkMaxNumOfReviewImages,
+    validateReviewImageInput, validateReviewInput } = require('../../utils/validation');
+const { checkAuthorization } = require('../../utils/authorization.js');
 
 const { formatDate, getReviewsInfo } = require('../../utils/subroutines.js')
-// const bcrypt = require('bcryptjs');
-
-// helper functions
-
-const validateReviewImageInput = [
-    check('url')
-        .isString()
-        .withMessage('Url must be a string')
-        .notEmpty()
-        .withMessage('Review image url is required'),
-    handleValidationErrors
-];
-
-const validateReviewInput = [
-    check('review')
-        .isString()
-        .withMessage('Review must be a string')
-        .notEmpty()
-        .withMessage('Review text is required'),
-    check('stars')
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5')
-        .notEmpty()
-        .withMessage('Stars input is required'),
-    handleValidationErrors
-];
-
-
-// middlewares
-
-async function checkAuthorization(req, res, next) {
-    const review = await Review.findByPk(req.params.reviewId);
-    if (req.user.id !== review.userId) {
-        const err = new Error('Forbidden');
-        err.title = 'Authorization required';
-        // err.errors = { message: 'Forbidden' };
-        err.status = 403;
-        return next(err);
-    } else {
-        next();
-    }
-
-};
-
-async function validateReviewId(req, res, next) {
-    const review = await Review.findByPk(req.params.reviewId);
-    if (review) {
-        next();
-    } else {
-        const err = new Error("Review couldn't be found");
-        err.title = "Bad request";
-        err.status = 404;
-        next(err);
-    };
-};
-
-async function checkMaxNumOfReviewImages(req, res, next) {
-    const imgNum = await ReviewImage.count({ where: { reviewId: req.params.reviewId } });
-    if (imgNum < 10) {
-        next();
-    } else {
-        const err = new Error("Maximum number of images for this resource was reached");
-        err.title = "Bad request";
-        // err.errors = { message: "Maximum number of images for this resource was reached" };
-        err.status = 403;
-        next(err);
-    };
-};
 
 
 // routers
@@ -140,7 +74,7 @@ router.put('/:reviewId', requireAuth, validateReviewId,
 
     });
 
-// Edit a Review
+// Delete a Review
 router.delete('/:reviewId', requireAuth, validateReviewId,
     checkAuthorization, async (req, res) => {
         const review = await Review.findByPk(req.params.reviewId);

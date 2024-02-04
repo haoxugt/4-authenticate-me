@@ -1,11 +1,40 @@
+// Format createdAt and updatedAt output at UTC timezone
 function formatDate(ResObj) {
     ResObj.createdAt = ResObj.createdAt
         .toJSON().substring(0, 19).replace('T', ' ') + ' (UTC)';
     ResObj.updatedAt = ResObj.updatedAt
         .toJSON().substring(0, 19).replace('T', ' ') + ' (UTC)';
     return ResObj;
-}
+};
 
+// Get spots information
+async function getSpotsInfo(spots) {
+    let spotsRes = [];
+    for (let spotIdx = 0; spotIdx < spots.length; spotIdx++) {
+        const spot = spots[spotIdx];
+        spotsRes.push(spot.toJSON());
+        spotsRes[spotIdx] = formatDate(spotsRes[spotIdx]);
+
+        const reviews = await spot.getReviews();
+        if (reviews.length) {
+            let avgRating = reviews.reduce((acc, curr) => acc + curr.stars, 0);
+            avgRating /= reviews.length;
+            spotsRes[spotIdx].avgRating = Number(avgRating.toFixed(2));
+        } else {
+            spotsRes[spotIdx].avgRating = "None";
+        }
+        const img = await spot.getSpotImages({ where: { preview: true } });
+        if (img.length) {
+            const previewImage = img[0].url;
+            spotsRes[spotIdx].previewImage = previewImage;
+        } else {
+            spotsRes[spotIdx].previewImage = "None";
+        }
+    }
+    return spotsRes;
+};
+
+// Get reviews information
 async function getReviewsInfo(reviews, includeSpot) {
     let reviewsRes = [];
     for (let reviewIdx = 0; reviewIdx < reviews.length; reviewIdx++) {
@@ -67,6 +96,7 @@ async function getBookingsInfo(bookings) {
 
 
 module.exports = {
+    getSpotsInfo,
     formatDate,
     getReviewsInfo,
     getBookingsInfo

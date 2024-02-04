@@ -7,20 +7,11 @@ const bcrypt = require('bcryptjs');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { validateLogin } = require('../../utils/validation');
 
-const validateLogin = [
-    check('credential')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('Email or username is required'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .withMessage('Password is required'),
-    handleValidationErrors
-];
 
+// routes
+// Log in
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
 
@@ -58,12 +49,15 @@ router.post('/', validateLogin, async (req, res, next) => {
 
 });
 
+// Log out
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
     return res.json({ message: 'success' });
 }
 );
 
+
+//Get current user
 router.get('/', (req, res) => {
     const { user } = req;
     if (user) {

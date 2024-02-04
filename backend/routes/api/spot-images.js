@@ -3,40 +3,10 @@ const router = express.Router();
 
 const { Op } = require('sequelize');
 const { Spot, SpotImage } = require('../../db/models');
-// const bcrypt = require('bcryptjs');
+const { validateSpotImageId } = require('../../utils/validation');
+
 const { requireAuth } = require('../../utils/auth');
-
-// middlewares
-// check if SpotImage exists
-async function validateSpotImageId(req, res, next) {
-    const spotImage = await SpotImage.findByPk(req.params.imageId);
-    if (spotImage) {
-        next();
-    } else {
-        const err = new Error("Spot Image couldn't be found");
-        err.title = "Bad request";
-        err.status = 404;
-        // err.errors = { message: "Spot Image couldn't be found" };
-        next(err);
-    };
-};
-
-// check Authorization
-async function checkAuthorization(req, res, next) {
-    const spotImage = await SpotImage.findByPk(req.params.imageId);
-    const spot = await Spot.findByPk(spotImage.spotId);
-
-    if (req.user.id !== spot.ownerId) {
-        const err = new Error('Forbidden');
-        err.title = 'Authorization required';
-        // err.errors = { message: 'Forbidden' };
-        err.status = 403;
-        return next(err);
-    } else {
-        next();
-    }
-
-};
+const { checkAuthorization } = require('../../utils/authorization.js');
 
 
 // routers
@@ -48,12 +18,10 @@ router.get('/', async (req, res) => {
 
 // Delete a Spot Image
 router.delete('/:imageId', requireAuth, validateSpotImageId,
-checkAuthorization, async (req, res) => {
+  checkAuthorization, async (req, res) => {
     const spotImage = await SpotImage.findByPk(req.params.imageId);
     await spotImage.destroy();
-    res.json({
-        "message": "Successfully deleted"
-    });
+    res.json({ "message": "Successfully deleted" });
 });
 
 
