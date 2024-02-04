@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
-const { validateLogin } = require('../../utils/validation');
+const { validateLogin } = require('../../utils/validateInput.js');
 
 
 // routes

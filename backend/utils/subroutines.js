@@ -94,10 +94,18 @@ async function getBookingsInfo(bookings) {
     return bookingsRes;
 }
 
+function createNewError(message, title, status, errors) {
+    const err = new Error(message);
+    err.title = title;
+    err.status = status;
+    if (errors !== undefined) err.errors = errors;
+    return err;
+};
 
 module.exports = {
     getSpotsInfo,
     formatDate,
     getReviewsInfo,
-    getBookingsInfo
+    getBookingsInfo,
+    createNewError
 };

@@ -6,8 +6,9 @@ const { Booking, Spot, Review, User, ReviewImage } = require('../../db/models');
 
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
-const { handleValidationErrors, validateReviewId, checkMaxNumOfReviewImages,
-    validateReviewImageInput, validateReviewInput } = require('../../utils/validation');
+const { handleValidationErrors, validateReviewImageInput, validateReviewInput } = require('../../utils/validateInput.js');
+const { validateReviewId }  = require('../../utils/validateId.js');
+const { checkMaxNumOfReviewImages } = require('../../utils/othermiddlewares.js');
 const { checkAuthorization } = require('../../utils/authorization.js');
 
 const { formatDate, getReviewsInfo } = require('../../utils/subroutines.js')
@@ -18,12 +19,12 @@ const { formatDate, getReviewsInfo } = require('../../utils/subroutines.js')
 router.get('/', async (req, res) => {
 
     const reviews = await Review.findAll();
-    res.json({ Reviews: reviews });
+    return res.json({ Reviews: reviews });
 });
 
 router.get('/review-images', async (req, res) => {
     const images = await ReviewImage.findAll();
-    res.json(images);
+    return res.json(images);
 });
 
 
@@ -36,7 +37,7 @@ router.get('/current', requireAuth, async (req, res) => {
     } else {
         reviews = "None";
     }
-    res.json({ Reviews: reviews });
+    return res.json({ Reviews: reviews });
 });
 
 // Add an Image to a Review based on the Review's id
@@ -53,7 +54,7 @@ router.post('/:reviewId/images', requireAuth, validateReviewId, checkAuthorizati
         id: newImg[0].id,
         url: newImg[0].url
     }
-    res.json(reviewImage);
+    return res.json(reviewImage);
 
 
 });
@@ -70,7 +71,7 @@ router.put('/:reviewId', requireAuth, validateReviewId,
         await reviewToEdit.save();
         let reviewResponse = reviewToEdit.toJSON();
         reviewResponse = formatDate(reviewResponse);
-        res.json(reviewResponse);
+        return res.json(reviewResponse);
 
     });
 
@@ -79,7 +80,7 @@ router.delete('/:reviewId', requireAuth, validateReviewId,
     checkAuthorization, async (req, res) => {
         const review = await Review.findByPk(req.params.reviewId);
         await review.destroy();
-        res.json({ "message": "Successfully deleted" })
+        return res.json({ "message": "Successfully deleted" })
     });
 
 module.exports = router;

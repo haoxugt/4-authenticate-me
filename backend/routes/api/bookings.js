@@ -6,9 +6,10 @@ const { User, Booking, Spot } = require('../../db/models');
 // const bcrypt = require('bcryptjs');
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
-const { handleValidationErrors, validateBookingId, checkOldBooking, validateBookingInput,
-    checkBookingConflictEdit, checkBookingStart } = require('../../utils/validation');
-const { checkAuthorization, checkAuthorizationBySpotOwnerOrUser } = require('../../utils/authorization.js');
+const { handleValidationErrors, validateBookingInput} = require('../../utils/validateInput.js');
+const {validateBookingId} = require('../../utils/validateId.js');
+const { checkOldBooking, checkBookingConflictEdit, checkBookingStart } = require('../../utils/othermiddlewares.js');
+const { checkAuthorization } = require('../../utils/authorization.js');
 const { formatDate, getBookingsInfo } = require('../../utils/subroutines.js')
 
 
@@ -46,7 +47,7 @@ router.put('/:bookingId', requireAuth, validateBookingId,
 
 // Delete a Booking
 router.delete('/:bookingId', requireAuth, validateBookingId,
-    checkAuthorizationBySpotOwnerOrUser, checkBookingStart,
+    checkAuthorization, checkBookingStart,
     async (req, res) => {
         const booking = await Booking.findByPk(req.params.bookingId);
         await booking.destroy();

@@ -7,79 +7,28 @@ const { User, Spot, SpotImage, Review, Booking } = require('../../db/models');
 const bcrypt = require('bcryptjs');
 
 const { check, body } = require('express-validator');
-const { handleValidationErrors, validateSpotInput, validateSpotId, hasReview, validateReviewInput,
-    validateBookingInput, checkBookingConflict, validateQueryInput } = require('../../utils/validation');
+const { handleValidationErrors, validateSpotInput, validateReviewInput,
+    validateBookingInput,validateQueryInput } = require('../../utils/validateInput.js');
+const { validateSpotId } = require('../../utils/validateId.js');
+const { hasReview, checkBookingConflict }  = require('../../utils/othermiddlewares.js');
 const { requireAuth } = require('../../utils/auth');
-const { checkAuthorization, checkAuthorizationByOnwer } = require('../../utils/authorization.js');
+const { checkAuthorization } = require('../../utils/authorization.js');
 const { formatDate, getSpotsInfo, getReviewsInfo } = require('../../utils/subroutines.js');
+const { assembleQueryObj } = require('../../utils/othermiddlewares.js')
 
 
 // routers
 // Get all spots
-router.get('/', validateQueryInput, async (req, res) => {
-    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+router.get('/', validateQueryInput, assembleQueryObj, async (req, res) => {
 
-    let queryObj = {
-        where: {}
-    };
-    page = page === undefined ? 1 : parseInt(page);
-    size = size === undefined ? 20 : parseInt(size);
-    queryObj.limit = size;
-    queryObj.offset = size * (page - 1);
-
-    if (minLat !== undefined && maxLat !== undefined) {
-        queryObj.where.lat = {
-            [Op.gte]: minLat,
-            [Op.lte]: maxLat
-        }
-    } else if (minLat !== undefined) {
-        queryObj.where.lat = {
-            [Op.gte]: minLat
-        }
-    } else if (maxLat !== undefined) {
-        queryObj.where.lat = {
-            [Op.lte]: maxLat
-        }
-    }
-
-    if (minLng !== undefined && maxLng !== undefined) {
-        queryObj.where.lng = {
-            [Op.gte]: minLng,
-            [Op.lte]: maxLng
-        }
-    } else if (minLng !== undefined) {
-        queryObj.where.lng = {
-            [Op.gte]: minLng
-        }
-    } else if (maxLng !== undefined) {
-        queryObj.where.lng = {
-            [Op.lte]: maxLng
-        }
-    }
-
-    if (minPrice !== undefined && maxPrice !== undefined) {
-        queryObj.where.price = {
-            [Op.gte]: minPrice,
-            [Op.lte]: maxPrice
-        }
-    } else if (minPrice !== undefined) {
-        queryObj.where.price = {
-            [Op.gte]: minPrice
-        }
-    } else if (maxPrice !== undefined) {
-        queryObj.where.price = {
-            [Op.lte]: maxPrice
-        }
-    }
-
-    let spots = await Spot.findAll(queryObj);
+    let spots = await Spot.findAll(req.queryObj);
     spots = await getSpotsInfo(spots);
 
     return res.json({
         Spots: spots,
-        page,
-        size
-    })
+        page: req.queryParams.page,
+        size: req.queryParams.size
+    });
 });
 
 //Get spots of current user
@@ -87,7 +36,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     let spots = await user.getSpots();
 
-    let spots2 = await Spot.findAll({ where: { ownerId: req.user.id } });
+    // let spots2 = await Spot.findAll({ where: { ownerId: req.user.id } });
 
     spots = await getSpotsInfo(spots);
     return res.json({ Spots: spots });
@@ -173,6 +122,7 @@ router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
             address, city, state, country, lat, lng, name, description, price
         }
     ], { validate: true });
+
     let spotResponse = spot[0].toJSON();
     spotResponse = formatDate(spotResponse);
     return res.status(201).json(spotResponse);
@@ -217,7 +167,7 @@ router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization, 
 
 // Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, validateSpotId,
-    validateBookingInput, checkBookingConflict, checkAuthorizationByOnwer,
+    validateBookingInput, checkBookingConflict, checkAuthorization,
     async (req, res, next) => {
 
         const { startDate, endDate } = req.body;
@@ -261,7 +211,7 @@ router.put('/:spotId', requireAuth, validateSpotId, checkAuthorization,
 router.delete('/:spotId', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
     await spot.destroy();
-    res.json({ message: "Successfully deleted" });
+    return res.json({ message: "Successfully deleted" });
 })
 
 

@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
-const { validateSignup, checkDuplicateUser } = require('../../utils/validation');
+const { validateSignup } = require('../../utils/validateInput.js');
+const { checkDuplicateUser }  = require('../../utils/othermiddlewares.js');
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.post('/', validateSignup, checkDuplicateUser, async (req, res, next) => {
 //         attributes: ["id","username", "email", "hashedPassword"]
 //     });
 //     console.log(typeof users[0].dataValues.hashedPassword)
-//     res.json(users);
+//     return res.json(users);
 // });
 
 
