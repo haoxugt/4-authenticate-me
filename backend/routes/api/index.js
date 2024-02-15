@@ -18,8 +18,8 @@ router.use('/bookings', bookingsRouter);
 router.use('/reviews', reviewsRouter);
 router.use('/review-images', reviewImagesRouter);
 
-router.post('/test', (req, res) => {
-    return res.json({ requestBody: req.body });
-});
+// router.post('/test', (req, res) => {
+//     return res.json({ requestBody: req.body });
+// });
 
 module.exports = router;
