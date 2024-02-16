@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import * as sessionActions from './store/session';
 
 // import LoginFormPage from './components/LoginFormPage';
-import SignupFormPage from './components/SignupFormPage';
+// import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 
 function Layout() {
@@ -32,10 +32,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <h1>Welcome!</h1>
-      },
-      {
-        path: 'signup',
-        element: <SignupFormPage />
       }
     ]
   }
