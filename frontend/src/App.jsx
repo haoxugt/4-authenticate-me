@@ -5,6 +5,7 @@ import * as sessionActions from './store/session';
 
 import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
+import Navigation from './components/Navigation';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function Layout() {
 
   return (
     <>
+      <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
     </>
   )
