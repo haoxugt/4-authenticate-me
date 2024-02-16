@@ -3,22 +3,23 @@
     justify-content: center;
 }
 
-.login-form-container {
+.signup-form-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: solid 2px black;
     border-radius: 10px;
-    width: 200px;
-    height: auto;
-    margin: 10px;
-    padding: 10px;
+    width: 220px;
+    height: 250px;
+    padding: 10px
 }
 
-.errors {
-    margin: 5px;
-    font-size: 0.95rem;
-    color: rgb(180, 72, 72);
-    font-style: italic;
+/* form {
+        display: flex;
+        flex-direction: column;
+} */
+
+.errors{
+    color: red;
 }

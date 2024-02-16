@@ -29,33 +29,35 @@ function LoginFormPage() {
     };
 
     return (
-        <>
+        <div className='login-form-container'>
             <h1>{formType}</h1>
             <form onSubmit={handleSubmit}>
                 {/* <div className="errors">{errors.understanding}</div> */}
                 <label>
-                    Username or Email
+                    {/* Username or Email */}
                     <input
                         type="text"
-                        value={credential}
+                        // value={credential}
                         onChange={(e) => setCredential(e.target.value)}
+                        placeholder='Username or Email'
                         required
                     />
                 </label>
                 {/* <div className="errors">{errors.improvement}</div> */}
                 <label>
-                    Password
+                    {/* Password */}
                     <input
                         type="password"
-                        value={password}
+                        // value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        placeholder='Password'
                         required
                     />
                 </label>
                 {errors.credential && <p>{errors.credential}</p>}
                 <button type="submit">{formType}</button>
             </form>
-        </>
+        </div>
     );
 }
 
