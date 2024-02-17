@@ -43,6 +43,18 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
+  const createSpot = (e) => {
+    e.preventDefault();
+    // dispatch(sessionActions.logout());
+    closeMenu();
+  };
+
+  const managerSpots = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logout());
+    closeMenu();
+  };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -58,7 +70,8 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <p>Hi, {user.firstName}</p>
-            <p>Create a Spot</p>
+            <p onClick={createSpot}>Create a Spot</p>
+            <p onClick={managerSpots}>Manager Spots</p>
             <p onClick={logout}>Log Out</p>
           </>
         ) : (
