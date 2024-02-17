@@ -4,9 +4,10 @@ const GET_ALL_SPOTS = 'spot/getALlSpots';
 const CREATE_SPOT = 'spot/creatSpot';
 
 // action
-const getALlSpotsAction = () => {
+const getALlSpotsAction = (spots) => {
   return {
-    type: GET_ALL_SPOTS
+    type: GET_ALL_SPOTS,
+    payload: spots
   }
 }
 
@@ -20,7 +21,8 @@ const createSpotAction = (spot) => {
 // Thunk Creators
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
-  dispatch(getALlSpotsAction());
+  const spots = response.json();
+  dispatch(getALlSpotsAction(spots));
   return response;
 }
 
@@ -49,6 +51,8 @@ const initialState = {};
 const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS:
-      return {...state, Spots:}
+      return {...state, Spots: action.payload}
   }
 }
+
+export default spotReducer;

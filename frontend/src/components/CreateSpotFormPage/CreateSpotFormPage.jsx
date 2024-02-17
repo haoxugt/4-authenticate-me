@@ -1,4 +1,9 @@
-function CreateSpotFormModal() {
+const handleSubmit = (e) => {
+    e.preventDefault();
+}
+
+
+function CreateSpotFormPage() {
     return (
         <div className="create-form-container">
             <p>Create a spot</p>
@@ -6,7 +11,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Address'
                         required
                     />
@@ -14,7 +19,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='City'
                         required
                     />
@@ -22,7 +27,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='State'
                         required
                     />
@@ -30,7 +35,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Country'
                         required
                     />
@@ -38,7 +43,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Latitude'
                         required
                     />
@@ -46,7 +51,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Longtitude'
                         required
                     />
@@ -54,7 +59,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Name'
                         required
                     />
@@ -62,7 +67,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <textarea
                         type="text"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Description'
                         required
                     />
@@ -70,7 +75,7 @@ function CreateSpotFormModal() {
                 <lable>
                     <input
                         type="number"
-                        onChange={(e) => }
+                        onChange={() => {}}
                         placeholder='Price'
                         required
                     />
@@ -79,3 +84,5 @@ function CreateSpotFormModal() {
         </div>
     );
 }
+
+export default CreateSpotFormPage;

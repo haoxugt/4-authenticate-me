@@ -6,6 +6,7 @@ import * as sessionActions from './store/session';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
+import CreateSpotFormPage from './components/CreateSpotFormPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         // element: <h1>Welcome!</h1>
+      },
+      {
+        path: '/spots/new',
+        element: <CreateSpotFormPage />
       }
     ]
   }

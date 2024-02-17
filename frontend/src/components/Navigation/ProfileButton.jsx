@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Navigate } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 // import OpenModalButton from '../OpenModalButton';
 import OpenModalMenuItem from './OpenModalMenuItem';
@@ -46,7 +47,9 @@ function ProfileButton({ user }) {
   const createSpot = (e) => {
     e.preventDefault();
     // dispatch(sessionActions.logout());
-    closeMenu();
+    // closeMenu();
+    console.log("==============");
+    <Navigate to="/spots/new" replace={true} />;
   };
 
   const managerSpots = (e) => {
@@ -60,7 +63,7 @@ function ProfileButton({ user }) {
   return (
     <div className='right-memu-container'>
       {user && (
-        <button className='creat-spot-button'>Create a Spot</button>
+        <button className='creat-spot-button' onClick={createSpot}>Create a Spot</button>
       )}
       <button className='user-icons-container' onClick={toggleMenu}>
         <GiHamburgerMenu size={16} color="grey"/>
@@ -70,7 +73,7 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <p>Hi, {user.firstName}</p>
-            <p onClick={createSpot}>Create a Spot</p>
+            {/* <p onClick={createSpot}>Create a Spot</p> */}
             <p onClick={managerSpots}>Manager Spots</p>
             <p onClick={logout}>Log Out</p>
           </>
