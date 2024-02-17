@@ -1,19 +1,25 @@
-#root {
+/* #root {
     display: flex;
     justify-content: center;
-}
+} */
 
 .login-form-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: solid 2px black;
-    border-radius: 10px;
-    width: 200px;
+    /* border: solid 2px black; */
+    /* border-radius: 10px; */
+    width: 300px;
     height: auto;
     margin: 10px;
     padding: 10px;
+}
+
+.login-form-container input {
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
 }
 
 .errors {
@@ -21,4 +27,15 @@
     font-size: 0.95rem;
     color: rgb(180, 72, 72);
     font-style: italic;
+}
+
+.startButton{
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+    border-style: none;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    /* background: linear-gradient(90deg, rgb(229, 30, 78), rgb(214, 4, 101)); */
+    background-color: rgb(214, 4, 101);
 }

@@ -1,7 +1,14 @@
-.profile-dropdown {
-    position: absolute;
+
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%
 }
 
-.hidden {
-    display: none;
+.profile-button-container {
+    font-size: larger;
+    /* color: red; */
+    width: auto;
+    height:100px;
 }

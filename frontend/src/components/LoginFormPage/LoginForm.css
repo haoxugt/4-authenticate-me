@@ -8,8 +8,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: solid 2px black;
-    border-radius: 10px;
+    /* border: solid 2px black; */
+    /* border-radius: 10px; */
     width: 200px;
     height: auto;
     margin: 10px;

@@ -10,17 +10,27 @@ import './Navigation.css'
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
+  if (sessionUser) {
+    document.title="Abbey";
+    const favicon = document.getElementById('favicon');
+    favicon.setAttribute('href', './logo.png');
+  }
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
+    <nav className="nav-container">
+      <div>
+        <NavLink to="/">
+          {sessionUser ?
+          <img style={{height:"45px"}} src='./logo_large.png' alt='Abbey logo' /> :
+          <img style={{height:"40px"}} src='./Airbnb_Logo.svg' alt='Airbnb logo' />
+        }
+        </NavLink>
+      </div>
       {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
+        <div className="profile-button-container">
+          <ProfileButton className="profile-button" user={sessionUser} />
+        </div>
       )}
-    </ul>
+    </nav>
   );
 }
 
