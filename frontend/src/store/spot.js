@@ -27,7 +27,7 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 export const createSpot = (spot) => async (dispatch) => {
-  const {address, city, state, country, lat, lng, description, price} = spot;
+  const { address, city, state, country, lat, lng, description, price } = spot;
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     body: JSON.stringify({
@@ -51,7 +51,11 @@ const initialState = {};
 const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS:
-      return {...state, Spots: action.payload}
+      return { ...state, Spots: action.payload };
+    case CREATE_SPOT:
+      return { ...state, ...action.payload };
+    default:
+      return state;
   }
 }
 
