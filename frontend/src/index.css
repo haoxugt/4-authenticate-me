@@ -1,1 +1,14 @@
 /* TODO: Add sitewide styles */
+* {
+  font-family: 'Nunito Sans';
+  src: url('https://fonts.google.com/specimen/Nunito+Sans');
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* min-width: 750px;
+  width: auto; */
+  width: 100%;
+}

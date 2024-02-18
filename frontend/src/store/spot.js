@@ -21,8 +21,9 @@ const createSpotAction = (spot) => {
 // Thunk Creators
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
-  const spots = response.json();
-  dispatch(getALlSpotsAction(spots));
+  const data = await response.json();
+
+  dispatch(getALlSpotsAction(data.Spots));
   return response;
 }
 
@@ -46,12 +47,15 @@ export const createSpot = (spot) => async (dispatch) => {
   }
 }
 
-const initialState = {};
+const initialState = { Spots: {} };
 
 const spotReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_SPOTS:
-      return { ...state, Spots: action.payload };
+    case GET_ALL_SPOTS: {
+      const newObj = {};
+      action.payload.forEach( el => newObj[el.id] = {...el});
+      return { ...state, Spots: {...newObj} };
+    }
     case CREATE_SPOT:
       return { ...state, ...action.payload };
     default:

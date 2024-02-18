@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const spotReviews = [
   {
-    spotName: "Downton Abbey-Spot1",
+    spotName: "Downton Abbey",
     reviews: [
       {
         username: "MatthewCrawley",
@@ -25,7 +25,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Brancaster Castle-Spot3",
+    spotName: "Brancaster Castle",
     reviews: [
       {
         username: "RobertCrawley",
@@ -40,7 +40,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Crawley's House-Spot5",
+    spotName: "Crawley's House",
     reviews: [
       {
         username: "MaryCrawley",
@@ -55,7 +55,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Grantham's House-Spot2",
+    spotName: "Grantham's House",
     reviews: [
       {
         username: "MatthewCrawley",
@@ -70,7 +70,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Levinson's House-Spot4",
+    spotName: "Levinson's House",
     reviews: [
       {
         username: "HenryTalbot",
@@ -80,7 +80,7 @@ const spotReviews = [
     ]
   },
   {
-    spotName: "Downton Abbey-Spot1",
+    spotName: "Downton Abbey",
     reviews: [
       {
         username: "CoraCrawley",

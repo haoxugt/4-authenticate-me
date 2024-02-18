@@ -1,0 +1,10 @@
+.spots-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 24px;
+  row-gap: 70px;
+}
+
+.spots-container > a {
+  text-decoration: none;
+}

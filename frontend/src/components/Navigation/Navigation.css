@@ -3,12 +3,12 @@
 .nav-container {
     display: flex;
     justify-content: space-between;
-    width: 100%
+    width: 100%;
 }
 
 .profile-button-container {
     font-size: larger;
     /* color: red; */
     width: auto;
-    height:100px;
+    height:60px;
 }

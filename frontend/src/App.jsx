@@ -6,7 +6,8 @@ import * as sessionActions from './store/session';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
-import CreateSpotFormPage from './components/CreateSpotFormPage';
+import SpotsList from './components/SpotsList';
+import SpotFormPage from './components/SpotFormPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -19,10 +20,10 @@ function Layout() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className='page-container'>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
-    </>
+    </div>
   )
 }
 
@@ -32,11 +33,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        // element: <h1>Welcome!</h1>
+        element: <SpotsList />
       },
       {
         path: '/spots/new',
-        element: <CreateSpotFormPage />
+        element: <SpotFormPage formType="Create a Spot"/>
       }
     ]
   }

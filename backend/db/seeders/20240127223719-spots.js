@@ -19,7 +19,7 @@ const ownerSpots = [
         country: "United Kingdom",
         lat: 50.32,
         lng: -1.36,
-        name: "Downton Abbey-Spot1",
+        name: "Downton Abbey",
         description: "Built in 1679.",
         price: 186.36
       },
@@ -30,7 +30,7 @@ const ownerSpots = [
         country: "United Kingdom",
         lat: 20.66,
         lng: 30,
-        name: "Grantham's House-Spot2",
+        name: "Grantham's House",
         description: "Built in 1854.",
         price: 134.99
       }
@@ -46,7 +46,7 @@ const ownerSpots = [
         country: "United Kingdom",
         lat: 0.01,
         lng: -20,
-        name: "Brancaster Castle-Spot3",
+        name: "Brancaster Castle",
         description: "Built in 11th century.",
         price: 109.99
       }
@@ -62,7 +62,7 @@ const ownerSpots = [
         country: "United States of America",
         lat: -20.15,
         lng: -84.51,
-        name: "Levinson's House-Spot4",
+        name: "Levinson's House",
         description: "Eugene Zimmennan's house.",
         price: 100
       }
@@ -78,7 +78,7 @@ const ownerSpots = [
         country: "United Kingdom",
         lat: -40.93,
         lng: 70.56,
-        name: "Crawley's House-Spot5",
+        name: "Crawley's House",
         description: "Built in 10-11th century.",
         price: 90
       }

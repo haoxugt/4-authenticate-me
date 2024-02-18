@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 // import OpenModalButton from '../OpenModalButton';
 import OpenModalMenuItem from './OpenModalMenuItem';
@@ -15,6 +15,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const navigate = useNavigate();
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep click from bubbling up to document and triggering closeMenu
@@ -48,13 +49,11 @@ function ProfileButton({ user }) {
     e.preventDefault();
     // dispatch(sessionActions.logout());
     // closeMenu();
-    console.log("==============");
-    <Navigate to="/spots/new" replace={true} />;
+    navigate('/spots/new');
   };
 
   const managerSpots = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
     closeMenu();
   };
 
