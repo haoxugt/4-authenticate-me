@@ -39,3 +39,14 @@
     /* background: linear-gradient(90deg, rgb(229, 30, 78), rgb(214, 4, 101)); */
     background-color: rgb(214, 4, 101);
 }
+
+.Demouser-login{
+    margin-top: 7px;;
+    font-size: 17px;;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.Demouser-login:hover{
+    cursor: pointer;
+}

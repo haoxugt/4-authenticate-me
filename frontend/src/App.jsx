@@ -8,6 +8,7 @@ import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import SpotsList from './components/SpotsList';
 import SpotFormPage from './components/SpotFormPage';
+import SpotShowPage from './components/Spots/SpotShowPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: '/spots/new',
         element: <SpotFormPage formType="Create a Spot"/>
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotShowPage />
+      },
+      {
+        path: '*',
+        element: <h2>Page Not Found</h2>
       }
     ]
   }

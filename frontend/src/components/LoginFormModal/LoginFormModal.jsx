@@ -15,6 +15,7 @@ function LoginFormModal() {
 
 
     const formType = "Log In";
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
@@ -27,6 +28,15 @@ function LoginFormModal() {
                 }
             );
     };
+
+    const DemoUserLogin = () => {
+        // setCredential("MatthewCrawley");
+        // setPassword("MatthewCrawley");
+        // console.log("credential =========>", credential);
+        return dispatch(sessionActions.login({ credential: "MatthewCrawley", password: "MatthewCrawley" }))
+        .then(closeModal);
+
+    }
 
     return (
         <div className='login-form-container'>
@@ -55,6 +65,7 @@ function LoginFormModal() {
                 </label>
                 {errors.credential && <p>{errors.credential}</p>}
                 <button type="submit" className="startButton">{formType}</button>
+                <div className='Demouser-login' onClick={DemoUserLogin}>Demo user</div>
             </form>
         </div>
     );
