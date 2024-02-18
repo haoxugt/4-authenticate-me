@@ -12,3 +12,7 @@
     width: auto;
     height:60px;
 }
+
+.nav-container>img:hover {
+    cursor: pointer;
+}

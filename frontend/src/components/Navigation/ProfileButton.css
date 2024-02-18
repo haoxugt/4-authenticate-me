@@ -41,10 +41,12 @@
     background-color: white;
     border-radius: 25px;
     font-weight: bold;
+    font-size: 15px;
     padding:10px;
 }
 
 .creat-spot-button:hover {
+    cursor: pointer;
     background-color: rgb(200, 200, 200);
 }
 
@@ -62,5 +64,6 @@
 }
 
 .user-icons-container:hover {
+    cursor: pointer;
     box-shadow: 2px 2px 2px rgb(200, 200, 200);
 }

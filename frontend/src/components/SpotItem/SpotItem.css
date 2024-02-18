@@ -1,7 +1,9 @@
-.spot-card-container {
+/* .spot-card-container {
   width: 100%;
   height: 22vw;
   text-decoration: none;
+  padding-bottom: 8px;
+  margin-bottom: 50px;
 }
 
 .spot-card-container>img {
@@ -9,4 +11,22 @@
   width: 100%;
   height: 100%;
   border-radius: 12px;
+} */
+
+.spot-card-container {
+  width: 100%;
+  height: auto;
+  text-decoration: none;
+  /* padding-bottom: 8px;
+  margin-bottom: 50px; */
+}
+.spot-card-container>img {
+  object-fit: cover;
+  width: 100%;
+  height: 22vw;
+  border-radius: 12px;
+}
+
+.spot-card-container span {
+  color: grey;
 }
