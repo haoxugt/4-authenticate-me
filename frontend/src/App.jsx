@@ -7,9 +7,10 @@ import * as sessionActions from './store/session';
 // import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import SpotsList from './components/SpotsList';
-import SpotFormPage from './components/SpotFormPage';
 import SpotShowPage from './components/Spots/SpotShowPage';
 import SpotsManagePage from './components/Spots/SpotsManagePage/SpotsManagePage';
+import EditSpotFormPage from './components/Spots/EditSpotFormPage';
+import CreateSpotFormPage from './components/Spots/CreateSpotFormPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -39,11 +40,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/spots/new',
-        element: <SpotFormPage formType="Create a Spot"/>
+        element: <CreateSpotFormPage />
       },
       {
         path: '/spots/:spotId',
         element: <SpotShowPage />
+      },
+      {
+        path: '/spots/:spotId/edit',
+        element: <EditSpotFormPage />
       },
       {
         path: '/spots/current',

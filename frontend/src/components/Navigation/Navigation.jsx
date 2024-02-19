@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     document.title = "Abbey";
     const favicon = document.getElementById('favicon');
-    favicon.setAttribute('href', './logo.png');
+    favicon.setAttribute('href', '/logo.png');
   }
   return (
     <nav className="nav-container">

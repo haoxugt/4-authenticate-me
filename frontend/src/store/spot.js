@@ -4,6 +4,7 @@ const GET_ALL_SPOTS = 'spot/getALlSpots';
 const CREATE_SPOT = 'spot/creatSpot';
 const GET_SPOT_BY_ID = 'spot/getSpotById';
 const DELETE_SPOT = 'spot/deleteSpot'
+const EDIT_SPOT = 'spot/editSpot';
 
 // action
 const getALlSpotsAction = (spots) => {
@@ -34,6 +35,13 @@ const deleteSpotAction = (spotId) => {
   }
 }
 
+const editSpotAction = (spot) => {
+  return {
+    type: EDIT_SPOT,
+    payload: spot
+  }
+}
+
 // Thunk Creators
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
@@ -44,7 +52,7 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 export const createSpot = (spot) => async (dispatch) => {
-  const { address, city, state, country, lat, lng, description, price } = spot;
+  const { address, city, state, country, lat, lng, name, description, price } = spot;
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     body: JSON.stringify({
@@ -54,12 +62,36 @@ export const createSpot = (spot) => async (dispatch) => {
       country,
       lat,
       lng,
+      name,
       description,
       price
     })
   });
   if (response.ok) {
     dispatch(createSpotAction(response));
+  }
+}
+
+export const editSpot = (spot) => async (dispatch) => {
+  const { address, city, state, country, lat, lng, name, description, price } = spot;
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price
+    })
+  });
+  console.log(" response ==============> ", await response.json())
+  if (response.ok) {
+    dispatch(editSpotAction(response));
+    return spot;
   }
 }
 
@@ -101,6 +133,8 @@ const spotReducer = (state = initialState, action) => {
       delete newState.Spots[action.payload];
       return newState;
     }
+    case EDIT_SPOT:
+      return {...state, Spots: {...state.Spots, ...{[action.payload.id]: action.payload}}};
     default:
       return state;
   }
