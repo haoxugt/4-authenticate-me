@@ -36,7 +36,6 @@ function LoginFormModal() {
     const DemoUserLogin = () => {
         setCredential("MatthewCrawley");
         setPassword("MatthewCrawley");
-
     }
 
     return (
@@ -49,7 +48,7 @@ function LoginFormModal() {
                     <input
                         id="login-credential-input"
                         type="text"
-                        // value={credential}
+                        value={credential}
                         onChange={(e) => setCredential(e.target.value)}
                         placeholder='Username or Email'
                         required
@@ -61,7 +60,7 @@ function LoginFormModal() {
                     <input
                         id="login-password-input"
                         type="password"
-                        // value={password}
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='Password'
                         required
