@@ -1,12 +1,14 @@
 .profile-dropdown {
     position: absolute;
     top:65px;
-    right: 10px;
+    right: 25px;
     background-color: white;
     border: solid 1px rgb(200, 200, 200);
-    width: 130px;
+    width: 140px;
     border-radius: 15px;
     padding: 0;
+    font-size: 18px;
+    box-shadow: 1px 1px 1px rgb(200, 200, 200);
 }
 
 .profile-dropdown>p {
