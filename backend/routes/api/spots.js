@@ -94,7 +94,7 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
     let spotResponse = spot.toJSON();
 
     if (spotResponse.SpotImages.length === 0) {
-        spotResponse.SpotImages = "None";
+        spotResponse.SpotImages = null;
     }
     spotResponse.Owner = spotResponse.User;
     delete spotResponse.User;
@@ -110,7 +110,7 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
         const avgStarRating = spotReviews.reduce((acc, curr) => acc + curr.stars, 0) / spotReviews.length;
         spotResponse.avgStarRating = Number(avgStarRating.toFixed(2));
     } else {
-        spotResponse.avgStarRating = "None";
+        spotResponse.avgStarRating = null;
     }
     return res.json(spotResponse);
 

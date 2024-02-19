@@ -2,6 +2,8 @@ import { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
+// import { Navigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import './LoginForm.css';
 
@@ -12,6 +14,7 @@ function LoginFormModal() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    // const navigate = useNavigate();
 
 
     const formType = "Log In";
@@ -27,14 +30,12 @@ function LoginFormModal() {
                     if (data && data.errors) setErrors(data.errors);
                 }
             );
+            // return (<Navigate to='/' />);
     };
 
     const DemoUserLogin = () => {
-        // setCredential("MatthewCrawley");
-        // setPassword("MatthewCrawley");
-        // console.log("credential =========>", credential);
-        return dispatch(sessionActions.login({ credential: "MatthewCrawley", password: "MatthewCrawley" }))
-        .then(closeModal);
+        setCredential("MatthewCrawley");
+        setPassword("MatthewCrawley");
 
     }
 
@@ -42,9 +43,11 @@ function LoginFormModal() {
         <div className='login-form-container'>
             <h1>{formType}</h1>
             <form onSubmit={handleSubmit}>
+                <div className='label-container'>
                 <label>
                     {/* Username or Email */}
                     <input
+                        id="login-credential-input"
                         type="text"
                         // value={credential}
                         onChange={(e) => setCredential(e.target.value)}
@@ -56,6 +59,7 @@ function LoginFormModal() {
                 <label>
                     {/* Password */}
                     <input
+                        id="login-password-input"
                         type="password"
                         // value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -63,9 +67,10 @@ function LoginFormModal() {
                         required
                     />
                 </label>
+                </div>
                 {errors.credential && <p>{errors.credential}</p>}
                 <button type="submit" className="startButton">{formType}</button>
-                <div className='Demouser-login' onClick={DemoUserLogin}>Demo user</div>
+                <button className='Demouser-login' onClick={DemoUserLogin}>Demo user</button>
             </form>
         </div>
     );

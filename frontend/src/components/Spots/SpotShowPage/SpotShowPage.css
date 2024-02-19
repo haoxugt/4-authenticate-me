@@ -1,0 +1,49 @@
+.spotshow-page-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.spotshow-img-container {
+  display: flex;
+  width: 100%;
+  height: 30vw;
+  column-gap: 10px;
+}
+
+.spotshow-img-container>img {
+  width: 48%
+}
+
+.spotshow-imgs-right {
+  width: 48%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.spotshow-imgs-right>img {
+  width: 100%;
+  height: 14.5vw;
+}
+
+.details-info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-review-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: solid 1px grey;
+  padding: 15px;
+  gap: 15px;
+  border-radius: 15px;
+  ;
+}
+
+.price-review-box>p {
+  display: flex;
+  justify-content: space-between;
+  gap:30px;
+}
