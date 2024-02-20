@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
@@ -13,6 +13,7 @@ function LoginFormModal() {
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const [disabledButton, setDisabledButton] = useState(true);
     const { closeModal } = useModal();
     // const navigate = useNavigate();
 
@@ -30,46 +31,62 @@ function LoginFormModal() {
                     if (data && data.errors) setErrors(data.errors);
                 }
             );
-            // return (<Navigate to='/' />);
+        // return (<Navigate to='/' />);
     };
 
     const DemoUserLogin = () => {
-        setCredential("MatthewCrawley");
-        setPassword("MatthewCrawley");
+        setCredential("RobertCrawley");
+        setPassword("RobertCrawley");
     }
+
+    useEffect(() => {
+        if (credential.length >= 4 && password.length >= 6) {
+            setDisabledButton(false);
+        } else {
+            setDisabledButton(true);
+        }
+        setErrors({});
+    }, [credential, password]);
 
     return (
         <div className='login-form-container'>
             <h1>{formType}</h1>
             <form onSubmit={handleSubmit}>
+                {errors.credential && <p className='errors'>{errors.credential}</p>}
                 <div className='label-container'>
-                <label>
-                    {/* Username or Email */}
-                    <input
-                        id="login-credential-input"
-                        type="text"
-                        value={credential}
-                        onChange={(e) => setCredential(e.target.value)}
-                        placeholder='Username or Email'
-                        required
-                    />
-                </label>
-                {/* <div className="errors">{errors.improvement}</div> */}
-                <label>
-                    {/* Password */}
-                    <input
-                        id="login-password-input"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder='Password'
-                        required
-                    />
-                </label>
+                    <label>
+                        {/* Username or Email */}
+                        <input
+                            id="login-credential-input"
+                            type="text"
+                            value={credential}
+                            onChange={(e) => setCredential(e.target.value)}
+                            placeholder='Username or Email'
+                            required
+                        />
+                    </label>
+                    {/* <div className="errors">{errors.improvement}</div> */}
+                    <label>
+                        {/* Password */}
+                        <input
+                            id="login-password-input"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder='Password'
+                            required
+                        />
+                    </label>
                 </div>
-                {errors.credential && <p>{errors.credential}</p>}
-                <button type="submit" className="startButton">{formType}</button>
-                <button className='Demouser-login' onClick={DemoUserLogin}>Demo user</button>
+
+                <button type="submit"
+                    className="startButton"
+                    disabled={disabledButton}>
+                    {formType}
+                </button>
+                <button className='Demouser-login' onClick={DemoUserLogin}>
+                    Log in as demo user
+                </button>
             </form>
         </div>
     );

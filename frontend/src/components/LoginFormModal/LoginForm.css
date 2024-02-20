@@ -87,12 +87,17 @@
     margin-top: 10px;
     width: 100%;
     font-size:16px;
-    height: 30px;
+    height: 35px;
     border-style: none;
     border-radius: 10px;
     color: rgb(255, 255, 255);
     /* background: linear-gradient(90deg, rgb(229, 30, 78), rgb(214, 4, 101)); */
     background-color: rgb(214, 4, 101);
+}
+
+/* button:disabled, */
+.startButton[disabled]{
+    background-color: rgb(187, 184, 185);
 }
 
 .startButton:hover{

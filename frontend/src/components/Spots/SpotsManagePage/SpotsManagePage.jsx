@@ -38,7 +38,7 @@ function SpotsManagePage() {
     <div className="spots-container">
     {spots?.map((spot) => {
       return (
-        <NavLink key={spot.id} to={`spots/${spot.id}`}>
+        <NavLink key={spot.id} to={`/spots/${spot.id}`}>
           <SpotItem spot={spot}/>
           <button name={`update-spot${spot.id}`}type="submit" onClick={updateSpotButton}>Update</button>
           <button name={`delete-spot${spot.id}`} type="submit" onClick={deleteSpotButton}>Delete</button>

@@ -100,7 +100,7 @@ export const editSpot = (spot) => async (dispatch) => {
 export const getSpotById = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}`);
   const data = await response.json();
-  // console.log("data==========>", data)
+
   dispatch(getSpotByIdAction(data));
   return response;
 }
@@ -109,8 +109,7 @@ export const deleteSpot = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: 'DELETE'
   });
-  // const data = await response.json();
-  // console.log("data==========>", data)
+
   if (response.ok) {
     dispatch(deleteSpotAction(spotId));
   }

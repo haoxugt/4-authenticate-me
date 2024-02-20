@@ -21,7 +21,7 @@ function SpotsList() {
     <div className="spots-container">
       {spots?.map((spot) => {
         return (
-          <NavLink key={spot.id} to={`spots/${spot.id}`}>
+          <NavLink key={spot.id} to={`/spots/${spot.id}`}>
             <SpotItem spot={spot}/>
           </NavLink>
           )

@@ -72,7 +72,7 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <p>Hello, {user.firstName}</p>
+            <p className='hello-user'>Hello, {user.firstName}</p>
             {/* <p onClick={createSpot}>Create a Spot</p> */}
             <p onClick={manageSpots}>Manage Spots</p>
             <p onClick={logout}>Log Out</p>

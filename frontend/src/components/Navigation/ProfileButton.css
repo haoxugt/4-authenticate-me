@@ -26,7 +26,13 @@
 }
 
 .profile-dropdown>p:hover{
+    cursor: pointer;
     background-color: rgb(240, 238, 238);
+}
+
+p.hello-user:hover{
+    cursor:default;
+    background-color: white;
 }
 
 .hidden {
