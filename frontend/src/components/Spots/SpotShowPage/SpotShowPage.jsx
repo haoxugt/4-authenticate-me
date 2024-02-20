@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllSpots, getSpotById } from "../../../store/spot";
-import { getReviewsBySpotIdThunk } from "../../../store/review";
+import { getReviewsBySpotIdThunk, createReviewThunk } from "../../../store/review";
 import { FaStar } from "react-icons/fa";
 import { LuDot } from "react-icons/lu";
 import ReviewItem from "../../Reviews/ReviewItem";
+import PostReviewButton from "../../Reviews/PostReviewButton/PostReviewButton";
 
 import './SpotShowPage.css'
 
@@ -38,10 +39,11 @@ function SpotShowPage() {
     alert("Feature Coming Soon");
   }
 
-  const postReview = (e) => {
-    e.preventDefault();
-    console.log("post a review");
-  }
+  // const postReview = async (e) => {
+  //   e.preventDefault();
+  //   console.log("post a review");
+  //   await dispatch(createReviewThunk(spotId))
+  // }
 
   if (!spot) return <h2>Spot can not be found</h2>;
   // if (!spot) return null;
@@ -96,13 +98,20 @@ function SpotShowPage() {
             {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
         </h2>
         {/* post review button */}
-        {sessionUser.id !== spot.ownerId && (<button onClick={postReview}>Post your Review</button>)}
+        {sessionUser && sessionUser.id !== spot.ownerId && !reviews.filter(el => el.userId === sessionUser.id).length && (<PostReviewButton id={spot.id} />)}
         {reviews.length ?
-          reviews.map(el => <ReviewItem key={el.id} review={el} />) :
-          (<>{sessionUser.id !== spot.ownerId ?  <p>Be the first to post a review!</p> : null}</>)
+          reviews.map(el => {
+            return (
+              <div key={el.id}>
+                <ReviewItem review={el} />
+                {sessionUser && el.userId === sessionUser.id && <button name={el.id}>Delete</button>}
+              </div>
+            )
+          }) :
+          (<>{sessionUser && sessionUser.id !== spot.ownerId ? <p>Be the first to post a review!</p> : null}</>)
 
-          }
-    </div>
+        }
+      </div>
 
     </div >
   )

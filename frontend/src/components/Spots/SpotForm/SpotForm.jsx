@@ -133,7 +133,6 @@ function SpotForm({ spot, formType }) {
                             onChange={(e) => setDescription(e.target.value)}
                             value={description}
                             placeholder='Description'
-                            required
                         >
                         </textarea>
                     </label>
@@ -143,7 +142,6 @@ function SpotForm({ spot, formType }) {
                             onChange={(e) => setPrice(e.target.value)}
                             value={price}
                             placeholder='Price'
-                            required
                         />
                     </label>
                 </div>

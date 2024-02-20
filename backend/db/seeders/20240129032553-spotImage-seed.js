@@ -30,7 +30,7 @@ const spot_spotImages = [
         preview: true
       },
       {
-        url: "https://static.wikia.nocookie.net/downtonabbey/images/7/74/Bridgewater2.jpg/revision/latest?cb=20180822194235",
+        url: "https://live.staticflickr.com/720/21317434562_de0d38bf5e_z.jpg",
         preview: false
       }
     ]
@@ -65,7 +65,7 @@ const spot_spotImages = [
     spotName: "Crawley's House",
     spotImages: [
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/The_Rectory-Bampton.JPG/1920px-The_Rectory-Bampton.JPG",
+        url: "https://live.staticflickr.com/7729/18358294931_95ddfa60fa_b.jpg",
         preview: true
       }
     ]

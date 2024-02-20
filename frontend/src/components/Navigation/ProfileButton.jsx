@@ -74,7 +74,7 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <p className='hello-user'>Hello, {user.firstName}</p>
-            <p className='hello-user'>{user.email}</p>
+            <p className='hello-user hello-email'>{user.email}</p>
             <p onClick={manageSpots}>Manage Spots</p>
             <p onClick={logout}>Log Out</p>
           </>
