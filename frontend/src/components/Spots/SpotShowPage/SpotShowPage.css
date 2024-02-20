@@ -8,10 +8,11 @@
   width: 100%;
   height: 30vw;
   column-gap: 10px;
+  margin-top: 15px;
 }
 
 .spotshow-img-container>img {
-  width: 48%
+  width: 48%;
 }
 
 .spotshow-imgs-right {
@@ -45,5 +46,17 @@
 .price-review-box>p {
   display: flex;
   justify-content: space-between;
-  gap:30px;
+  gap: 30px;
+}
+
+.details-info-container {
+  margin-top: 10px;
+  padding-bottom: 20px;
+  ;
+  border-bottom: solid 2px grey;
+}
+
+/* reviews */
+.review-list-container {
+  margin-top: 15px;
 }

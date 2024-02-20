@@ -8,6 +8,11 @@
   padding: 0;
 }
 
+#root {
+    display: flex;
+    justify-content: center;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;

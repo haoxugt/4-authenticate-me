@@ -1,0 +1,12 @@
+.review-container>h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.star-date {
+  display: flex;
+  flex-direction: center;
+  gap: 20px;
+  width: 400px;
+}

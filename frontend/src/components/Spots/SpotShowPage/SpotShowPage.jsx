@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllSpots, getSpotById } from "../../../store/spot";
+import { getReviewsBySpotIdThunk } from "../../../store/review";
 import { FaStar } from "react-icons/fa";
 import { LuDot } from "react-icons/lu";
+import ReviewItem from "../../Reviews/ReviewItem";
 
 import './SpotShowPage.css'
 
@@ -13,13 +15,17 @@ function SpotShowPage() {
   const dispatch = useDispatch();
 
   const spotShow = useSelector(state => state.spot.spotShow);
+  const reviewsObj = useSelector(state => state.review);
+  let reviews = Object.values(reviewsObj);
+  // const
 
 
   useEffect(() => {
     async function getSpotByIdRun() {
-      // console.log("refresh =================")
+
       if (!spot) await dispatch(getAllSpots());
       await dispatch(getSpotById(spotId));
+      await dispatch(getReviewsBySpotIdThunk(spotId))
     }
     getSpotByIdRun();
   }, [dispatch, spot, spotId]);
@@ -28,6 +34,7 @@ function SpotShowPage() {
   if (!Object.values(spotShow).length) {
     return <h2>Page loading</h2>;
   }
+  console.log(" reviews =======> " , reviews)
 
   return (
     <div className="spotshow-page-container">
@@ -60,6 +67,15 @@ function SpotShowPage() {
           </p>
           <button type="submit">Reserve</button>
         </div>
+      </div>
+      <div className="review-list-container">
+        <h2><FaStar /> {spotShow.avgStarRating} <LuDot /> {spotShow.numReviews} Reviews</h2>
+        {/* {reviews?.map(el => {
+          return (
+
+          )
+        })} */}
+        {reviews.length && <ReviewItem review={reviews[1]} />}
       </div>
 
     </div>
