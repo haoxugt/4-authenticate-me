@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import { Navigate } from "react-router-dom";
@@ -16,6 +16,7 @@ function SignupFormModal() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [diabledSignup, setDisabledSignup] = useState(true);
   const { closeModal } = useModal();
 
 
@@ -43,11 +44,28 @@ function SignupFormModal() {
         });
     }
     return setErrors({
+      ...errors,
       confirmPassword: "Confirm Password field must be the same as the Password field"
 
     })
 
   };
+
+  useEffect(() => {
+      if (email.length > 0 && username.length > 0 &&
+    firstName.length > 0 && lastName.length > 0 &&
+    password.length > 0 && confirmPassword.length > 0) {
+      setDisabledSignup(false);
+    } else {
+      setDisabledSignup(true)
+    }
+  } , [email,
+    username,
+    firstName,
+    lastName,
+    password,
+    confirmPassword
+  ]);
 
   return (
     <div className='signup-form-container'>
@@ -56,65 +74,67 @@ function SignupFormModal() {
         <label>
           {/* Email */}
           <input
+            id='signup-email-input'
             type="email"
-            // value={email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Email'
-            required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='errors'>{errors.email}</p>}
         <label>
           <input
             type="text"
-            // value={username}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder='Username'
-            required
+            // required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className='errors'>{errors.username}</p>}
         <label>
           <input
             type="text"
-            // value={email}
+            value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             placeholder='First Name'
-            required
+            // required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className='errors'>{errors.firstName}</p>}
         <label>
           <input
             type="text"
-            // value={email}
+            value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             placeholder='Last Name'
-            required
+            // required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className='errors'>{errors.lastName}</p>}
         <label>
           <input
             type="password"
-            // value={email}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder='Password'
-            required
+            // required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='errors'>{errors.password}</p>}
         <label>
           <input
+          id='signup-confirmedpassword-input'
             type="password"
-            // value={email}
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder='Confirm Password'
-            required
+            // required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">{formType}</button>
+
+        {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
+        <button type="submit" className="startButton" disabled={diabledSignup}>{formType}</button>
       </form>
     </div>
   );

@@ -52,7 +52,6 @@
 #login-credential-input:focus {
     border: solid 2px black;
     border-radius: 5px;
-
 }
 
 #login-password-input {
@@ -70,11 +69,6 @@
         border-bottom: solid 10px rgb(210,210,210);
     }
 }
-/* form {
-    border: solid 2px red;
-
-} */
-
 
 .errors {
     margin: 5px;
