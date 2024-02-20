@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GET_REVIEWS_BY_SPOTID = 'review/getReviewsBySpotId';
-const CREATE_REVIEW = 'review/createReview';
+// const CREATE_REVIEW = 'review/createReview';
 
 // action
 const getReviewsBySpotIdAction = (reviews) => {
@@ -11,12 +11,12 @@ const getReviewsBySpotIdAction = (reviews) => {
   }
 }
 
-const createReviewAction = (review) => {
-  return {
-    type: CREATE_REVIEW,
-    payload: review
-  }
-}
+// const createReviewAction = (review) => {
+//   return {
+//     type: CREATE_REVIEW,
+//     payload: review
+//   }
+// }
 
 //
 // Thunk Creators
@@ -43,8 +43,9 @@ export const createReviewThunk = (spotId, reviewObj) => async (dispatch) => {
 
   // console.log(" data ========> ", await response.json())
   if (response.ok) {
-    const data = await response.json();
-    dispatch(createReviewAction(data));
+    // const data = await response.json();
+    // dispatch(createReviewAction(data));
+    const data = dispatch(getReviewsBySpotIdThunk(spotId));
     return data;
   }
 }
@@ -60,9 +61,9 @@ const reviewReducer = (state = initialState, action) => {
       }
       return { ...newObj };
     }
-    case CREATE_REVIEW: {
-      return {...state, ...{[action.payload.id]: action.payload}};
-    }
+    // case CREATE_REVIEW: {
+    //   return {...state, ...{[action.payload.id]: action.payload}};
+    // }
     default:
       return state;
   }

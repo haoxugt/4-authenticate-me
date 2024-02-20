@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
-import ReviewStars from "../ReviewStars";
+// import ReviewStars from "../ReviewStars";
+import ReviewStarsInput from "../ReviewStarsInput";
 import { createReviewThunk } from "../../../store/review";
+import { getSpotById } from "../../../store/spot";
 // import { useParams } from "react-router-dom";
 
 import './ReviewForm.css'
@@ -22,6 +24,7 @@ function ReviewFormModal({id}) {
     setErrors({});
     return dispatch(createReviewThunk(spotId, { review, stars }))
       .then(closeModal)
+      .then(() => dispatch(getSpotById(spotId)))
       .catch(
         async (res) => {
           const data = await res.json();
@@ -30,6 +33,10 @@ function ReviewFormModal({id}) {
       );
     // return (<Navigate to='/' />);
   };
+
+  const onChange = (number) => {
+    setStars(parseInt(number));
+  }
 
   useEffect(() => {
     if (review.length >= 10 && stars >= 1) {
@@ -57,10 +64,10 @@ function ReviewFormModal({id}) {
           </label>
 
           <label className="review-star-container">
-            <ReviewStars num={stars} /> Stars
+            <ReviewStarsInput stars={stars} disabled={false} onChange={onChange}/> Stars
           </label>
         </div>
-        <label>this spot is No. {spotId}</label>
+        {/* <label>this spot is No. {spotId}</label> */}
         <button type="submit"
           className="startButton"
           disabled={disabledPostButton}>

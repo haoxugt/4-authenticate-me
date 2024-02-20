@@ -1,0 +1,12 @@
+.rating-star-input {
+  display: flex;
+  margin-right: 4px;
+}
+
+.rating-star-input .filled {
+  color: black;
+}
+
+.rating-star-input .empty {
+  color: rgb(190, 190, 189);
+}

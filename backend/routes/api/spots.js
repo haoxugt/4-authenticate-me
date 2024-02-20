@@ -110,7 +110,7 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
         const avgStarRating = spotReviews.reduce((acc, curr) => acc + curr.stars, 0) / spotReviews.length;
         spotResponse.avgStarRating = Number(avgStarRating.toFixed(2));
     } else {
-        spotResponse.avgStarRating = null;
+        spotResponse.avgStarRating = "None";
     }
     return res.json(spotResponse);
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllSpots, getSpotById } from "../../../store/spot";
-import { getReviewsBySpotIdThunk, createReviewThunk } from "../../../store/review";
+import { getReviewsBySpotIdThunk } from "../../../store/review";
 import { FaStar } from "react-icons/fa";
 import { LuDot } from "react-icons/lu";
 import ReviewItem from "../../Reviews/ReviewItem";
@@ -81,8 +81,8 @@ function SpotShowPage() {
           <p>
             <span>${spotShow?.price} night</span>
             <span><FaStar />
-              {spot.avgRating === "None" ? "New" :
-                (Number.isInteger(spot.avgRating) ? spot.avgRating + ".0" : spot.avgRating)}
+              {spotShow.avgStarRating === "None" ? "New" :
+                (Number.isInteger(spotShow.avgStarRating) ? spotShow.avgStarRating + ".0" : spotShow.avgStarRating)}
               {spotShow.numReviews === 0 ? null : (<><LuDot />
                 {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)} </span>
           </p>
@@ -92,8 +92,8 @@ function SpotShowPage() {
       {/* review parts */}
       <div className="review-list-container">
         <h2><FaStar />
-          {spot.avgRating === "None" ? "New" :
-            (Number.isInteger(spot.avgRating) ? spot.avgRating + ".0" : spot.avgRating)}
+          {spotShow.avgStarRating === "None" ? "New" :
+            (Number.isInteger(spotShow.avgStarRating) ? spotShow.avgStarRating + ".0" : spotShow.avgStarRating)}
           {spotShow.numReviews === 0 ? null : (<><LuDot />
             {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
         </h2>
@@ -108,7 +108,7 @@ function SpotShowPage() {
               </div>
             )
           }) :
-          (<>{sessionUser && sessionUser.id !== spot.ownerId ? <p>Be the first to post a review!</p> : null}</>)
+          (<>{sessionUser && sessionUser.id !== spot.ownerId ? <span>Be the first to post a review!</span> : null}</>)
 
         }
       </div>
