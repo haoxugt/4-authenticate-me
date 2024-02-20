@@ -42,9 +42,13 @@ function SpotForm({ spot, formType }) {
             }
         } else if (formType === 'Create a new spot') {
             const newSpot = await dispatch(createSpot(spot));
-            if (newSpot) {
+            console.log("newSpot =========> ", newSpot);
+            if (newSpot.id) {
                 navigate(`/spots/${newSpot.id}`);
                 setErrors({});
+            } else {
+                setErrors({...errors, ...newSpot.errors});
+                console.log("errors =========> " , errors);
             }
         }
     }
@@ -74,13 +78,13 @@ function SpotForm({ spot, formType }) {
                         />
                     </label>
                     <label>
-                        State
+                        State {errors.state && <span className='errors'>{errors.state}</span>}
                         <input
                             type="text"
                             onChange={(e) => setState(e.target.value)}
                             value={state}
                             placeholder='State'
-                            required
+                            // required
                         />
                     </label>
                     <label>
@@ -90,7 +94,7 @@ function SpotForm({ spot, formType }) {
                             onChange={(e) => setCountry(e.target.value)}
                             value={country}
                             placeholder='Country'
-                            required
+                            // required
                         />
                     </label>
                     <label>
@@ -104,7 +108,7 @@ function SpotForm({ spot, formType }) {
                         />
                     </label>
                     <label>
-                        longtitude
+                        longtitude {errors.lng && <span className='errors'>{errors.lng}</span>}
                         <input
                             type="text"
                             onChange={(e) => setLng(e.target.value)}

@@ -12,13 +12,16 @@ import './SpotShowPage.css'
 function SpotShowPage() {
   const { spotId } = useParams();
   const spot = useSelector(state => state.spot.Spots[spotId]);
+  const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const spotShow = useSelector(state => state.spot.spotShow);
   const reviewsObj = useSelector(state => state.review);
   let reviews = Object.values(reviewsObj);
+  reviews.sort((a, b) => {
+    return (new Date(b.createdAt)) - (new Date(a.createdAt));
+  })
   // const
-
 
   useEffect(() => {
     async function getSpotByIdRun() {
@@ -30,11 +33,23 @@ function SpotShowPage() {
     getSpotByIdRun();
   }, [dispatch, spot, spotId]);
 
+  const reserveBooking = (e) => {
+    e.preventDefault();
+    alert("Feature Coming Soon");
+  }
+
+  const postReview = (e) => {
+    e.preventDefault();
+    console.log("post a review");
+  }
+
   if (!spot) return <h2>Spot can not be found</h2>;
+  // if (!spot) return null;
   if (!Object.values(spotShow).length) {
     return <h2>Page loading</h2>;
   }
-  console.log(" reviews =======> " , reviews)
+  // if(!reviews.length) return null;
+  // console.log(" reviews =======> " , reviews)
 
   return (
     <div className="spotshow-page-container">
@@ -63,22 +78,33 @@ function SpotShowPage() {
         <div className="price-review-box">
           <p>
             <span>${spotShow?.price} night</span>
-            <span><FaStar /> {spotShow.avgStarRating} <LuDot /> {spotShow.numReviews} Reviews</span>
+            <span><FaStar />
+              {spot.avgRating === "None" ? "New" :
+                (Number.isInteger(spot.avgRating) ? spot.avgRating + ".0" : spot.avgRating)}
+              {spotShow.numReviews === 0 ? null : (<><LuDot />
+                {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)} </span>
           </p>
-          <button type="submit">Reserve</button>
+          <button type="submit" className="reserve-button" onClick={reserveBooking}>Reserve</button>
         </div>
       </div>
+      {/* review parts */}
       <div className="review-list-container">
-        <h2><FaStar /> {spotShow.avgStarRating} <LuDot /> {spotShow.numReviews} Reviews</h2>
-        {/* {reviews?.map(el => {
-          return (
+        <h2><FaStar />
+          {spot.avgRating === "None" ? "New" :
+            (Number.isInteger(spot.avgRating) ? spot.avgRating + ".0" : spot.avgRating)}
+          {spotShow.numReviews === 0 ? null : (<><LuDot />
+            {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
+        </h2>
+        {/* post review button */}
+        {sessionUser.id !== spot.ownerId && (<button onClick={postReview}>Post your Review</button>)}
+        {reviews.length ?
+          reviews.map(el => <ReviewItem key={el.id} review={el} />) :
+          (<>{sessionUser.id !== spot.ownerId ?  <p>Be the first to post a review!</p> : null}</>)
 
-          )
-        })} */}
-        {reviews.length && <ReviewItem review={reviews[1]} />}
-      </div>
-
+          }
     </div>
+
+    </div >
   )
 }
 

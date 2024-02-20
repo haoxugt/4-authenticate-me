@@ -17,6 +17,8 @@
   width: 100%;
   height: auto;
   text-decoration: none;
+  position: relative;
+  z-index: 0;
   /* padding-bottom: 8px;
   margin-bottom: 50px; */
 }
@@ -29,4 +31,26 @@
 
 .spot-card-container span {
   color: grey;
+}
+
+.spot-card-container .tooltiptext {
+  visibility: hidden;
+  background-color: white;
+  color: black;
+  text-align: center;
+  padding: 2px 8px 2px;
+  border-radius: 15px;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 1;
+}
+
+.spot-card-container:hover .tooltiptext {
+  visibility: visible;
+}
+
+.spot-card-address-review {
+  display: flex;
+  justify-content: space-between;
 }

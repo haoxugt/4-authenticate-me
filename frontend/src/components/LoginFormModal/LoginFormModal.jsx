@@ -38,6 +38,11 @@ function LoginFormModal() {
         setCredential("RobertCrawley");
         setPassword("RobertCrawley");
     }
+    const DemoUserLogin2 = () => {
+        setCredential("MatthewCrawley");
+        setPassword("MatthewCrawley");
+    }
+
 
     useEffect(() => {
         if (credential.length >= 4 && password.length >= 6) {
@@ -85,7 +90,10 @@ function LoginFormModal() {
                     {formType}
                 </button>
                 <button className='Demouser-login' onClick={DemoUserLogin}>
-                    Log in as demo user
+                    Log in as Demo User
+                </button>
+                <button className='Demouser-login' onClick={DemoUserLogin2}>
+                    Log in as Demo User 2
                 </button>
             </form>
         </div>

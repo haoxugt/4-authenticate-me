@@ -52,11 +52,23 @@
 .details-info-container {
   margin-top: 10px;
   padding-bottom: 20px;
-  ;
+
   border-bottom: solid 2px grey;
 }
 
 /* reviews */
 .review-list-container {
   margin-top: 15px;
+}
+
+/* reserve */
+.reserve-button {
+  align-self: center;
+  color:white;
+  width: 80%;
+  font-size: 16px;
+  height: 35px;
+  background-color: rgb(214, 4, 101);
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px solid black;
 }
