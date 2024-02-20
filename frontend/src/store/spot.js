@@ -68,7 +68,9 @@ export const createSpot = (spot) => async (dispatch) => {
     })
   });
   if (response.ok) {
-    dispatch(createSpotAction(response));
+    const newSpot = await response.json()
+    dispatch(createSpotAction(newSpot));
+    return newSpot;
   }
 }
 
@@ -88,7 +90,7 @@ export const editSpot = (spot) => async (dispatch) => {
       price
     })
   });
-  console.log(" response ==============> ", await response.json())
+  // console.log(" response ==============> ", await response.json())
   if (response.ok) {
     dispatch(editSpotAction(response));
     return spot;
@@ -125,7 +127,7 @@ const spotReducer = (state = initialState, action) => {
       return { ...state, Spots: { ...newObj } };
     }
     case CREATE_SPOT:
-      return { ...state, ...action.payload };
+      return { ...state, Spots: {...state.Spots, ...{[action.payload.id]: action.payload}}};
     case GET_SPOT_BY_ID:
       return { ...state, spotShow: { ...action.payload } };
     case DELETE_SPOT: {

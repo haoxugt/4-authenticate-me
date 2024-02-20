@@ -17,7 +17,7 @@ function SpotShowPage() {
 
   useEffect(() => {
     async function getSpotByIdRun() {
-      console.log("refresh =================")
+      // console.log("refresh =================")
       if (!spot) await dispatch(getAllSpots());
       await dispatch(getSpotById(spotId));
     }
@@ -26,7 +26,7 @@ function SpotShowPage() {
 
   if (!spot) return <h2>Spot can not be found</h2>;
   if (!Object.values(spotShow).length) {
-    return <h1>Page crash</h1>;
+    return <h2>Page loading</h2>;
   }
 
   return (

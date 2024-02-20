@@ -16,9 +16,13 @@ function EditSpotFormPage() {
     getSingleSpotRun();
   }, [dispatch, spotId]);
 
-  if (!spot) return (<></>);
+  if (!Object.values(spot).length) return (<></>);
 
-  return <SpotForm spot={spot} formType="Edit a spot" />;
+  return (
+    +spot.id === +spotId && (
+      <SpotForm spot={spot} formType="Edit a spot" />
+    )
+  )
 }
 
 export default EditSpotFormPage;

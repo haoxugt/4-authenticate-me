@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './SpotForm.css';
 import { useDispatch } from 'react-redux';
-import { editSpot } from '../../../store/spot';
+import { editSpot, createSpot } from '../../../store/spot';
 import { useNavigate } from 'react-router-dom';
 
 function SpotForm({ spot, formType }) {
@@ -33,10 +33,17 @@ function SpotForm({ spot, formType }) {
             description,
             price
         }
+
         if (formType === 'Edit a spot') {
             const toEditSpot = await dispatch(editSpot(spot));
             if (toEditSpot) {
                 navigate(`/spots/${toEditSpot.id}`);
+                setErrors({});
+            }
+        } else if (formType === 'Create a new spot') {
+            const newSpot = await dispatch(createSpot(spot));
+            if (newSpot) {
+                navigate(`/spots/${newSpot.id}`);
                 setErrors({});
             }
         }
