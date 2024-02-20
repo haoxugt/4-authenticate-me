@@ -73,17 +73,17 @@
   box-shadow: 5px 5px 5px solid black;
 }
 
-.review-list-container>p {
+.review-list-container>button {
   width: 150px;
   text-align: center;
-  font-size: 18px;
+  font-size: 14px;
   border: solid 1px black;
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 10px 10px 15px;
   padding: 5px;
-  background-color: rgb(206, 204, 204);
+  /* background-color: rgb(206, 204, 204); */
 }
 
-.review-list-container>p:hover {
+.review-list-container>button:hover {
   cursor: pointer;
 }

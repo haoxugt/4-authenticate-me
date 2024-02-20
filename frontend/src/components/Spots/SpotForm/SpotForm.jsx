@@ -42,13 +42,13 @@ function SpotForm({ spot, formType }) {
             }
         } else if (formType === 'Create a new spot') {
             const newSpot = await dispatch(createSpot(spot));
-            console.log("newSpot =========> ", newSpot);
+            // console.log("newSpot =========> ", newSpot);
             if (newSpot.id) {
                 navigate(`/spots/${newSpot.id}`);
                 setErrors({});
             } else {
                 setErrors({...errors, ...newSpot.errors});
-                console.log("errors =========> " , errors);
+                // console.log("errors =========> " , errors);
             }
         }
     }

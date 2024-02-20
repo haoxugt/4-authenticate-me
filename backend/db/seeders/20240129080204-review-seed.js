@@ -84,7 +84,7 @@ const spotReviews = [
         username: "HenryTalbot",
         review: "Want to have a try.",
         stars: 3,
-        createdAt: '2022-06-20'
+        createdAt: '2022-01-01'
       }
     ]
   },

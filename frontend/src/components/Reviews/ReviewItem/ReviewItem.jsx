@@ -10,7 +10,7 @@ function ReviewItem({review}) {
                 "August", "September", "October",
                 "November", "December"];
   const date =  new Date(review.createdAt);
-  const convertedDate = month[date.getMonth() - 1] + " " + (date.getYear() + 1900);
+  const convertedDate = month[date.getMonth()] + " " + (date.getYear() + 1900);
 
   return (
     <div className='review-container'>

@@ -7,6 +7,9 @@ import { FaStar } from "react-icons/fa";
 import { LuDot } from "react-icons/lu";
 import ReviewItem from "../../Reviews/ReviewItem";
 import PostReviewButton from "../../Reviews/PostReviewButton/PostReviewButton";
+// import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButtion";
+import DeleteReviewModal from "../../Reviews/DeleteReviewModal";
 
 import './SpotShowPage.css'
 
@@ -104,11 +107,21 @@ function SpotShowPage() {
             return (
               <div key={el.id}>
                 <ReviewItem review={el} />
-                {sessionUser && el.userId === sessionUser.id && <button name={el.id}>Delete</button>}
+                {sessionUser && el.userId === sessionUser.id &&
+                  <div className="review-control-buttons">
+                    <button name={el.id} onClick={reserveBooking}>Update</button>
+                    <OpenModalButton
+                      itemText="Delete"
+                      className='test'
+                      // onItemClick={closeMenu}
+                      modalComponent={<DeleteReviewModal review={el} />}
+                    />
+                  </div>
+                }
               </div>
             )
           }) :
-          (<>{sessionUser && sessionUser.id !== spot.ownerId ? <span>Be the first to post a review!</span> : null}</>)
+          (<>{sessionUser && sessionUser.id !== spot.ownerId ? <p>Be the first to post a review!</p> : null}</>)
 
         }
       </div>

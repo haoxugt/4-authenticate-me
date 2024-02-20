@@ -31,21 +31,31 @@ export const getReviewsBySpotIdThunk = (spotId) => async (dispatch) => {
 }
 
 export const createReviewThunk = (spotId, reviewObj) => async (dispatch) => {
-  const  { review, stars } = reviewObj;
+  const { review, stars } = reviewObj;
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: 'POST',
-    headers: { "Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       review,
       stars
     })
   });
 
-  // console.log(" data ========> ", await response.json())
   if (response.ok) {
-    // const data = await response.json();
     // dispatch(createReviewAction(data));
     const data = dispatch(getReviewsBySpotIdThunk(spotId));
+    return data;
+  }
+}
+
+export const deleteReviewThunk = (review) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${review.id}`, {
+    method: 'DELETE'
+  })
+
+  if (response.ok) {
+    // dispatch(createReviewAction(data));
+    const data = dispatch(getReviewsBySpotIdThunk(review.spotId));
     return data;
   }
 }
