@@ -2,3 +2,97 @@
     display: flex;
     flex-direction: column;
 }
+
+.city-state-container,
+.lat-lng-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.city-container,
+.state-container,
+.lat-container,
+.lng-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-container {
+    width: 60%;
+}
+
+.city-input {
+    width: 98%;
+}
+
+.state-container {
+    width: 38%;
+    margin-left: 10px;
+}
+
+.lat-container,
+.lng-container {
+    width: 49%;
+}
+
+.lng-container {
+    margin-left: 10px;
+}
+
+.lat-input {
+    width: 98%;
+}
+
+.title-intro {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1.5px solid black;
+}
+
+.description-textarea {
+    height: 80px;
+}
+
+.paragraph-intro {
+    margin-top: 5px;
+    max-width: 500px;
+}
+
+.price-container {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.price-input {
+    width: 97%;
+}
+
+#position-line {
+    width: 100;
+    height: 30px;
+    margin-top: 30px;
+    border-top: 2px solid black;
+}
+
+.spot-spot-button {
+    margin: auto;
+    /* display: flex;
+    justify-content: center; */
+    display: grid;
+    border: 2px solid balck;
+    padding: 2px 5px 2px;
+    font-size: 15px;
+    color: white;
+    /* background-color: rgb(214, 4, 4); */
+    background-color: var(--rausch-color);
+    box-shadow: 2px 2px 5px black;
+}
+
+.spot-spot-button:hover {
+    cursor: pointer;
+    /* background-color: rgb(180, 3, 3); */
+    /* background-color: rgb(238, 53, 53); */
+    background-color: var(--darkred-color);
+}

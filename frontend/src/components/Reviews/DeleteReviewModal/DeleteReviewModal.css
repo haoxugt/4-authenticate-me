@@ -28,11 +28,11 @@
 
 
 .yes-button {
-  background-color: rgb(214, 4, 101);
+  background-color: var(--rausch-color);
 }
 
 .yes-button:hover {
-  background-color: rgb(165, 5, 80);
+  background-color: var(--darkred-color);
 }
 
 .no-button {

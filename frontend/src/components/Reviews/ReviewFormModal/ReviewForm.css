@@ -24,6 +24,6 @@
   display: flex;
 }
 
-form>.startButton {
+.review-form-container .startButton {
   width: 250px;
 }

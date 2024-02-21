@@ -53,7 +53,7 @@ export const getAllSpots = () => async (dispatch) => {
 
 export const createSpot = (spot) => async (dispatch) => {
   const { address, city, state, country, lat, lng, name, description, price } = spot;
-  console.log("spot ======> ", spot)
+  // console.log("spot ======> ", spot)
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { "Content-Type": "application/json"},

@@ -68,14 +68,14 @@
   width: 80%;
   font-size: 16px;
   height: 35px;
-  background-color: rgb(214, 4, 101);
+  background-color: var(--rausch-color);
   border-radius: 5px;
   box-shadow: 2px 2px 5px black;
 }
 
 .reserve-button:hover {
   cursor: pointer;
-  background-color: rgb(165, 5, 80);
+  background-color: var(--darkred-color);
 }
 
 .review-list-container>button {
