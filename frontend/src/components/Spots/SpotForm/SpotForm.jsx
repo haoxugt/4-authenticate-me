@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './SpotForm.css';
 import { useDispatch } from 'react-redux';
-import { editSpot, createSpot } from '../../../store/spot';
+import { editSpot, createSpot, createSpotImageThunk } from '../../../store/spot';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,15 +15,21 @@ function SpotForm({ spot, formType }) {
     const [name, setName] = useState(spot?.name);
     const [description, setDescription] = useState(spot?.description);
     const [price, setPrice] = useState(spot?.price);
-    const [spotImage1, setSpotImage1] = useState("");
-    const [spotImage2, setSpotImage2] = useState("");
-    const [spotImage3, setSpotImage3] = useState("");
-    const [spotImage4, setSpotImage4] = useState("");
-    const [spotImage5, setSpotImage5] = useState("");
+    const [spotImage1, setSpotImage1] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[0]?.url || "");
+    const [spotImage2, setSpotImage2] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[1]?.url || "");
+    const [spotImage3, setSpotImage3] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[2]?.url || "");
+    const [spotImage4, setSpotImage4] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[3]?.url || "");
+    const [spotImage5, setSpotImage5] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[4]?.url || "");
+    const disabledImageUpdate = formType === 'Edit a spot';
+    const formTitle = formType === 'Edit a spot' ? 'Update your Spot' : 'Create a New Spot';
+    const formButton = formType === 'Edit a spot' ? 'Update your Spot' : 'Create Spot';
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+    // console.log("url ==========>" , spot.SpotImages[0].url)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,6 +37,7 @@ function SpotForm({ spot, formType }) {
         setHasSubmitted(true);
 
         if (Object.values(errors).length) return null;
+
         spot = {
             ...spot,
             address,
@@ -38,18 +45,34 @@ function SpotForm({ spot, formType }) {
             state,
             country,
             lat: lat || 0,
-            lng,
+            lng: lng || 0,
             name,
             description,
             price
         }
 
+        let spotImage1Obj = { url: spotImage1, preview: true};
+        let spotImage2Obj = spotImage2 && { url: spotImage2, preview: false};
+        let spotImage3Obj = spotImage3 && { url: spotImage3, preview: false};
+        let spotImage4Obj = spotImage4 && { url: spotImage4, preview: false};
+        let spotImage5Obj = spotImage5 && { url: spotImage5, preview: false};
+
         if (formType === 'Edit a spot') {
-            const toEditSpot = await dispatch(editSpot(spot));
-            if (toEditSpot) {
-                navigate(`/spots/${toEditSpot.id}`);
+
+            // const toEditSpot = await dispatch(editSpot(spot));
+            dispatch(editSpot(spot))
+            .then(res => {
+                navigate(`/spots/${res.id}`);
                 setErrors({});
-            }
+                setHasSubmitted(false);
+                return;
+            })
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+                return;
+            })
+
         } else if (formType === 'Create a new spot') {
             // const newSpot = await dispatch(createSpot(spot));
             // console.log("newSpot =========> ", newSpot);
@@ -60,23 +83,34 @@ function SpotForm({ spot, formType }) {
             //     setErrors({ ...errors, ...newSpot.errors });
             //     console.log("errors =========> " , errors);
             // }
-
+            let newSpotId;
             dispatch(createSpot(spot))
-            .then(res => navigate(`/spots/${res.id}`))
-            .catch( async (res) => {
-                const data = await res.json();
-                console.log("response data =====>", data)
-                if (data && data.errors) setErrors(data.errors);
-                return;
-            })
+                .then(res => newSpotId = res.id)
+                .then(spotId => dispatch(createSpotImageThunk(spotId, spotImage1Obj)))
+                .then(() => spotImage2 && dispatch(createSpotImageThunk(newSpotId, spotImage2Obj)))
+                .then(() => spotImage3 && dispatch(createSpotImageThunk(newSpotId, spotImage3Obj)))
+                .then(() => spotImage4 && dispatch(createSpotImageThunk(newSpotId, spotImage4Obj)))
+                .then(() => spotImage5 && dispatch(createSpotImageThunk(newSpotId, spotImage5Obj)))
+                .then(() => {
+                    navigate(`/spots/${newSpotId}`);
+                    setErrors({});
+                    setHasSubmitted(false);
+                    return;
+                })
+                .catch(async (res) => {
+                    const data = await res.json();
+                    // console.log("response data =====>", data)
+                    if (data && data.errors) setErrors(data.errors);
+                    return;
+                })
 
         }
     }
 
     const checkImageExtension = (url) => {
-      return url.toLowerCase().endsWith("png") ||
-             url.toLowerCase().endsWith("jpg") ||
-             url.toLowerCase().endsWith("jpeg")
+        return url.toLowerCase().endsWith("png") ||
+            url.toLowerCase().endsWith("jpg") ||
+            url.toLowerCase().endsWith("jpeg")
     }
 
     useEffect(() => {
@@ -94,25 +128,28 @@ function SpotForm({ spot, formType }) {
         if (name.length === 0) err.name = "Name is required";
         if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
         if (price.length === 0) err.price = "Price is required";
-        if (price <= 0) err.price = "Price per day must be a positive number";
+        if (price?.length && price <= 0) err.price = "Price per day must be a positive number";
+
         if (spotImage1.length === 0) err.previewImage = "Preview image is required"
-        if (spotImage1.length && !checkImageExtension(spotImage1)) err.previewImage = "Image URL must end in .png, .jpg, or .jpeg";
-        if (spotImage2.length && !checkImageExtension(spotImage2)) err.spotImage2 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (spotImage3.length && !checkImageExtension(spotImage3)) err.spotImage3 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (spotImage4.length && !checkImageExtension(spotImage4)) err.spotImage4 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (spotImage5.length && !checkImageExtension(spotImage5)) err.spotImage5 = "Image URL must end in .png, .jpg, or .jpeg";
+        if (spotImage1?.length && !checkImageExtension(spotImage1)) err.previewImage = "Image URL must end in .png, .jpg, or .jpeg";
+        if (spotImage2?.length && !checkImageExtension(spotImage2)) err.spotImage2 = "Image URL must end in .png, .jpg, or .jpeg";
+        if (spotImage3?.length && !checkImageExtension(spotImage3)) err.spotImage3 = "Image URL must end in .png, .jpg, or .jpeg";
+        if (spotImage4?.length && !checkImageExtension(spotImage4)) err.spotImage4 = "Image URL must end in .png, .jpg, or .jpeg";
+        if (spotImage5?.length && !checkImageExtension(spotImage5)) err.spotImage5 = "Image URL must end in .png, .jpg, or .jpeg";
 
         setErrors(err);
         // if (!Object.values(err).length) {
 
         // }
-    }, [country, address, lat, lng, name, description, price,
-        spotImage1, spotImage2, spotImage3, spotImage4, spotImage5]);
+    }, [country, address, city, state,
+        lat, lng, name, description,
+        price, spotImage1, spotImage2, spotImage3,
+        spotImage4, spotImage5]);
 
     return (
         <div>
 
-            <h2>{formType}</h2>
+            <h2>{formTitle}</h2>
             <h3>Where&apos;s your place located?</h3>
             <p className='paragraph-intro'>Guests will only get your exact address once they booked a reservation.</p>
             <form onSubmit={handleSubmit}>
@@ -249,54 +286,66 @@ function SpotForm({ spot, formType }) {
                         placeholder='Price, per night (USD)'
                     /></span>
                     <p className='errors'>{hasSubmitted && errors.price && errors.price}</p>
+
                     {/* spot images part */}
-                    <h3 className='title-intro'>Liven up your spot with photos</h3>
-                    <p className='paragraph-intro'>Submit a link to at least one photo to publish your spot.</p>
+                    {/* {formType === "Create a new spot" &&  */}
+                    <div>
 
-                    <input
-                        // className='price-input'
-                        type="text"
-                        onChange={(e) => setSpotImage1(e.target.value)}
-                        value={spotImage1}
-                        placeholder='Preview Image URL'
-                    />
-                    <p className='errors'>{hasSubmitted && errors.previewImage && errors.previewImage}</p>
-                    <input
-                        // className='price-input'
-                        type="text"
-                        onChange={(e) => setSpotImage2(e.target.value)}
-                        value={spotImage2}
-                        placeholder='Image URL'
-                    />
-                    <p className='errors'>{hasSubmitted && errors.spotImage2 && errors.spotImage2}</p>
-                    <input
-                        // className='price-input'
-                        type="text"
-                        onChange={(e) => setSpotImage3(e.target.value)}
-                        value={spotImage3}
-                        placeholder='Image URL'
-                    />
-                    <p className='errors'>{hasSubmitted && errors.spotImage3 && errors.spotImage3}</p>
-                    <input
-                        // className='price-input'
-                        type="text"
-                        onChange={(e) => setSpotImage4(e.target.value)}
-                        value={spotImage4}
-                        placeholder='Image URL'
-                    />
-                    <p className='errors'>{hasSubmitted && errors.spotImage4 && errors.spotImage4}</p>
-                    <input
-                        // className='price-input'
+                        <h3 className='title-intro'>Liven up your spot with photos</h3>
+                        <p className='paragraph-intro'>Submit a link to at least one photo to publish your spot.
+                            {formType === 'Edit a spot' && <span className='update-image-info'> Not suppoted for updating.</span>}
+                        </p>
 
-                        type="text"
-                        onChange={(e) => setSpotImage5(e.target.value)}
-                        value={spotImage5}
-                        placeholder='Image URL'
-                    />
-                    <p className='errors'>{hasSubmitted && errors.spotImage5 && errors.spotImage5}</p>
+                        <input
+                            className='spotimage-input'
+                            type="text"
+                            onChange={(e) => setSpotImage1(e.target.value)}
+                            value={spotImage1}
+                            placeholder='Preview Image URL'
+                            disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.previewImage && errors.previewImage}</p>
+                        <input
+                            className='spotimage-input'
+                            type="text"
+                            onChange={(e) => setSpotImage2(e.target.value)}
+                            value={spotImage2}
+                            placeholder='Image URL (optional)'
+                            disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.spotImage2 && errors.spotImage2}</p>
+                        <input
+                            className='spotimage-input'
+                            type="text"
+                            onChange={(e) => setSpotImage3(e.target.value)}
+                            value={spotImage3}
+                            placeholder='Image URL (optional)'
+                            disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.spotImage3 && errors.spotImage3}</p>
+                        <input
+                            className='spotimage-input'
+                            type="text"
+                            onChange={(e) => setSpotImage4(e.target.value)}
+                            value={spotImage4}
+                            placeholder='Image URL (optional)'
+                            disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.spotImage4 && errors.spotImage4}</p>
+                        <input
+                            className='spotimage-input'
+                            type="text"
+                            onChange={(e) => setSpotImage5(e.target.value)}
+                            value={spotImage5}
+                            placeholder='Image URL (optional)'
+                            disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.spotImage5 && errors.spotImage5}</p>
+                    </div>
+                    {/* } */}
                 </div>
                 <div id="position-line"></div>
-                <button type="submit" className="spot-spot-button">{formType}</button>
+                <button type="submit" className="spot-spot-button">{formButton}</button>
             </form>
         </div>
     );

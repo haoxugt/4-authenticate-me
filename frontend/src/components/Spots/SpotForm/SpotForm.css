@@ -96,3 +96,12 @@
     /* background-color: rgb(238, 53, 53); */
     background-color: var(--darkred-color);
 }
+
+.spotimage-input {
+    width: 100%;
+}
+
+.update-image-info {
+    color: var(--babu-color);
+    font-style: italic;
+}

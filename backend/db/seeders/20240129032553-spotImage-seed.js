@@ -39,13 +39,25 @@ const spot_spotImages = [
     spotName: "Brancaster Castle",
     spotImages: [
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alnwick_Castle_in_uk.jpg/1280px-Alnwick_Castle_in_uk.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708555979/AlnwickCastle_01_q02jwu.jpg",
         preview: true
       },
       {
-        url: "https://www.alnwickcastle.com/_assets/media/library/9493.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708556005/AlnwickCastle_02_dgued8.jpg",
         preview: false
-      }
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708556008/AlnwickCastle_04_hd7cx6.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708556007/AlnwickCastle_05_jmh3w1.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708556006/AlnwickCastle_03_uzpqox.jpg",
+        preview: false
+      },
     ]
   },
   {

@@ -97,6 +97,8 @@ export const editSpot = (spot) => async (dispatch) => {
       price
     })
   });
+
+
   // console.log(" response ==============> ", await response.json())
   if (response.ok) {
     dispatch(editSpotAction(response));
@@ -121,6 +123,24 @@ export const deleteSpot = (spotId) => async (dispatch) => {
     dispatch(deleteSpotAction(spotId));
   }
   return response;
+}
+
+// create spot image thunk creator
+export const createSpotImageThunk = (spotId, spotImage) => async () => {
+  const { url, preview } = spotImage;
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json"},
+    body: JSON.stringify({
+      url,
+      preview
+    })
+  });
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+
 }
 
 const initialState = { Spots: {}, spotShow: {} };
