@@ -1,5 +1,5 @@
 // import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
-import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButtion";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButton";
 import ReviewFormModal from '../ReviewFormModal';
 
 

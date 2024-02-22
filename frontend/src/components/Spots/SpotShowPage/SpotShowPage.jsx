@@ -8,7 +8,7 @@ import { LuDot } from "react-icons/lu";
 import ReviewItem from "../../Reviews/ReviewItem";
 import PostReviewButton from "../../Reviews/PostReviewButton/PostReviewButton";
 // import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
-import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButtion";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButton";
 import DeleteReviewModal from "../../Reviews/DeleteReviewModal";
 
 import './SpotShowPage.css'
@@ -42,19 +42,13 @@ function SpotShowPage() {
     alert("Feature Coming Soon");
   }
 
-  // const postReview = async (e) => {
-  //   e.preventDefault();
-  //   console.log("post a review");
-  //   await dispatch(createReviewThunk(spotId))
-  // }
 
   if (!spot) return <h2>Spot can not be found</h2>;
   // if (!spot) return null;
   if (!Object.values(spotShow).length) {
     return <h2>Page loading</h2>;
   }
-  // if(!reviews.length) return null;
-  // console.log(" reviews =======> " , reviews)
+
 
   return (
     <div className="spotshow-page-container">

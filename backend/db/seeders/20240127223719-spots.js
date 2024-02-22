@@ -53,22 +53,6 @@ const ownerSpots = [
     ]
   },
   {
-    ownerUsername: 'CoraCrawley',
-    spots: [
-      {
-        address: "2448 Auburn Ave",
-        city: "Cincinnati",
-        state: "Ohio",
-        country: "United States of America",
-        lat: -20.15,
-        lng: -84.51,
-        name: "Levinson's House",
-        description: "Eugene Zimmennan's house.",
-        price: 100
-      }
-    ]
-  },
-  {
     ownerUsername: "MatthewCrawley",
     spots: [
       {
@@ -85,16 +69,32 @@ const ownerSpots = [
     ]
   },
   {
+    ownerUsername: 'CoraCrawley',
+    spots: [
+      {
+        address: "2448 Auburn Ave",
+        city: "Cincinnati",
+        state: "Ohio",
+        country: "United States of America",
+        lat: -20.15,
+        lng: -84.51,
+        name: "Levinson's House",
+        description: "Eugene Zimmennan's house.",
+        price: 100
+      }
+    ]
+  },
+  {
     ownerUsername: "RobertCrawley",
     spots: [
       {
-        address: "Spot6 address",
-        city: "Bampton",
-        state: "West Oxfordshire",
+        address: "Lower Basildon",
+        city: "Reading",
+        state: "Berkshire",
         country: "United Kingdom",
         lat: 32.05,
         lng: 32.05,
-        name: "Spot6",
+        name: "Basildon Park",
         description: "Built in 10-11th century.",
         price: 65
       }

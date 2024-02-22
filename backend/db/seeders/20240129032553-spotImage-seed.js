@@ -13,11 +13,23 @@ const spot_spotImages = [
     spotName: "Downton Abbey",
     spotImages: [
       {
-        url: "https://www.pbs.org/wgbh/masterpiece/wp-content/uploads/2020/06/downton-abbey-highclere-1920x1080-1.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708568972/Highclere_01_somjuf.jpg",
         preview: true
       },
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Highclere_Castle.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708569660/Highclere_06_drcsar.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708569883/Highclere_03_2_ijzxwq.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708569886/Highclere_04_2_rdg16x.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708568973/Highclere_05_nlj6hb.jpg",
         preview: false
       }
     ]
@@ -26,11 +38,23 @@ const spot_spotImages = [
     spotName: "Grantham's House",
     spotImages: [
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Bridgewater_House.jpg/1280px-Bridgewater_House.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708576497/Bridgewater_House_01_2_o3l7nd.jpg",
         preview: true
       },
       {
-        url: "https://live.staticflickr.com/720/21317434562_de0d38bf5e_z.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708570702/Bridgewater_House_02_zmsgz4.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708570702/Bridgewater_House_03_gjbcpj.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708570703/Bridgewater_House_04_k095jq.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708570704/Bridgewater_House_05_w2qsnq.jpg",
         preview: false
       }
     ]
@@ -64,11 +88,48 @@ const spot_spotImages = [
     spotName: "Levinson's House",
     spotImages: [
       {
-        url: "https://images1.loopnet.com/i2/v_ieoBtBeIIpBcDF0aVDcK3GrUVnahs5oHp43_DSffs/116/2448-Auburn-Ave-Cincinnati-OH-Primary-Photo-1-LargeHighDefinition.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585636/Ohio_01_luomph.avif",
         preview: true
       },
       {
-        url: "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/67401658_10217524323771380_1151310900460781568_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=755d08&_nc_ohc=y_4v8sw7RKoAX89wHJ8&_nc_ht=scontent-sjc3-1.xx&oh=00_AfBlIKwEoKW-eIgtrxz-M3lKCa6SIk_tPc25v5CxgOid6w&oe=65DE2F7A",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585637/ohio_02_d8lcue.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585639/ohio_03_nlkuh2.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585641/ohio_04_fjwpio.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585642/Ohio_05_iadafa.jpg",
+        preview: false
+      }
+    ]
+  },
+  {
+    spotName: "Basildon Park",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708575742/Basildon_Park_01_x9mvmr.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708575742/Basildon_Park_02_g7z0ua.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708575744/Basildon_Park_04_oiz23t.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708575744/Basildon_Park_05_gl1wds.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708575742/Basildon_Park_03_gplr20.jpg",
         preview: false
       }
     ]
@@ -77,17 +138,24 @@ const spot_spotImages = [
     spotName: "Crawley's House",
     spotImages: [
       {
-        url: "https://live.staticflickr.com/7729/18358294931_95ddfa60fa_b.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708577653/Crawley_01_zaprmx.jpg",
         preview: true
-      }
-    ]
-  },
-  {
-    spotName: "Crawley's House",
-    spotImages: [
+      },
       {
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/The_Rectory-Bampton.JPG/1920px-The_Rectory-Bampton.JPG",
-        preview: true
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708577653/Crawley_02_pn5qfh.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708577654/Crawley_03_lbmqwt.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708577656/Crawley_04_rgdofp.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585605/Crawley_05_mlkl71.jpg",
+        preview: false
       }
     ]
   }

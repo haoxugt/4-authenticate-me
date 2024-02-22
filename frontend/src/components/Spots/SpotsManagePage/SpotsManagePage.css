@@ -1,0 +1,32 @@
+/* .manage-spot-title {
+
+} */
+.manage-menu {
+  display: flex;
+  flex-direction: column;
+  margin-left:0;
+  align-items: flex-start;
+  width: 100%;
+  /* justify-content: flex-start; */
+}
+
+.manage-spot-button {
+  display: flex;
+  gap:5px;
+}
+
+.manage-spot-button> button {
+  background-color: rgb(163, 160, 160);
+  width: 30%;
+  color: white;
+}
+
+.manage-spot-button> button:hover {
+  background-color: rgb(104, 102, 102);
+  box-shadow: 2px 2px 2px black;
+
+}
+
+.spot-button-container>a {
+  text-decoration: none;
+}
