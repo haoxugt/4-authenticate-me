@@ -12,74 +12,74 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await User.bulkCreate([
       {
-        email: 'robertcrawley@downtonabbey.com',
+        email: 'roberty@downton.com',
         username: 'RobertCrawley',
         firstName: 'Robert',
         lastName: 'Crawley',
         hashedPassword: bcrypt.hashSync('RobertCrawley')
       },
       {
-        email: 'coracrawley@downtonabbey.com',
-        username: 'CoraCrawley',
-        firstName: 'Cora',
-        lastName: 'Crawley',
-        hashedPassword: bcrypt.hashSync('CoraCrawley')
-      },
-      {
-        email: 'marycrawley@downtonabbey.com',
-        username: 'MaryCrawley',
-        firstName: 'Mary',
-        lastName: 'Crawley',
-        hashedPassword: bcrypt.hashSync('MaryCrawley')
-      },
-      {
-        email: 'matthewcrawley@machesterlawyer.org',
+        email: 'matthew@lawyer.org',
         username: 'MatthewCrawley',
         firstName: 'Matthew',
         lastName: 'Crawley',
         hashedPassword: bcrypt.hashSync('MatthewCrawley')
       },
       {
-        email: 'edithppelham@brancastercastle.com',
+        email: 'cora@downton.com',
+        username: 'CoraCrawley',
+        firstName: 'Cora',
+        lastName: 'Crawley',
+        hashedPassword: bcrypt.hashSync('CoraCrawley')
+      },
+      {
+        email: 'mary@downton.com',
+        username: 'MaryCrawley',
+        firstName: 'Mary',
+        lastName: 'Crawley',
+        hashedPassword: bcrypt.hashSync('MaryCrawley')
+      },
+      {
+        email: 'edith@brancaster.com',
         username: 'EdithPelham',
         firstName: 'Edith',
         lastName: 'Pelham',
         hashedPassword: bcrypt.hashSync('EdithPelham')
       },
       {
-        email: 'henryttalbot@downtonabbey.com',
+        email: 'henry@downton.com',
         username: 'HenryTalbot',
         firstName: 'Henry',
         lastName: 'Talbot',
         hashedPassword: bcrypt.hashSync('HenryTalbot')
       },
       {
-        email: 'seventh.user@downtonabbey.com',
-        username: 'seventhuser',
-        firstName: 'Seventh',
-        lastName: 'User',
-        hashedPassword: bcrypt.hashSync('secret password')
+        email: 'rose@duneagle.com',
+        username: 'RoseAldridge',
+        firstName: 'Rose',
+        lastName: 'Aldridge',
+        hashedPassword: bcrypt.hashSync('RoseAldridge')
       },
       {
-        email: 'eighth.user@downtonabbey.com',
-        username: 'eighthuser',
-        firstName: 'Eighth',
-        lastName: 'User',
-        hashedPassword: bcrypt.hashSync('secret password')
+        email: 'national@filoli.org',
+        username: 'NationalTrust',
+        firstName: 'National',
+        lastName: 'Trust',
+        hashedPassword: bcrypt.hashSync('NationalTrust')
       },
       {
-        email: 'ninth.user@downtonabbey.com',
-        username: 'ninthuser',
-        firstName: 'Ninth',
-        lastName: 'User',
-        hashedPassword: bcrypt.hashSync('secret password')
+        email: 'haoxugt@gmail.com',
+        username: 'HaoXu',
+        firstName: 'Hao',
+        lastName: 'Xu',
+        hashedPassword: bcrypt.hashSync('HaoXu')
       },
       {
-        email: 'tenth.user@downtonabbey.com',
-        username: 'tenthuser',
-        firstName: 'Tenth',
-        lastName: 'User',
-        hashedPassword: bcrypt.hashSync('secret password')
+        email: 'shumei@miho.jp',
+        username: 'Shumei',
+        firstName: 'Shumeiculture',
+        lastName: 'Foundation',
+        hashedPassword: bcrypt.hashSync('Shumei')
       }
     ], { validate: true });
   },
@@ -89,7 +89,7 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       username: { [Op.in]: ['RobertCrawley', 'CoraCrawley', 'MaryCrawley', 'MatthewCrawley',
-      'EdithPelham', 'HenryTalbot', 'seventhuser', 'eighthuser', 'ninthuser', 'tenthuser'] }
+      'EdithPelham', 'HenryTalbot', 'RoseAldridge', 'NationalTrust', 'haoxugt', 'Shumei'] }
     }, {});
   }
 };

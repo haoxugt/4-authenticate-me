@@ -85,26 +85,26 @@ const spot_spotImages = [
     ]
   },
   {
-    spotName: "Levinson's House",
+    spotName: "Duneagle Castle",
     spotImages: [
       {
-        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585636/Ohio_01_luomph.avif",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708624928/Frontend/Inveraray_Castle/Inveraray_02_jeu2it.jpg",
         preview: true
       },
       {
-        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585637/ohio_02_d8lcue.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708624931/Frontend/Inveraray_Castle/Inveraray_05_msesy5.jpg",
         preview: false
       },
       {
-        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585639/ohio_03_nlkuh2.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708624929/Frontend/Inveraray_Castle/Inveraray_03_klgqcz.jpg",
         preview: false
       },
       {
-        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585641/ohio_04_fjwpio.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708624933/Frontend/Inveraray_Castle/Inveraray_06_snp7d9.jpg",
         preview: false
       },
       {
-        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585642/Ohio_05_iadafa.jpg",
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708624935/Frontend/Inveraray_Castle/Inveraray_07_wzgp4j.jpg",
         preview: false
       }
     ]
@@ -158,7 +158,108 @@ const spot_spotImages = [
         preview: false
       }
     ]
-  }
+  },
+  {
+    spotName: "Levinson's House",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708636736/Frontend/Ohio/Ohio_01_cfhqvl.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585637/ohio_02_d8lcue.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585639/ohio_03_nlkuh2.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585641/ohio_04_fjwpio.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708585642/Ohio_05_iadafa.jpg",
+        preview: false
+      }
+    ]
+  },
+  {
+    spotName: "Miho Museum",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708636642/Frontend/Miho/Miho_01_oe1jnt.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708636644/Frontend/Miho/Miho_02_q4oizj.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708636645/Frontend/Miho/Miho_03_w0bimj.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708636646/Frontend/Miho/Miho_04_txed9q.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708636649/Frontend/Miho/Miho_05_wssft6.jpg",
+        preview: false
+      }
+    ]
+  },
+  {
+    spotName: "Filoli",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708640751/Frontend/Filoli/Filoli_01_nbwojw.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708640753/Frontend/Filoli/filoli_02_usivg4.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708640755/Frontend/Filoli/filoli_03_nemuhr.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708640756/Frontend/Filoli/filoli_04_gouier.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708640759/Frontend/Filoli/filoli_05_zdi0np.jpg",
+        preview: false
+      }
+    ]
+  },
+  // {
+  //   spotName: "",
+  //   spotImages: [
+  //     {
+  //       url: "",
+  //       preview: true
+  //     },
+  //     {
+  //       url: "",
+  //       preview: false
+  //     },
+  //     {
+  //       url: "",
+  //       preview: false
+  //     },
+  //     {
+  //       url: "",
+  //       preview: false
+  //     },
+  //     {
+  //       url: "",
+  //       preview: false
+  //     }
+  //   ]
+  // },
+
 ];
 
 /** @type {import('sequelize-cli').Migration} */
@@ -166,14 +267,14 @@ module.exports = {
   async up(queryInterface, Sequelize) {
 
     for (let spotImageIdx = 0; spotImageIdx < spot_spotImages.length; spotImageIdx++) {
-      const {spotName, spotImages } = spot_spotImages[spotImageIdx];
-      const spot =  await Spot.findOne({
+      const { spotName, spotImages } = spot_spotImages[spotImageIdx];
+      const spot = await Spot.findOne({
         where: {
           name: spotName
         }
       });
 
-      for (let imgIdx = 0 ; imgIdx < spotImages.length; imgIdx++) {
+      for (let imgIdx = 0; imgIdx < spotImages.length; imgIdx++) {
         const spotImage = spotImages[imgIdx];
         await spot.createSpotImage(spotImage);
       }

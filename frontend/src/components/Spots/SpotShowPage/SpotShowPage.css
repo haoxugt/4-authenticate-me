@@ -12,6 +12,7 @@
   margin-top: 15px;
   padding: 0px;
   box-sizing: 0;
+  /* margin-bottom: 25px;; */
 }
 
 .spotshow-img-container>img {
@@ -45,8 +46,20 @@
 
 .details-info-container {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 10px;
   width: 100%;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: solid 2px grey;
+}
+
+.spot-owner-description-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 70%;
 }
 
 .price-review-box {
@@ -57,7 +70,8 @@
   padding: 15px;
   gap: 15px;
   border-radius: 15px;
-  ;
+  min-width: 200px;
+  max-width: 28%;
 }
 
 .price-review-box>p {
@@ -66,12 +80,6 @@
   gap: 30px;
 }
 
-.details-info-container {
-  margin-top: 10px;
-  padding-bottom: 20px;
-
-  border-bottom: solid 2px grey;
-}
 
 /* reviews */
 .review-list-container {

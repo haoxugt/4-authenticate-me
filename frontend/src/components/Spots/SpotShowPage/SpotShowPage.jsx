@@ -70,9 +70,9 @@ function SpotShowPage() {
         </div>
       </div>
       <div className="details-info-container">
-        <div>
+        <div className="spot-owner-description-container">
           <h2>Hosted by {spotShow?.Owner.firstName} {spotShow?.Owner.lastName}</h2>
-          <p>{spotShow?.description}</p>
+          {spotShow?.description.split('\n').map((el, index) => <p key={`description-${index}`}>{el}</p>)}
         </div>
         <div className="price-review-box">
           <p>
