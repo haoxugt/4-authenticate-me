@@ -132,22 +132,22 @@ const ownerSpots = [
       }
     ]
   },
-  {
-    ownerUsername: "RobertCrawley",
-    spots: [
-      {
-        address: "Spot9 address",
-        city: "Bampton",
-        state: "West Oxfordshire",
-        country: "United Kingdom",
-        lat: -40.93,
-        lng: 40.01,
-        name: "Spot9",
-        description: "Built in 10-11th century.",
-        price: 55
-      }
-    ]
-  },
+  // {
+  //   ownerUsername: "RobertCrawley",
+  //   spots: [
+  //     {
+  //       address: "Spot9 address",
+  //       city: "Bampton",
+  //       state: "West Oxfordshire",
+  //       country: "United Kingdom",
+  //       lat: -40.93,
+  //       lng: 40.01,
+  //       name: "Spot9",
+  //       description: "Built in 10-11th century.",
+  //       price: 55
+  //     }
+  //   ]
+  // },
   {
     ownerUsername: 'CoraCrawley',
     spots: [
@@ -161,6 +161,38 @@ const ownerSpots = [
         name: "Levinson's House",
         description: "Eugene Zimmennan's house.",
         price: 100
+      }
+    ]
+  },
+  {
+    ownerUsername: "NickHoward",
+    spots: [
+      {
+        address: "Castle Howard",
+        city: "York",
+        state: "North Yorkshire",
+        country: "United Kingdom",
+        lat: 54.121389,
+        lng: -0.905833,
+        name: "Castle Howard",
+        description: "Castle Howard is a stately home in North Yorkshire, England, within the civil parish of Henderskelfe, located 15 miles (24 km) north of York. It is a private residence and has been the home of the Carlisle branch of the Howard family for more than 300 years. Castle Howard is not a fortified structure, but the term \"castle\" is sometimes used in the name of an English country house that was built on the site of a former castle.\nThe house is familiar to television and film audiences as the fictional \"Brideshead\", both in Granada Television's 1981 adaptation of Evelyn Waugh's Brideshead Revisited and in a two-hour 2008 adaptation for cinema.",
+        price: 115
+      }
+    ]
+  },
+  {
+    ownerUsername: "AndreHugel",
+    spots: [
+      {
+        address: "12 Rue des Tanneurs",
+        city: "Colmar",
+        state: "Alsace",
+        country: "France",
+        lat: 48.0753,
+        lng: 7.3593,
+        name: "Brasserie Des Tanneurs",
+        description: "Nestling in the heart of Colmar's historic centre, the Brasserie des Tanneurs enjoys an ideal central location, making it a must for visitors in search of a unique tasting experience. Situated at the foot of the unmissable Koïfhus and the colourful facades of the old town, this Alsatian Brasserie offers a real haven for discovery-seekers in search of authenticity.\nThe menu of traditional or revisited dishes showcases these culinary delights prepared using fresh, seasonal ingredients from local producers, which blend harmoniously with regional beers and wines. Each bite is a gustatory journey, a symphony of subtle tastes that celebrate Alsace's culinary heritage.\nThe team, true ambassadors of Alsatian hospitality, welcome you with kindness and guide you through the menu, sharing their passion for our sweet and savoury specialities.\nTheir commitment to quality and attention to detail is reflected in every plate that leaves the kitchen, offering an exceptional culinary experience so that every stroke of the fork is a true ode to regional flavours and an immersion in the Alsatian terroir.",
+        price: 123
       }
     ]
   },

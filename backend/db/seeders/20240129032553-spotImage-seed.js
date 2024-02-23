@@ -234,6 +234,56 @@ const spot_spotImages = [
       }
     ]
   },
+  {
+    spotName: "Castle Howard",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708670771/Frontend/Howard/Howard_01_pm1umz.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708670773/Frontend/Howard/Howard_02_big3on.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708670774/Frontend/Howard/Howard_03_y8amis.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708670777/Frontend/Howard/Howard_04_hgajcd.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708671136/Frontend/Howard/Howard_06_bdiein.jpg",
+        preview: false
+      }
+    ]
+  },
+  {
+    spotName: "Brasserie Des Tanneurs",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708676500/Frontend/Colmar/Colmar_09_dyypbj.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708676493/Frontend/Colmar/Colmar_01_fke9t1.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708677117/Frontend/Colmar/Colmar_04_fkvcbz.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708676498/Frontend/Colmar/Colmar_07_ycgfgd.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708677008/Frontend/Colmar/Colmar_10_lcxogd.jpg",
+        preview: false
+      }
+    ]
+  },
   // {
   //   spotName: "",
   //   spotImages: [
