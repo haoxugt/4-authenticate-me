@@ -22,6 +22,7 @@
 }
 
 .manage-spot-button> button:hover {
+  cursor: pointer;
   background-color: rgb(104, 102, 102);
   box-shadow: 2px 2px 2px black;
 

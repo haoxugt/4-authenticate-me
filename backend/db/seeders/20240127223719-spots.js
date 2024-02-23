@@ -17,10 +17,10 @@ const ownerSpots = [
         city: "Highclere",
         state: "Newbury",
         country: "United Kingdom",
-        lat: 50.32,
-        lng: -1.36,
+        lat: 51.3267,
+        lng: -1.3614,
         name: "Downton Abbey",
-        description: "Built in 1679.",
+        description: "Highclere Castle is a Grade I listed country house built in 1679 and largely renovated in the 1840s, with a park designed by Capability Brown in the 18th century. The 5,000-acre estate is in Highclere in Hampshire, England, about 5 miles (8 km) south of Newbury, Berkshire, and 9.5 miles (15 km) north of Andover, Hampshire. The 19th-century renovation is in a Jacobethan and Italianate style produced by architect Charles Barry. It is the country seat of the Earls of Carnarvon, a branch of the Anglo-Welsh Herbert family.\nHighclere Castle has been used as a filming location for several films and television series, including 1990s comedy series Jeeves and Wooster, and achieved international fame as the main location for the ITV historical drama series Downton Abbey (2010-15) and the 2019 and 2022 films based on it.\nThe house, Egyptian exhibition, and gardens are open to the public for self-guided tours during the summer months and at other times during the rest of the year, such as Christmas and Easter. The house also holds ticketed events, such as the Battle Proms picnic concert, and special guided tours throughout the year.",
         price: 186.36
       },
       {
@@ -28,10 +28,10 @@ const ownerSpots = [
         city: "London",
         state: "Great London",
         country: "United Kingdom",
-        lat: 20.66,
-        lng: 30,
+        lat: 51.5047,
+        lng: -0.14,
         name: "Grantham's House",
-        description: "Built in 1854.",
+        description: "Bridgewater House is a townhouse located at 14 Cleveland Row in the St James's area of London, England. It is a Grade I listed building.\nThe exterior appears as Marchmain House in the 1981 television adaptation of Brideshead Revisited and as Grantham House, the Crawleys\' London house, in the TV historical drama series Downton Abbey.",
         price: 134.99
       }
     ]
@@ -44,10 +44,10 @@ const ownerSpots = [
         city: "Alnwick",
         state: "Northumberland",
         country: "United Kingdom",
-        lat: 0.01,
-        lng: -20,
+        lat: 55.4158,
+        lng: -1.7062,
         name: "Brancaster Castle",
-        description: "Built in 11th century.",
+        description: "Alnwick Castle is a castle and country house in Alnwick in the English county of Northumberland. It is the seat of the 12th Duke of Northumberland, built following the Norman conquest and renovated and remodelled a number of times. It is a Grade I listed building now the home of Ralph Percy, 12th Duke of Northumberland and his family. In 2016, the castle received over 600,000 visitors per year when combined with adjacent attraction the Alnwick Garden.",
         price: 109.99
       }
     ]
@@ -60,10 +60,10 @@ const ownerSpots = [
         city: "Bampton",
         state: "West Oxfordshire",
         country: "United Kingdom",
-        lat: -40.93,
-        lng: 70.56,
+        lat: 51.7278,
+        lng: -1.5489,
         name: "Crawley's House",
-        description: "Built in 10-11th century.",
+        description: "The Church of Saint Mary the Virgin is the Church of England parish church of Bampton, West Oxfordshire. It is in the Archdeaconry of Dorchester in the Diocese of Oxford.\nThe church was built in the 10th or 11th century as an Anglo-Saxon minster with a tower. In the 12th century it was rebuilt as a cruciform Norman building centred on a crossing under the tower. Gothic additions to the church were made several times in the 13th, 14th and 15th centuries. The church is a Grade I listed building.\nSt Mary's is used as the set of St Michael and All Angels' Church in the television series Downton Abbey. Churchgate House is additionally used as the set of Crawley House, the residence of Isobel and Matthew Crawley.",
         price: 90
       }
     ]
@@ -92,10 +92,10 @@ const ownerSpots = [
         city: "Reading",
         state: "Berkshire",
         country: "United Kingdom",
-        lat: 32.05,
-        lng: 32.05,
+        lat: 51.4989,
+        lng: -1.1227,
         name: "Basildon Park",
-        description: "Built in 10-11th century.",
+        description: "Basildon Park is a country house situated 2 miles (3 kilometres) south of Goring-on-Thames and Streatley in Berkshire, between the villages of Upper Basildon and Lower Basildon. It is owned by the National Trust and is a Grade I listed building. The house was built between 1776 and 1783 for Sir Francis Sykes and designed by John Carr in the Palladian style at a time when Palladianism was giving way to the newly fashionable neoclassicism. Thus, the interiors are in a neoclassical \"Adamesque\" style.\nThe interiors of Basildon stood in for the Crawley family's London mansion, Grantham House, on the series Downton Abbey.",
         price: 65
       }
     ]
@@ -125,7 +125,7 @@ const ownerSpots = [
         state: "California",
         country: "US",
         lat: 37.4704,
-        lng: -122.310703,
+        lng: -122.3107,
         name: "Filoli",
         description: "Filoli, also known as the Bourn-Roth Estate, is a country house set in 16 acres (6.5 ha) of formal gardens surrounded by a 654-acre (265 ha) estate, located in Woodside, California, about 25 miles (40 km) south of San Francisco, at the southern end of Crystal Springs Reservoir, on the eastern slope of the Santa Cruz Mountains. Now owned by the National Trust for Historic Preservation, Filoli is open to the public. The site is both a California Historical Landmark and listed on the National Register of Historic Places.",
         price: 65
@@ -156,10 +156,10 @@ const ownerSpots = [
         city: "Cincinnati",
         state: "Ohio",
         country: "United States of America",
-        lat: -20.15,
-        lng: -84.51,
+        lat: 39.1268,
+        lng: -84.5080,
         name: "Levinson's House",
-        description: "Eugene Zimmennan's house.",
+        description: "Cora Levinson's prototype is from Helena Keith-Falconer, Countess of Kintore, formerly Helena Montagu, Duchess of Manchester, was an American heiress who twice married into the British aristocracy, firstly to the 9th Duke of Manchester and then to the 10th Earl of Kintore. Helena was born in Cincinnati, Hamilton County, Ohio. She was the only child of Eugene Zimmerman and wife Marietta Zimmerman.\nZimmerman's family lived at 2448 Auburn Avenue, the southeast corner of Auburn and McMillan in Mount Auburn, an affluent neighborhood in Cincinnati, Hamilton County, Ohio",
         price: 100
       }
     ]

@@ -87,14 +87,19 @@
 }
 
 /* button:disabled, */
-.startButton[disabled]{
-    background-color: rgb(187, 184, 185);
-}
-
 .startButton:hover{
     cursor: pointer;
     background-color: var(--darkred-color);
 }
+.startButton[disabled]{
+    cursor: default;
+    background-color: rgb(187, 184, 185);
+}
+
+
+/* .startButton:hover[disabled]{
+    cursor: deafult;
+} */
 
 .Demouser-login{
     margin-top: 7px;;

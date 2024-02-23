@@ -6,6 +6,7 @@ import { getSpotById } from "../../../store/spot";
 
 function EditSpotFormPage() {
   const { spotId } = useParams();
+  const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const spot = useSelector(state => state.spot.spotShow);
 
@@ -15,6 +16,11 @@ function EditSpotFormPage() {
     }
     getSingleSpotRun();
   }, [dispatch, spotId]);
+
+  if (!sessionUser) return <h2>You must log in.</h2>;
+  if ( sessionUser && sessionUser.id !== spot.ownerId) {
+    return <h2>You must be the owner of this spot.</h2>;
+  }
 
   if (!Object.values(spot).length) return (<></>);
 

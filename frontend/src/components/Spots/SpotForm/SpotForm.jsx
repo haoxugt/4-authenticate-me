@@ -150,7 +150,7 @@ function SpotForm({ spot, formType }) {
         <div>
 
             <h2>{formTitle}</h2>
-            <h3>Where&apos;s your place located?</h3>
+            <h3>1. Where&apos;s your place located?</h3>
             <p className='paragraph-intro'>Guests will only get your exact address once they booked a reservation.</p>
             <form onSubmit={handleSubmit}>
 
@@ -247,7 +247,7 @@ function SpotForm({ spot, formType }) {
 
 
                     {/* spot description part */}
-                    <h3 className='title-intro'>Describe your place to guests</h3>
+                    <h3 className='title-intro'>2. Describe your place to guests</h3>
                     <p className='paragraph-intro'>Mention the best features of your space,
                         any special amentities like fast wifi or parking, and what you
                         love about the neighborhood.</p>
@@ -261,7 +261,7 @@ function SpotForm({ spot, formType }) {
                     {hasSubmitted && errors.description && <span className='errors'>{errors.description}</span>}
 
                     {/* spot name part */}
-                    <h3 className='title-intro'>Create a title for your spot</h3>
+                    <h3 className='title-intro'>3. Create a title for your spot</h3>
                     <p className='paragraph-intro'>Catch guests&apos; attention with a spot title that highlights what makes
                         your place special.</p>
                     <input
@@ -274,7 +274,7 @@ function SpotForm({ spot, formType }) {
                     {hasSubmitted && errors.name && <span className='errors'>{errors.name}</span>}
 
                     {/* spot price part */}
-                    <h3 className='title-intro'>Set a base price for your spot</h3>
+                    <h3 className='title-intro'>4. Set a base price for your spot</h3>
                     <p className='paragraph-intro'>Competitive pricing can help your listing stand out and rank higher
                         in search results.</p>
 
@@ -291,7 +291,7 @@ function SpotForm({ spot, formType }) {
                     {/* {formType === "Create a new spot" &&  */}
                     <div>
 
-                        <h3 className='title-intro'>Liven up your spot with photos</h3>
+                        <h3 className='title-intro'>5. Liven up your spot with photos</h3>
                         <p className='paragraph-intro'>Submit a link to at least one photo to publish your spot.
                             {formType === 'Edit a spot' && <span className='update-image-info'> Not suppoted for updating.</span>}
                         </p>
