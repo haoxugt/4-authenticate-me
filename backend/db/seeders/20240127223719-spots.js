@@ -132,22 +132,22 @@ const ownerSpots = [
       }
     ]
   },
-  // {
-  //   ownerUsername: "RobertCrawley",
-  //   spots: [
-  //     {
-  //       address: "Spot9 address",
-  //       city: "Bampton",
-  //       state: "West Oxfordshire",
-  //       country: "United Kingdom",
-  //       lat: -40.93,
-  //       lng: 40.01,
-  //       name: "Spot9",
-  //       description: "Built in 10-11th century.",
-  //       price: 55
-  //     }
-  //   ]
-  // },
+  {
+    ownerUsername: "DarioSattui",
+    spots: [
+      {
+        address: "4045 St Helena Hwy",
+        city: "Calistoga",
+        state: "California",
+        country: "USA",
+        lat: 38.5584,
+        lng: -122.5426,
+        name: "Castello di Amorosa",
+        description: "Castello di Amorosa is a winery located near Calistoga, California. The winery opened to the public in April 2007, as the project of a fourth-generation vintner, Dario Sattui, who also owns and operates the V. Sattui Winery named after his great-grandfather, Vittorio Sattui, who originally established a winery in San Francisco in 1885 after emigrating from Italy to California.",
+        price: 65
+      }
+    ]
+  },
   {
     ownerUsername: 'CoraCrawley',
     spots: [

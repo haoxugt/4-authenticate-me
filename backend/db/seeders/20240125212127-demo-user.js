@@ -68,7 +68,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('NationalTrust')
       },
       {
-        email: 'haoxugt@gmail.com',
+        email: 'haoxu@net.com',
         username: 'HaoXu',
         firstName: 'Hao',
         lastName: 'Xu',
@@ -94,7 +94,14 @@ module.exports = {
         firstName: 'Andre',
         lastName: 'Hugel',
         hashedPassword: bcrypt.hashSync('AndreHugel')
-      }
+      },
+      {
+        email: 'dario@cda.com',
+        username: 'DarioSattui',
+        firstName: 'Dario',
+        lastName: 'Sattui',
+        hashedPassword: bcrypt.hashSync('DarioSattui')
+      },
     ], { validate: true });
   },
 
@@ -104,7 +111,8 @@ module.exports = {
     return queryInterface.bulkDelete(options, {
       username: {
         [Op.in]: ['RobertCrawley', 'CoraCrawley', 'MaryCrawley', 'MatthewCrawley',
-          'EdithPelham', 'HenryTalbot', 'RoseAldridge', 'NationalTrust', 'haoxugt', 'Shumei']
+                  'EdithPelham', 'HenryTalbot', 'RoseAldridge', 'NationalTrust',
+                  'haoxugt', 'Shumei', 'NickHoward', 'AndreHugel', 'DarioSattui']
       }
     }, {});
   }

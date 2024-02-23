@@ -284,32 +284,31 @@ const spot_spotImages = [
       }
     ]
   },
-  // {
-  //   spotName: "",
-  //   spotImages: [
-  //     {
-  //       url: "",
-  //       preview: true
-  //     },
-  //     {
-  //       url: "",
-  //       preview: false
-  //     },
-  //     {
-  //       url: "",
-  //       preview: false
-  //     },
-  //     {
-  //       url: "",
-  //       preview: false
-  //     },
-  //     {
-  //       url: "",
-  //       preview: false
-  //     }
-  //   ]
-  // },
-
+  {
+    spotName: "Castello di Amorosa",
+    spotImages: [
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708702543/Frontend/Amorosa/Amorosa_01_ywctrb.jpg",
+        preview: true
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708702543/Frontend/Amorosa/Amorosa_09_im5dgc.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708702542/Frontend/Amorosa/Amorosa_06_cnsxlf.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708702543/Frontend/Amorosa/Amorosa_11_xnm7fq.jpg",
+        preview: false
+      },
+      {
+        url: "https://res.cloudinary.com/dwrohcbtx/image/upload/v1708702542/Frontend/Amorosa/Amorosa_10_zc8mhk.jpg",
+        preview: false
+      }
+    ]
+  }
 ];
 
 /** @type {import('sequelize-cli').Migration} */
