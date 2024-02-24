@@ -70,7 +70,7 @@ router.put('/:reviewId', requireAuth, validateReviewId,
 
         await reviewToEdit.save();
         let reviewResponse = reviewToEdit.toJSON();
-        reviewResponse = formatDate(reviewResponse);
+        // reviewResponse = formatDate(reviewResponse);
         return res.json(reviewResponse);
 
     });
