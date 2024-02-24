@@ -1,16 +1,32 @@
 .nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 2400px;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    width: 100vw;
+    /* max-width: 2400px; */
     position: sticky;
     top: 0px;
     padding-top: 10px;
     padding-bottom: 12px;
     /* left:0; */
-    z-index: 9;
+    z-index: 1;
     background-color: white;
+}
+
+.nav-inner-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100vw - 100px);
+    max-width: 2400px;
+    /* position: sticky; */
+    /* top: 0px; */
+    margin: auto;
+
+    /* padding-left: calc((100vw - 2080px) / 2); */
+    /* left:0; */
+    /* z-index: 1; */
+    /* background-color: white; */
 }
 
 .profile-button-container {
@@ -21,6 +37,7 @@
     height: 60px;
     display: flex;
     align-items: center;
+
 }
 
 .nav-container>img:hover {

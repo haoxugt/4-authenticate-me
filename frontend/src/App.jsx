@@ -11,6 +11,7 @@ import SpotShowPage from './components/Spots/SpotShowPage';
 import SpotsManagePage from './components/Spots/SpotsManagePage/SpotsManagePage';
 import EditSpotFormPage from './components/Spots/EditSpotFormPage';
 import CreateSpotFormPage from './components/Spots/CreateSpotFormPage';
+import Footer from './components/HTMLItems/Footer';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -23,9 +24,12 @@ function Layout() {
   }, [dispatch]);
 
   return (
-    <div className='page-container'>
+    <div className='header-page-container'>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
+      <div className='page-container'>
+        {isLoaded && <Outlet />}
+        <Footer />
+      </div>
     </div>
   )
 }

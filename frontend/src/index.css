@@ -24,11 +24,17 @@
 
 }
 
+.header-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(100vw - 100px);
+  width: calc(100vw - 102px);
   max-width: 2400px;
   margin: 0px 50px 20px;
   /* margin: 0; */

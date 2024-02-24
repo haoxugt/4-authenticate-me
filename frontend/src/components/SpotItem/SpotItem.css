@@ -18,7 +18,7 @@
   height: auto;
   text-decoration: none;
   position: relative;
-  z-index: 0;
+  /* z-index: 0; */
   /* padding-bottom: 8px;
   margin-bottom: 50px; */
   margin-top: 13px;
@@ -46,7 +46,7 @@
   position: absolute;
   top: 5px;
   left: 10px;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .spot-card-container:hover .tooltiptext {

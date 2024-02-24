@@ -1,5 +1,6 @@
 import './SpotItem.css';
 import { FaStar } from "react-icons/fa";
+import PriceTag from '../HTMLItems/PriceTag';
 
 function SpotItem({ spot }) {
 
@@ -12,7 +13,8 @@ function SpotItem({ spot }) {
         <span><FaStar /> {spot.avgRating === "None" ? "New" :
         (Number.isInteger(spot.avgRating) ? spot.avgRating + ".0" : spot.avgRating)}</span>
       </div>
-      <span>${spot.price} night</span>
+      {/* <span>${spot.price} night</span> */}
+      <PriceTag price={spot.price} />
     </div>
   )
 }

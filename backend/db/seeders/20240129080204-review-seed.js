@@ -16,13 +16,13 @@ const spotReviews = [
         username: "MatthewCrawley",
         review: "This is a fantastic place!",
         stars: 5,
-        createdAt: '2022-02-20'
+        createdAt: '2022-07-20'
       },
       {
         username: "HenryTalbot",
         review: "This is an awesome spot!",
         stars: 4,
-        createdAt: '2023-02-20'
+        createdAt: '2023-05-20'
       }
     ]
   },
@@ -33,7 +33,7 @@ const spotReviews = [
         username: "RobertCrawley",
         review: "This is a good place!",
         stars: 5,
-        createdAt: '2022-03-20'
+        createdAt: '2022-08-20'
       },
       {
         username: "CoraCrawley",
@@ -50,7 +50,7 @@ const spotReviews = [
         username: "MaryCrawley",
         review: "Fair good.",
         stars: 3,
-        createdAt: '2022-04-20'
+        createdAt: '2022-09-20'
       },
       {
         username: "RobertCrawley",
@@ -67,7 +67,7 @@ const spotReviews = [
         username: "MatthewCrawley",
         review: "Nice stay here.",
         stars: 4,
-        createdAt: '2022-05-20'
+        createdAt: '2022-10-20'
       },
       {
         username: "EdithPelham",
@@ -84,7 +84,7 @@ const spotReviews = [
         username: "HenryTalbot",
         review: "Want to have a try.",
         stars: 3,
-        createdAt: '2022-01-01'
+        createdAt: '2022-12-01'
       }
     ]
   },
@@ -95,7 +95,7 @@ const spotReviews = [
         username: "CoraCrawley",
         review: "Like home!",
         stars: 5,
-        createdAt: '2024-02-20'
+        createdAt: '2024-01-20'
       }
     ]
   }

@@ -50,7 +50,7 @@
   justify-content: space-between;
   gap: 10px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 25px;
   padding-bottom: 20px;
   border-bottom: solid 2px grey;
 }
@@ -62,22 +62,30 @@
   width: 70%;
 }
 
+.spot-owner-description-container>h2,
+.spot-owner-description-container>p {
+  margin-bottom: 10px;
+  ;
+}
+
 .price-review-box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: solid 1px grey;
+  border: solid 2px grey;
   padding: 15px;
   gap: 15px;
   border-radius: 15px;
-  min-width: 200px;
+  min-width: 285px;
   max-width: 28%;
+  margin-top: 10px;
 }
 
 .price-review-box>p {
   display: flex;
   justify-content: space-between;
   gap: 30px;
+
 }
 
 
@@ -89,7 +97,7 @@
 /* reserve */
 .reserve-button {
   align-self: center;
-  color:white;
+  color: white;
   width: 80%;
   font-size: 16px;
   height: 35px;
@@ -132,7 +140,7 @@
   gap: 5px;
 }
 
-.review-control-buttons>button{
+.review-control-buttons>button {
   width: 60px;
   margin-bottom: 5px;
   background-color: rgb(85, 84, 84);

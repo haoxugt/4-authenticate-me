@@ -1,0 +1,14 @@
+.price-tag-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 4px;
+  align-items: center;
+  color:black;
+}
+.price-tag-container>span {
+  color: black;
+}
+
+.price-tag {
+  font-weight: bold;
+}

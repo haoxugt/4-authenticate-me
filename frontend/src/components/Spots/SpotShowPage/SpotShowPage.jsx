@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 import { getSpotById } from "../../../store/spot";
 import { getReviewsBySpotIdThunk } from "../../../store/review";
 import { FaStar } from "react-icons/fa";
-import { LuDot } from "react-icons/lu";
 import ReviewItem from "../../Reviews/ReviewItem";
 import PostReviewButton from "../../Reviews/PostReviewButton/PostReviewButton";
 // import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButton";
 import DeleteReviewModal from "../../Reviews/DeleteReviewModal";
+import PriceTag from "../../HTMLItems/PriceTag";
 
 import './SpotShowPage.css'
 
@@ -110,11 +110,12 @@ function SpotShowPage() {
         </div>
         <div className="price-review-box">
           <p>
-            <span>${spotShow?.price} night</span>
+            {/* <span>${spotShow?.price} night</span> */}
+            <PriceTag price={spotShow?.price} />
             <span><FaStar />
               {spotShow.avgStarRating === "None" ? "New" :
                 (Number.isInteger(spotShow.avgStarRating) ? spotShow.avgStarRating + ".0" : spotShow.avgStarRating)}
-              {spotShow.numReviews === 0 ? null : (<><LuDot />
+              {spotShow.numReviews === 0 ? null : (<>{" · "}
                 {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)} </span>
           </p>
           <button type="submit" className="reserve-button" onClick={reserveBooking}>Reserve</button>
@@ -125,8 +126,7 @@ function SpotShowPage() {
         <h2><FaStar />
           {spotShow.avgStarRating === "None" ? "New" :
             (Number.isInteger(spotShow.avgStarRating) ? spotShow.avgStarRating + ".0" : spotShow.avgStarRating)}
-          {spotShow.numReviews === 0 ? null : (<><LuDot />
-            {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
+          {spotShow.numReviews === 0 ? null : (<>{" · "}{spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
         </h2>
         {/* post review button */}
         {sessionUser && sessionUser.id !== spotShow?.Owner.id && !reviews.filter(el => el.userId === sessionUser.id).length && (<PostReviewButton id={spotShow?.id} />)}

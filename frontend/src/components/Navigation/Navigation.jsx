@@ -17,6 +17,7 @@ function Navigation({ isLoaded }) {
   // }
   return (
     <nav className="nav-container">
+      <div className="nav-inner-container">
       <div>
         <NavLink to="/">
           {/* {sessionUser ?
@@ -31,6 +32,7 @@ function Navigation({ isLoaded }) {
           <ProfileButton className="profile-button" user={sessionUser} />
         </div>
       )}
+      </div>
     </nav>
   );
 }
