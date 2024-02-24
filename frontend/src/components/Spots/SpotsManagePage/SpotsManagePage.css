@@ -6,7 +6,8 @@
   flex-direction: column;
   margin-left:0;
   align-items: flex-start;
-  width: 100%;
+  width: calc(100vw - 100px);
+  /* width: 100%; */
   /* justify-content: flex-start; */
 }
 
@@ -30,4 +31,11 @@
 
 .spot-button-container>a {
   text-decoration: none;
+}
+
+.manage-spot-creat-spot-button {
+  margin-top: 10px;
+  background-color: grey;
+  color: white;
+  padding: 5px 10px 5px;
 }

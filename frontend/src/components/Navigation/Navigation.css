@@ -1,16 +1,26 @@
-
-
 .nav-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
+    max-width: 2400px;
+    position: sticky;
+    top: 0px;
+    padding-top: 10px;
+    padding-bottom: 12px;
+    /* left:0; */
+    z-index: 9;
+    background-color: white;
 }
 
 .profile-button-container {
     font-size: larger;
     /* color: red; */
     width: auto;
-    height:60px;
+    height: auto;
+    height: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .nav-container>img:hover {

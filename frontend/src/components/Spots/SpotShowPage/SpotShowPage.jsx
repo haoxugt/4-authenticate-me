@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAllSpots, getSpotById } from "../../../store/spot";
+import { getSpotById } from "../../../store/spot";
 import { getReviewsBySpotIdThunk } from "../../../store/review";
 import { FaStar } from "react-icons/fa";
 import { LuDot } from "react-icons/lu";
@@ -15,12 +15,14 @@ import './SpotShowPage.css'
 
 function SpotShowPage() {
   const { spotId } = useParams();
-  const spot = useSelector(state => state.spot.Spots[spotId]);
+  // const spotsInfo = useSelector(state => state.spot.Spots);
+  // const spot = spotsInfo[spotId];
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const spotShow = useSelector(state => state.spot.spotShow);
   const reviewsObj = useSelector(state => state.review);
+  const [spotError, setSpotError] = useState({});
   let reviews = Object.values(reviewsObj);
   reviews.sort((a, b) => {
     return (new Date(b.createdAt)) - (new Date(a.createdAt));
@@ -30,23 +32,55 @@ function SpotShowPage() {
   useEffect(() => {
     async function getSpotByIdRun() {
 
-      if (!spot) await dispatch(getAllSpots());
-      await dispatch(getSpotById(spotId));
-      await dispatch(getReviewsBySpotIdThunk(spotId))
+      // if (!spot) await dispatch(getAllSpots());
+      // await dispatch(getSpotById(spotId));
+      // await dispatch(getReviewsBySpotIdThunk(spotId))
+      // if (!spot) {
+      // dispatch(getAllSpots())
+      //   .then(() => dispatch(getSpotById(spotId)))
+      //   .then(() => dispatch(getReviewsBySpotIdThunk(spotId)))
+      //   .catch(async (res) => {
+      //     const data = await res.json();
+      //     if (data) {
+      //       console.log("data message ====> ", data)
+      //       return <h2>data</h2>;}
+      //   })
+      // }
+      setSpotError({});
+      dispatch(getSpotById(spotId))
+        .then(() => dispatch(getReviewsBySpotIdThunk(spotId)))
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data) setSpotError(data);
+        })
     }
     getSpotByIdRun();
-  }, [dispatch, spot, spotId]);
+  }, [dispatch, spotId]);
+  // }, [dispatch, spot, spotId]);
 
   const reserveBooking = (e) => {
     e.preventDefault();
     alert("Feature Coming Soon");
   }
 
-
-  if (!spot) return <h2>Spot can not be found</h2>;
+  // if (!Object.values(spotsInfo).length) {
+  //   console.log("spotsInfo Page loading")
+  //   return <h2>Page loading</h2>;
+  // } else {
+  //   // if (!spot) {
+  //     console.log("Spot can not be found")
+  //     // return <h2>Spot can not be found</h2>;
+  //   // }
+  // }
   // if (!spot) return null;
   if (!Object.values(spotShow).length) {
-    return <h2>Page loading</h2>;
+
+    if (Object.values(spotError).length) {
+      return <h2>{spotError.message}</h2>
+    } else {
+      return null;
+      // return <h2>Page loading</h2>;
+    }
   }
 
 
@@ -95,7 +129,7 @@ function SpotShowPage() {
             {spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
         </h2>
         {/* post review button */}
-        {sessionUser && sessionUser.id !== spot.ownerId && !reviews.filter(el => el.userId === sessionUser.id).length && (<PostReviewButton id={spot.id} />)}
+        {sessionUser && sessionUser.id !== spotShow?.Owner.id && !reviews.filter(el => el.userId === sessionUser.id).length && (<PostReviewButton id={spotShow?.id} />)}
         {reviews.length ?
           reviews.map(el => {
             return (
@@ -115,7 +149,7 @@ function SpotShowPage() {
               </div>
             )
           }) :
-          (<>{sessionUser && sessionUser.id !== spot.ownerId ? <p>Be the first to post a review!</p> : null}</>)
+          (<>{sessionUser && sessionUser.id !== spotShow?.Owner.id ? <p>Be the first to post a review!</p> : null}</>)
 
         }
       </div>

@@ -48,7 +48,7 @@ export const getAllSpots = () => async (dispatch) => {
   const data = await response.json();
 
   dispatch(getALlSpotsAction(data.Spots));
-  return response;
+  return data;
 }
 
 export const createSpot = (spot) => async (dispatch) => {
@@ -69,15 +69,13 @@ export const createSpot = (spot) => async (dispatch) => {
       price
     })
   });
-  console.log("response ======> ", response)
+  // console.log("response ======> ", response)
   if (response.ok) {
-    console.log("OK")
     const newSpot = await response.json()
     dispatch(createSpotAction(newSpot));
     return newSpot;
   }
-  console.log("not ok")
-  return await response.json();
+  // return await response.json();
 }
 
 export const editSpot = (spot) => async (dispatch) => {

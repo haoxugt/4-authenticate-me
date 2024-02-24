@@ -212,7 +212,7 @@ function SpotForm({ spot, formType }) {
                         </div>
                     </div>
 
-                    <div className='lat-lng-container'>
+                    <div className='lat-lng-container hidden'>
                         <div className='lat-container'>
                             <label>
                                 Latitude

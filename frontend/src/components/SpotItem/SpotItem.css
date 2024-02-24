@@ -21,11 +21,14 @@
   z-index: 0;
   /* padding-bottom: 8px;
   margin-bottom: 50px; */
+  margin-top: 13px;
 }
 .spot-card-container>img {
   object-fit: cover;
-  width: 23vw;
-  height: 23vw;
+  width: calc((95vw - 100px)/6);
+  max-width: 380px;
+  height: calc((95vw - 100px)/6);
+  max-height: 380px;
   border-radius: 12px;
 }
 

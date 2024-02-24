@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllSpots } from "../../store/spot";
@@ -11,11 +11,20 @@ function SpotsList() {
   const dispatch = useDispatch();
   const spotState = useSelector(state => state.spot);
   const spots = Object.values(spotState.Spots);
+  const [result, setResult] = useState({})
+  // dispatch(getAllSpots()).then((res)=> {console.log(res);})
 
 
   useEffect(() => {
-    dispatch(getAllSpots());
+    dispatch(getAllSpots())
+    .then(res => {
+      if (!res.Spots.length) setResult({"message": "No spots here."});
+      });
   }, [dispatch]);
+
+  if (Object.values(result).length) {
+    return <h2>{result.message}</h2>;
+  }
 
   return (
     <div className="spots-container">
