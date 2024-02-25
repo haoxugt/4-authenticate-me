@@ -29,8 +29,6 @@ function SpotForm({ spot, formType }) {
     const navigate = useNavigate();
 
 
-    // console.log("url ==========>" , spot.SpotImages[0].url)
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -99,7 +97,7 @@ function SpotForm({ spot, formType }) {
                 })
                 .catch(async (res) => {
                     const data = await res.json();
-                    // console.log("response data =====>", data)
+
                     if (data && data.errors) setErrors(data.errors);
                     return;
                 })

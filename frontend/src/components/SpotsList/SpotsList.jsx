@@ -12,8 +12,6 @@ function SpotsList() {
   const spotState = useSelector(state => state.spot);
   const spots = Object.values(spotState.Spots);
   const [result, setResult] = useState({})
-  // dispatch(getAllSpots()).then((res)=> {console.log(res);})
-
 
   useEffect(() => {
     dispatch(getAllSpots())

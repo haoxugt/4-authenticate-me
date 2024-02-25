@@ -46,22 +46,30 @@ function ReviewStarsInput({ stars, disabled, onChange }) {
       >
         <FaStar />
       </span>
-      <span className={activeRating < 2 ? "empty" : "filled"} id='FaStar2' onMouseEnter={ratingUpdate}
+      <span className={activeRating < 2 ? "empty" : "filled"}
+        id='FaStar2'
+        onMouseEnter={ratingUpdate}
         onMouseLeave={() => setActiveRating(stars)}
         onClick={onClickHandler}>
         <FaStar />
       </span>
-      <span className={activeRating < 3 ? "empty" : "filled"} id='FaStar3' onMouseEnter={ratingUpdate}
+      <span className={activeRating < 3 ? "empty" : "filled"}
+        id='FaStar3'
+        onMouseEnter={ratingUpdate}
         onMouseLeave={() => setActiveRating(stars)}
         onClick={onClickHandler}>
         <FaStar />
       </span>
-      <span className={activeRating < 4 ? "empty" : "filled"} id='FaStar4' onMouseEnter={ratingUpdate}
+      <span className={activeRating < 4 ? "empty" : "filled"}
+        id='FaStar4'
+        onMouseEnter={ratingUpdate}
         onMouseLeave={() => setActiveRating(stars)}
         onClick={onClickHandler}>
         <FaStar />
       </span>
-      <span className={activeRating < 5 ? "empty" : "filled"} id='FaStar5' onMouseEnter={ratingUpdate}
+      <span className={activeRating < 5 ? "empty" : "filled"}
+        id='FaStar5'
+        onMouseEnter={ratingUpdate}
         onMouseLeave={() => setActiveRating(stars)}
         onClick={onClickHandler}>
         <FaStar />

@@ -22,7 +22,7 @@ const getReviewsBySpotIdAction = (reviews) => {
 // Thunk Creators
 export const getReviewsBySpotIdThunk = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
-  // console.log(" data ========> ", await response.json())
+
   if (response.ok) {
     const data = await response.json();
     dispatch(getReviewsBySpotIdAction(data.Reviews));

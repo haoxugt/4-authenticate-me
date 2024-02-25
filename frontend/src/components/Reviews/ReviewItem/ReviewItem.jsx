@@ -4,15 +4,15 @@ import './ReviewItem.css'
 
 
 function ReviewItem({review}) {
-  // console.log("review inside reviewitem======>", review);
+
   const month = ["January", "February", "March",
                 "April", "May", "June", "July",
                 "August", "September", "October",
                 "November", "December"];
   const date =  new Date(review.createdAt);
-  console.log("review.createdAt ======> ", review.createdAt, date);
+
   const convertedDate = month[date.getMonth()] + " " + (date.getYear() + 1900);
-  console.log("review.convertedDate ======> ", convertedDate);
+
 
   return (
     <div className='review-container'>
