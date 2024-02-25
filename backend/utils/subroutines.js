@@ -1,9 +1,9 @@
 // Format createdAt and updatedAt output at UTC timezone
 function formatDate(ResObj) {
     ResObj.createdAt = ResObj.createdAt
-        .toJSON().substring(0, 19).replace('T', ' ') + ' (UTC)';
+        .toJSON().substring(0, 19).replace('T', ' ');
     ResObj.updatedAt = ResObj.updatedAt
-        .toJSON().substring(0, 19).replace('T', ' ') + ' (UTC)';
+        .toJSON().substring(0, 19).replace('T', ' ');
     return ResObj;
 };
 

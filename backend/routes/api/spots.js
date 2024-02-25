@@ -76,7 +76,7 @@ router.get('/:spotId/bookings', requireAuth, validateSpotId, async (req, res) =>
     if (req.user.id !== spot.ownerId) {
         bookingsResponse = bookings.map((el) => el.toJSON());
     } else {
-        // bookingsResponse = bookings.map((el) => formatDate(el.toJSON()));
+        bookingsResponse = bookings.map((el) => formatDate(el.toJSON()));
     }
 
     return res.json({ Bookings: bookingsResponse });
@@ -102,7 +102,7 @@ router.get('/:spotId', validateSpotId, async (req, res, next) => {
     // get reviews
     const spotReviews = await spot.getReviews();
 
-    // spotResponse = formatDate(spotResponse);
+    spotResponse = formatDate(spotResponse);
 
     spotResponse.numReviews = spotReviews.length;
 
@@ -128,7 +128,7 @@ router.post('/', requireAuth, validateSpotInput, async (req, res, next) => {
     ], { validate: true });
 
     let spotResponse = spot[0].toJSON();
-    // spotResponse = formatDate(spotResponse);
+    spotResponse = formatDate(spotResponse);
     return res.status(201).json(spotResponse);
 });
 
@@ -147,7 +147,7 @@ router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validate
     ], { validate: true });
 
     let reviewResponse = newReview[0].toJSON();
-    // reviewResponse = formatDate(reviewResponse);
+    reviewResponse = formatDate(reviewResponse);
 
     return res.status(201).json(reviewResponse);
 });
@@ -185,7 +185,7 @@ router.post('/:spotId/bookings', requireAuth, validateSpotId,
         }], { validate: true });
 
         let bookingResponse = newBooking[0].toJSON();
-        // bookingResponse = formatDate(bookingResponse);
+        bookingResponse = formatDate(bookingResponse);
         return res.json(bookingResponse);
     });
 
@@ -206,7 +206,7 @@ router.put('/:spotId', requireAuth, validateSpotId, checkAuthorization,
         spot.price = price;
         await spot.save();
         let spotResponse = spot.toJSON();
-        // spotResponse = formatDate(spotResponse);
+        spotResponse = formatDate(spotResponse);
         return res.json(spotResponse);
     }
 );

@@ -5,13 +5,13 @@ import './ReviewItem.css'
 
 function ReviewItem({review}) {
   // console.log("review inside reviewitem======>", review);
-  let month = ["January", "February", "March",
+  const month = ["January", "February", "March",
                 "April", "May", "June", "July",
                 "August", "September", "October",
                 "November", "December"];
-  let date =  new Date(review.createdAt);
+  const date =  new Date(review.createdAt);
   console.log("review.createdAt ======> ", review.createdAt, date);
-  let convertedDate = month[date.getMonth()] + " " + (date.getYear() + 1900);
+  const convertedDate = month[date.getMonth()] + " " + (date.getYear() + 1900);
   console.log("review.convertedDate ======> ", convertedDate);
 
   return (

@@ -40,7 +40,7 @@ router.put('/:bookingId', requireAuth, validateBookingId,
         bookingToEdit.endDate = endDate;
         await bookingToEdit.save();
         let bookingResponse = bookingToEdit.toJSON();
-        // bookingResponse = formatDate(bookingResponse);
+        bookingResponse = formatDate(bookingResponse);
         return res.json(bookingResponse);
     });
 
