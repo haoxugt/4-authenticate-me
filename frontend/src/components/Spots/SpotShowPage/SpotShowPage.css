@@ -76,8 +76,8 @@
   padding: 15px;
   gap: 15px;
   border-radius: 15px;
-  min-width: 285px;
-  max-width: 28%;
+  min-width: 270px;
+  max-width: 50%;
   margin-top: 10px;
 }
 
@@ -120,7 +120,7 @@
   border-radius: 4px;
   box-shadow: 2px 2px 5px black;
   color: white;
-  margin: 10px 10px 15px;
+  margin: 10px 10px 15px 0;
   padding: 5px;
   /* background-color: rgb(206, 204, 204); */
 }
@@ -146,6 +146,44 @@
   background-color: rgb(85, 84, 84);
   color: white;
   box-shadow: 2px 2px 5px black;
+}
+
+@media screen and (max-width: 900px) {
+  .spotshow-img-container {
+    height: 40vw;
+  }
+
+  .spotshow-imgs-right>img {
+    height: 19vw;
+  }
+
+  .details-info-container {
+    width: 100%;
+
+  }
+
+  .spot-owner-description-container {
+    width: 80%;
+  }
+
+  .price-review-box {
+    width: 20%;
+    min-width: 160px;
+  }
+
+  .price-review-box>p {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 7px;
+
+  }
+
+  .reserve-button {
+    width: 60%;
+    font-size: 14px;
+    min-width: 100px;
+  }
 }
 
 @media screen and (max-width: 550px) {
@@ -180,13 +218,17 @@
   }
 
   .price-review-box {
-    width: 100%;
+    width: calc(100vw - 20px);
     max-width: 100%;
     border: none;
     border-radius: unset;
     border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     flex-direction: row;
+    position: fixed;
+    z-index: 1;
+    bottom: 0px;
+    background-color: white;
   }
 
   .price-review-box>p {
@@ -200,5 +242,9 @@
     width: 30%;
     font-size: 14px;
     min-width: 100px;
+  }
+
+  .spotshow-page-container+footer {
+    margin-bottom: 70px;
   }
 }
