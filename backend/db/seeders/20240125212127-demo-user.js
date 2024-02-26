@@ -112,7 +112,7 @@ module.exports = {
       username: {
         [Op.in]: ['RobertCrawley', 'CoraCrawley', 'MaryCrawley', 'MatthewCrawley',
                   'EdithPelham', 'HenryTalbot', 'RoseAldridge', 'NationalTrust',
-                  'haoxugt', 'Shumei', 'NickHoward', 'AndreHugel', 'DarioSattui']
+                  'HaoXu', 'Shumei', 'NickHoward', 'AndreHugel', 'DarioSattui']
       }
     }, {});
   }
