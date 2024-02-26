@@ -7,6 +7,9 @@
   --darkred-color: rgb(238, 53, 53);
   --arches-color:rgb(252, 100, 45);
   --babu-color: rgb(0, 166, 153);
+  --darkbabu-color: rgb(1, 141, 129);
+  --grey-bg-color: rgb(163, 160, 160);
+  --darkgrey-bg-color: rgb(104, 102, 102);
 }
 
 * {

@@ -19,7 +19,8 @@
   width: 250px;
   height: 30px;
   color: white;
-  box-shadow: 2px 2px 5px black;
+  border-radius: 3px;
+
 }
 
 .delete-button:hover {
@@ -33,12 +34,14 @@
 
 .yes-button:hover {
   background-color: var(--darkred-color);
+  box-shadow: 2px 2px 5px black;
 }
 
 .no-button {
-  background-color: rgb(85, 84, 84);
+  background-color: var(--grey-bg-color);
 }
 
 .no-button:hover {
-  background-color: rgb(122, 121, 122);
+  background-color: var(--darkgrey-bg-color);
+  box-shadow: 2px 2px 5px black;
 }

@@ -1,3 +1,8 @@
+.spot-form-page-title {
+    margin-top:20px;
+    margin-bottom: 15px;
+}
+
 .spot-from-container {
     display: flex;
     flex-direction: column;
@@ -47,7 +52,7 @@
 .title-intro {
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1.5px solid black;
+    border-top: 1.5px solid var(--babu-color);
 }
 
 .description-textarea {
@@ -57,6 +62,7 @@
 .paragraph-intro {
     margin-top: 5px;
     max-width: 500px;
+    margin-bottom: 8px;
 }
 
 .price-container {
@@ -73,7 +79,7 @@
     width: 100;
     height: 30px;
     margin-top: 30px;
-    border-top: 2px solid black;
+    border-top: 2px solid var(--babu-color);
 }
 
 .spot-spot-button {
@@ -81,13 +87,13 @@
     /* display: flex;
     justify-content: center; */
     display: grid;
-    border: 2px solid balck;
-    padding: 2px 5px 2px;
+    border: 1.5px solid black;
+    border-radius: 7px;
+    padding: 3px 10px 3px;
     font-size: 15px;
     color: white;
     /* background-color: rgb(214, 4, 4); */
     background-color: var(--rausch-color);
-    box-shadow: 2px 2px 5px black;
 }
 
 .spot-spot-button:hover {
@@ -95,6 +101,7 @@
     /* background-color: rgb(180, 3, 3); */
     /* background-color: rgb(238, 53, 53); */
     background-color: var(--darkred-color);
+    box-shadow: 2px 2px 5px black;
 }
 
 .spotimage-input {

@@ -4,7 +4,7 @@
 .manage-menu {
   display: flex;
   flex-direction: column;
-  margin-left:0;
+  margin-left: 0;
   align-items: flex-start;
   width: calc(100vw - 100px);
   margin-top: 10px;
@@ -14,18 +14,24 @@
 
 .manage-spot-button {
   display: flex;
-  gap:5px;
+  gap: 7px;
+  margin-top: 7px;
 }
 
-.manage-spot-button> button {
-  background-color: rgb(163, 160, 160);
-  width: 30%;
+.manage-spot-button>button {
+  background-color: var(--grey-bg-color);
+  min-width: 80px;
+  width: 40%;
+  font-size: 15px;
+  padding-top: 1.5px;
+  padding-bottom: 1.5px;
+  border-radius: 3px;
   color: white;
 }
 
-.manage-spot-button> button:hover {
+.manage-spot-button>button:hover {
   cursor: pointer;
-  background-color: rgb(104, 102, 102);
+  background-color: var(--darkgrey-bg-color);
   box-shadow: 2px 2px 2px black;
 
 }
@@ -36,7 +42,15 @@
 
 .manage-spot-creat-spot-button {
   margin-top: 10px;
-  background-color: grey;
+  background-color: var(--babu-color);
+  font-size: 15px;
   color: white;
   padding: 5px 10px 5px;
+  border-radius: 8px;
+}
+
+.manage-spot-creat-spot-button:hover {
+  cursor: pointer;
+  background-color: var(--darkbabu-color);
+  box-shadow: 2px 2px 2px black;
 }

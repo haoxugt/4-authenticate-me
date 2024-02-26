@@ -3,13 +3,13 @@ import OpenModalButton from "../../Modals/OpenModalButton/OpenModalButton";
 import ReviewFormModal from '../ReviewFormModal';
 
 
-function PostReviewButton({ id }) {
+function PostReviewButton({ spotId }) {
   return (
     // <button name={id}>Delete</button>
     <OpenModalButton
       itemText="Post Your Review"
       // onItemClick={closeMenu}
-      modalComponent={<ReviewFormModal id={id}/>}
+      modalComponent={<ReviewFormModal spotId={spotId}/>}
     />
   )
 }

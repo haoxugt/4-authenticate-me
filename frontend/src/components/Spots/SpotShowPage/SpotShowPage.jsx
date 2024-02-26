@@ -129,7 +129,7 @@ function SpotShowPage() {
           {spotShow.numReviews === 0 ? null : (<>{" · "}{spotShow.numReviews === 1 ? (<>{spotShow.numReviews} Review</>) : (<>{spotShow.numReviews} Reviews</>)} </>)}
         </h2>
         {/* post review button */}
-        {sessionUser && sessionUser.id !== spotShow?.Owner.id && !reviews.filter(el => el.userId === sessionUser.id).length && (<PostReviewButton id={spotShow?.id} />)}
+        {sessionUser && sessionUser.id !== spotShow?.Owner.id && !reviews.filter(el => el.userId === sessionUser.id).length && (<PostReviewButton spotId={spotShow?.id} />)}
         {reviews.length ?
           reviews.map(el => {
             return (

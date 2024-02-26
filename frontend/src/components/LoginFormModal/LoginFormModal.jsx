@@ -39,8 +39,8 @@ function LoginFormModal() {
         setPassword("RobertCrawley");
     }
     const DemoUserLogin2 = () => {
-        setCredential("MatthewCrawley");
-        setPassword("MatthewCrawley");
+        setCredential("HaoXu");
+        setPassword("HaoXuHaoXu");
     }
 
 

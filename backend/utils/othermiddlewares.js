@@ -71,7 +71,7 @@ async function checkDuplicateUser(req, res, next) {
     if (userByUsername) {
         const err = new Error('User already exists');
         err.title = 'Server Error';
-        err.errors = { username: "User with that username already exists" };
+        err.errors = { username: "Username must be unique" };
         err.status = 500;
         return next(err);
     }
@@ -81,7 +81,7 @@ async function checkDuplicateUser(req, res, next) {
     if (userByEmail) {
         const err = new Error('User already exists');
         err.title = 'Server Error';
-        err.errors = { email: "User with that email already exists" };
+        err.errors = { email: "Email must be unique" };
         err.status = 500;
         return next(err);
     }

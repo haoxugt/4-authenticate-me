@@ -64,7 +64,7 @@ function ProfileButton({ user }) {
   return (
     <div className='right-memu-container'>
       {user && (
-        <button className='creat-spot-button' onClick={createSpot}>Create a Spot</button>
+        <button className='creat-spot-button' onClick={createSpot}>Create a New Spot</button>
       )}
       <button className='user-icons-container' onClick={toggleMenu}>
         <GiHamburgerMenu size={16} color="grey" />

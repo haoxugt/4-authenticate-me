@@ -47,9 +47,9 @@ function SpotsManagePage() {
   return (
     <>
       <div className='manage-menu'>
-        <h3 className='manage-spot-title'>Manage Spot</h3>
+        <h3 className='manage-spot-title'>Manage Spots</h3>
         {spots?.length === 0 && (
-          <button className='manage-spot-creat-spot-button' onClick={createSpot}>Create a Spot</button>
+          <button className='manage-spot-creat-spot-button' onClick={createSpot}>Create a New Spot</button>
         )}
       </div>
       <div className="spots-container">

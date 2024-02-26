@@ -10,8 +10,7 @@ import { getSpotById } from "../../../store/spot";
 import './ReviewForm.css'
 
 
-function ReviewFormModal({id}) {
-  const spotId = id;
+function ReviewFormModal({ spotId }) {
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState({});
@@ -64,7 +63,7 @@ function ReviewFormModal({id}) {
           </label>
 
           <label className="review-star-container">
-            <ReviewStarsInput stars={stars} disabled={false} onChange={onChange}/> Stars
+            <ReviewStarsInput stars={stars} disabled={false} onChange={onChange} /> Stars
           </label>
         </div>
         {/* <label>this spot is No. {spotId}</label> */}

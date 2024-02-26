@@ -59,6 +59,7 @@ function SignupFormModal() {
     } else {
       setDisabledSignup(true)
     }
+    setErrors({});
   }, [email,
     username,
     firstName,
@@ -96,7 +97,7 @@ function SignupFormModal() {
           {/* Email */}
           <input
             id='signup-email-input'
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Email'

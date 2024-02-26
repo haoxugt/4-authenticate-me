@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 20px;
 }
 
 .spotshow-img-container {
@@ -94,6 +95,10 @@
   margin-top: 15px;
 }
 
+.review-list-container>h2 {
+  margin-top: 5px;
+}
+
 /* reserve */
 .reserve-button {
   align-self: center;
@@ -115,10 +120,9 @@
   width: 150px;
   text-align: center;
   font-size: 14px;
-  background-color: rgb(85, 84, 84);
-  border: solid 1px black;
+  background-color: var(--babu-color);
+  border: 1px solid black;
   border-radius: 4px;
-  box-shadow: 2px 2px 5px black;
   color: white;
   margin: 10px 10px 15px 0;
   padding: 5px;
@@ -128,7 +132,12 @@
 .review-list-container>button:hover,
 .review-control-buttons>button:hover {
   cursor: pointer;
-  background-color: rgb(122, 121, 122)
+  background-color: var(--darkgrey-bg-color);
+  box-shadow: 2px 2px 5px black;
+}
+
+.review-list-container>button:hover {
+  background-color: var(--darkbabu-color);
 }
 
 .review-container {
@@ -137,15 +146,19 @@
 
 .review-control-buttons {
   display: flex;
-  gap: 5px;
+  gap: 9px;
 }
 
 .review-control-buttons>button {
-  width: 60px;
-  margin-bottom: 5px;
-  background-color: rgb(85, 84, 84);
+  width: 85px;
+  margin-top: 5px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  padding: 1px 10px 1px;
+  background-color: var(--grey-bg-color);
+  border-radius: 3px;
   color: white;
-  box-shadow: 2px 2px 5px black;
+  /* box-shadow: 2px 2px 5px black; */
 }
 
 @media screen and (max-width: 900px) {
@@ -229,12 +242,13 @@
     z-index: 1;
     bottom: 0px;
     background-color: white;
+    padding: 5px 15px 5px 15px;
   }
 
   .price-review-box>p {
     flex-direction: column;
-    justify-content: space-between;
-    gap: 7px;
+    align-items: flex-start;
+    gap: 3px;
 
   }
 
@@ -245,6 +259,6 @@
   }
 
   .spotshow-page-container+footer {
-    margin-bottom: 70px;
+    margin-bottom: 45px;
   }
 }
