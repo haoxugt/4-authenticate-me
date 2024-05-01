@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
+import { FcGoogle } from "react-icons/fc";
 // import { Navigate } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 
@@ -89,6 +90,7 @@ function LoginFormModal() {
                     disabled={disabledButton}>
                     {formType}
                 </button>
+                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle /> <span className='google-login'>Continue with Google</span></a>
                 <button className='Demouser-login' onClick={DemoUserLogin}>
                     Log in as Demo User
                 </button>

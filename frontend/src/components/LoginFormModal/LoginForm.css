@@ -114,3 +114,25 @@
 .Demouser-login:hover{
     cursor: pointer;
 }
+
+.oauth-button {
+    width: calc(100% - 16px);
+    display: grid;
+    grid-template-columns: 25px 1fr 25px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+
+.google-login {
+    display: inline;
+    text-align: center;
+    /* text-decoration: none; */
+}
