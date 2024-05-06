@@ -115,7 +115,7 @@ function LoginFormModal() {
                     {formType}
                 </button>
                 <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle /> <span className='google-login'>Continue with Google</span></a>
-                <a className="oauth-button" href={`https://abbeys.onrender.com/`}><FaFacebook color='#4267B2'/> <span className='google-login'>Continue with Facebook</span></a>
+                <a className="oauth-button" href={`https://abbeys.onrender.com/api/facebook/callback`}><FaFacebook color='#4267B2'/> <span className='google-login'>Continue with Facebook</span></a>
                 <div id="signInDiv"></div>
                 <button className='Demouser-login' onClick={DemoUserLogin}>
                     Log in as Demo User
