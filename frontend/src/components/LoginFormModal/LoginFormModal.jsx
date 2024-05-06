@@ -3,8 +3,12 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 // import { Navigate } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
+
+// import dotenv from 'dotenv'
+// dotenv.config();
 
 import './LoginForm.css';
 
@@ -18,6 +22,9 @@ function LoginFormModal() {
     const { closeModal } = useModal();
     // const navigate = useNavigate();
 
+
+    // const client_id = process.env.GOOGLE_CLIENT_ID
+    // const oauthSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET
 
     const formType = "Log In";
 
@@ -44,6 +51,10 @@ function LoginFormModal() {
         setPassword("HaoXuHaoXu");
     }
 
+    const handleCallbackResponse = (response) => {
+        console.log("Encoded JWT ID token: ", response.credential)
+    }
+
 
     useEffect(() => {
         if (credential.length >= 4 && password.length >= 6) {
@@ -53,6 +64,19 @@ function LoginFormModal() {
         }
         setErrors({});
     }, [credential, password]);
+
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "46240224630-4uo42jo28vnra638o7plr8ple49nu47u.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        })
+
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            { theme: "outline", size: "large"}
+        )
+    }, [])
 
     return (
         <div className='login-form-container'>
@@ -91,6 +115,8 @@ function LoginFormModal() {
                     {formType}
                 </button>
                 <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle /> <span className='google-login'>Continue with Google</span></a>
+                <a className="oauth-button" href={`https://abbeys.onrender.com/`}><FaFacebook color='#4267B2'/> <span className='google-login'>Continue with Facebook</span></a>
+                <div id="signInDiv"></div>
                 <button className='Demouser-login' onClick={DemoUserLogin}>
                     Log in as Demo User
                 </button>

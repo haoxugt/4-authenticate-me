@@ -13,5 +13,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express-session": "^1.18.0",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0"
+  }
 }
