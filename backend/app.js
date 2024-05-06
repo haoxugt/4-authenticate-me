@@ -22,7 +22,10 @@ const config = require('./config');
 passport.use(new Strategy({
     clientID: config.FACEBOOK_CLIENT_ID,
     clientSecret: config.FACEBOOK_CLIENT_SECRET,
-    callbackURL: '/facebook/callback'
+    callbackURL: 'https://abbeys.onrender.com/facebook/callback',
+    profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
+    passReqToCallback: true,
+    proxy: true
   },
   function(accessToken, refreshToken, profile, cb) {
     // save the profile on the Database
