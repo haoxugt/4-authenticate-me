@@ -35,7 +35,7 @@ passport.use(new FacebookStrategy({
   async function(accessToken, refreshToken, profile, cb) {
     // save the profile on the Database
     // Save the accessToken and refreshToken if you need to call facebook apis later on
-    const user = await User.findOne({
+    let user = await User.findOne({
         where: {
             [Op.or]: {
               username: profile.displayName,
