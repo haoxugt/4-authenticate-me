@@ -16,18 +16,21 @@ const app = express();
 
 // facebook -login
 const passport = require('passport');
-const Strategy = require('passport-facebook').Strategy;
+// const Strategy = require('passport-facebook').Strategy;
+const FacebookStrategy = require('passport-facebook');
 const User = require('./db/models');
 const { Op } = require('sequelize');
 // const config = require('./config');
 
-passport.use(new Strategy({
+// passport.use(new Strategy({
+passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
     profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
-    passReqToCallback: true,
-    proxy: true
+    state: true
+    // passReqToCallback: true,
+    // proxy: true
   },
   async function(accessToken, refreshToken, profile, cb) {
     // save the profile on the Database
@@ -35,8 +38,8 @@ passport.use(new Strategy({
     const user = await User.findOne({
         where: {
             [Op.or]: {
-              username: profile.email,
-              email: profile.email
+              username: profile.displayName,
+            //   email: profile.email
             }
           }
     });
@@ -48,7 +51,7 @@ passport.use(new Strategy({
     if (!user) {
         console.log('Adding new facebook user to DB..');
         user = await User.create({
-            email: profile.email,
+            email: profile.email || 'test@gmail.com',
             username: profile.displayName,
             firstName,
             lastName
