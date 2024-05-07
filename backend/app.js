@@ -20,7 +20,10 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook');
 const { User } = require('./db/models');
 const { Op } = require('sequelize');
+const {setTokenCookie} = require('./utils/auth')
 // const config = require('./config');
+
+let safeUser = {};
 
 // passport.use(new Strategy({
 passport.use(new FacebookStrategy({
@@ -48,7 +51,7 @@ passport.use(new FacebookStrategy({
     const firstName = profile.displayName.split(' ')[0]; //Extract the user's first name
     const lastName = profile.displayName.split(' ')[1]; // Extract the user's last name
 
-    let safeUser = {};
+
     if (!user) {
         console.log('Adding new facebook user to DB..');
         user = await User.create({
@@ -100,10 +103,11 @@ passport.use(new FacebookStrategy({
   app.get('/facebook', passport.authenticate('facebook', { scope: ['email']}));
   app.get('/facebook/callback', passport.authenticate('facebook', {
         failureRedirect: `${process.env.FACEBOOK_CALLBACK_URL}/error`
-    }), (req, res) => {
+    }), async (req, res) => {
     // res.send(`${process.env.FACEBOOK_CALLBACK_URL}/success`);
-    // res.send('/');
-    res.redirect('/');
+    await setTokenCookie(res, safeUser);
+    res.send('/');
+    // res.redirect('/');
   }) ;
 
 // =============================================
