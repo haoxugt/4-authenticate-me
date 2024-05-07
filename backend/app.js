@@ -83,16 +83,16 @@ passport.use(new FacebookStrategy({
     // return cb(null, profile);
   }));
 
-//   passport.serializeUser(function(user, cb) {
-//     cb(null, user);
-//   });
+  passport.serializeUser(function(user, cb) {
+    cb(null, user);
+  });
 
-//   passport.deserializeUser(function(obj, cb) {
-//     cb(null, obj);
-//   });
+  passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+  });
 
   app.use(require('body-parser').urlencoded({ extended: true }));
-  app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+  app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: true }));
 
   app.use(passport.initialize());
   app.use(passport.session());
