@@ -30,7 +30,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-    profileFields: ['id', 'displayName', 'emails', 'name', 'photos', 'username'],
+    profileFields: ['id', 'displayName', 'emails', 'name', 'photos'],
     state: true
     // passReqToCallback: true,
     // proxy: true
@@ -52,14 +52,14 @@ passport.use(new FacebookStrategy({
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     console.log("profile_last_name ====>", profile.name.familyName || "last_name undefined")
-    console.log("profile_username ====>", profile.username || "username undefined")
+    // console.log("profile_username ====>", profile.username || "username undefined")
 
 
     if (!user) {
         console.log('Adding new facebook user to DB..');
         user = await User.create({
-            email: profile.emails[0].value || 'test@gmail.com',
-            username: profile.displayName,
+            email: profile.emails[0].value,
+            username: profile.displayName.split(' ').join(''),
             firstName,
             lastName
         });
