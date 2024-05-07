@@ -18,7 +18,7 @@ const app = express();
 const passport = require('passport');
 // const Strategy = require('passport-facebook').Strategy;
 const FacebookStrategy = require('passport-facebook');
-const User = require('./db/models');
+const { User } = require('./db/models');
 const { Op } = require('sequelize');
 // const config = require('./config');
 
