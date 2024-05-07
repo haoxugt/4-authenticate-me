@@ -106,8 +106,8 @@ passport.use(new FacebookStrategy({
     }), async (req, res) => {
     // res.send(`${process.env.FACEBOOK_CALLBACK_URL}/success`);
     await setTokenCookie(res, safeUser);
-    res.send('/');
-    // res.redirect('/');
+    // res.send('/');
+    res.redirect('/');
   }) ;
 
 // =============================================
