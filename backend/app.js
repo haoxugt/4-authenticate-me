@@ -97,7 +97,7 @@ passport.use(new FacebookStrategy({
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.get('/facebook', passport.authenticate('facebook'));
+  app.get('/facebook', passport.authenticate('facebook', { scope: ['email']}));
   app.get('/facebook/callback', passport.authenticate('facebook', {
         failureRedirect: `${process.env.FACEBOOK_CALLBACK_URL}/error`
     }), (req, res) => {
