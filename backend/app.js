@@ -39,6 +39,7 @@ passport.use(new FacebookStrategy({
         where: {
             [Op.or]: {
               username: profile.displayName,
+              username: profile.displayName
             //   email: profile.email
             }
           }
