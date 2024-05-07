@@ -42,20 +42,20 @@ passport.use(new FacebookStrategy({
         where: {
             [Op.or]: {
               username: profile.displayName,
-              username: profile.displayName
-            //   email: profile.email
+              email: profile.emails[0].value
             }
           }
     });
     console.log("profile ====>", profile)
     const firstName = profile.displayName.split(' ')[0]; //Extract the user's first name
     const lastName = profile.displayName.split(' ')[1]; // Extract the user's last name
+    console.log("profile_last_name ====>", profile.last_name || "last_name undefined")
 
 
     if (!user) {
         console.log('Adding new facebook user to DB..');
         user = await User.create({
-            email: profile.email || 'test@gmail.com',
+            email: profile.emails[0].value || 'test@gmail.com',
             username: profile.displayName,
             firstName,
             lastName
