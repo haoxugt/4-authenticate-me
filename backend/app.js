@@ -59,7 +59,7 @@ passport.use(new FacebookStrategy({
         console.log('Adding new facebook user to DB..');
         user = await User.create({
             email: profile.emails[0].value,
-            username: profile.displayName.split(' ').join(''),
+            username: profile.displayName,
             firstName,
             lastName
         });
