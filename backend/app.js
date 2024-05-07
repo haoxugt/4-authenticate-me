@@ -20,8 +20,8 @@ const Strategy = require('passport-facebook').Strategy;
 const config = require('./config');
 
 passport.use(new Strategy({
-    clientID: config.FACEBOOK_CLIENT_ID,
-    clientSecret: config.FACEBOOK_CLIENT_SECRET,
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: 'https://abbeys.onrender.com/facebook/callback',
     profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
     passReqToCallback: true,
@@ -48,7 +48,9 @@ passport.use(new Strategy({
   app.use(passport.session());
 
   app.get('/facebook', passport.authenticate('facebook'));
-  app.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: `${config.FRONTEND_HOST}/error`}), (req, res) => {
+  app.get('/facebook/callback', passport.authenticate('facebook', {
+        failureRedirect: `${config.FRONTEND_HOST}/error`
+    }), (req, res) => {
     res.send(`${config.FRONTEND_HOST}/success`);
   }) ;
 
