@@ -30,7 +30,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-    profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
+    profileFields: ['id', 'displayName', 'emails', 'name', 'photos'],
     state: true
     // passReqToCallback: true,
     // proxy: true
@@ -99,14 +99,14 @@ passport.use(new FacebookStrategy({
 
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(passport.authenticate('session'));
+//   app.use(passport.authenticate('session'));
 
-  app.get('/facebook', passport.authenticate('facebook', { scope: ['email']}));
+  app.get('/facebook', passport.authenticate('facebook'));
   app.get('/facebook/callback', passport.authenticate('facebook', {
         failureRedirect: `${process.env.FACEBOOK_CALLBACK_URL}/error`
     }), async (req, res) => {
     // res.send(`${process.env.FACEBOOK_CALLBACK_URL}/success`);
-    // await setTokenCookie(res, safeUser);
+    await setTokenCookie(res, safeUser);
     // res.send('/');
     res.redirect('/');
   }) ;
