@@ -30,7 +30,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-    profileFields: ['id', 'displayName', 'emails', 'name', 'photos'],
+    profileFields: ['id', 'displayName', 'emails', 'name', 'photos', 'username'],
     state: true
     // passReqToCallback: true,
     // proxy: true
@@ -47,9 +47,12 @@ passport.use(new FacebookStrategy({
           }
     });
     console.log("profile ====>", profile)
-    const firstName = profile.displayName.split(' ')[0]; //Extract the user's first name
-    const lastName = profile.displayName.split(' ')[1]; // Extract the user's last name
-    console.log("profile_last_name ====>", profile.last_name || "last_name undefined")
+    // const firstName = profile.displayName.split(' ')[0]; //Extract the user's first name
+    // const lastName = profile.displayName.split(' ')[1]; // Extract the user's last name
+    const firstName = profile.name.givenName;
+    const lastName = profile.name.familyName;
+    console.log("profile_last_name ====>", profile.name.familyName || "last_name undefined")
+    console.log("profile_username ====>", profile.username || "username undefined")
 
 
     if (!user) {
