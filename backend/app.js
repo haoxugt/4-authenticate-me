@@ -17,29 +17,75 @@ const app = express();
 // facebook -login
 const passport = require('passport');
 const Strategy = require('passport-facebook').Strategy;
-const config = require('./config');
+const User = require('./db/models');
+const { Op } = require('sequelize');
+// const config = require('./config');
 
 passport.use(new Strategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'https://abbeys.onrender.com/facebook/callback',
+    callbackURL: process.env.FACEBOOK_CALLBACK_URL,
     profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
     passReqToCallback: true,
     proxy: true
   },
-  function(accessToken, refreshToken, profile, cb) {
+  async function(accessToken, refreshToken, profile, cb) {
     // save the profile on the Database
     // Save the accessToken and refreshToken if you need to call facebook apis later on
-    return cb(null, profile);
+    const user = await User.findOne({
+        where: {
+            [Op.or]: {
+              username: profile.email,
+              email: profile.email
+            }
+          }
+    });
+    console.log("profile ====>", profile)
+    const firstName = profile.displayName.split(' ')[0]; //Extract the user's first name
+    const lastName = profile.displayName.split(' ')[1]; // Extract the user's last name
+
+    let safeUser = {};
+    if (!user) {
+        console.log('Adding new facebook user to DB..');
+        user = await User.create({
+            email: profile.email,
+            username: profile.displayName,
+            firstName,
+            lastName
+        });
+        // const user = new User({
+        //   accountId: profile.id,
+        //   name: profile.displayName,
+        //   provider: profile.provider,
+        // });
+        // await user.save();
+        console.log("new user ===>", user);
+        safeUser = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+          };
+        return cb(null, profile);
+      } else {
+        console.log('Facebook User already exist in DB..');
+        // console.log(profile);
+        safeUser = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+        };
+        return cb(null, profile);
+      }
+    // return cb(null, profile);
   }));
 
-  passport.serializeUser(function(user, cb) {
-    cb(null, user);
-  });
+//   passport.serializeUser(function(user, cb) {
+//     cb(null, user);
+//   });
 
-  passport.deserializeUser(function(obj, cb) {
-    cb(null, obj);
-  });
+//   passport.deserializeUser(function(obj, cb) {
+//     cb(null, obj);
+//   });
 
   app.use(require('body-parser').urlencoded({ extended: true }));
   app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
@@ -49,9 +95,10 @@ passport.use(new Strategy({
 
   app.get('/facebook', passport.authenticate('facebook'));
   app.get('/facebook/callback', passport.authenticate('facebook', {
-        failureRedirect: `${config.FRONTEND_HOST}/error`
+        failureRedirect: `${process.env.FACEBOOK_CALLBACK_URL}/error`
     }), (req, res) => {
-    res.send(`${config.FRONTEND_HOST}/success`);
+    // res.send(`${process.env.FACEBOOK_CALLBACK_URL}/success`);
+    res.send('/');
   }) ;
 
 // =============================================
