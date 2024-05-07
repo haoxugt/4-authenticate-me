@@ -92,7 +92,7 @@ passport.use(new FacebookStrategy({
   });
 
   app.use(require('body-parser').urlencoded({ extended: true }));
-  app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: true }));
+  app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -102,7 +102,8 @@ passport.use(new FacebookStrategy({
         failureRedirect: `${process.env.FACEBOOK_CALLBACK_URL}/error`
     }), (req, res) => {
     // res.send(`${process.env.FACEBOOK_CALLBACK_URL}/success`);
-    res.send('/');
+    // res.send('/');
+    res.redirect('/');
   }) ;
 
 // =============================================
