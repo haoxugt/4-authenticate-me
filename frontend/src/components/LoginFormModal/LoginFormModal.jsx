@@ -3,7 +3,8 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { AiFillFacebook } from "react-icons/ai";
+import { FaApple } from "react-icons/fa";
 // import { Navigate } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 
@@ -114,14 +115,15 @@ function LoginFormModal() {
                     disabled={disabledButton}>
                     {formType}
                 </button>
-                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle /> <span className='google-login'>Continue with Google</span></a>
-                <a className="oauth-button" href={`https://abbeys.onrender.com/facebook`}><FaFacebook color='#4267B2'/> <span className='google-login'>Continue with Facebook</span></a>
-                <div id="signInDiv"></div>
+                <a className="oauth-button" href={`${window.origin}/facebook`}><AiFillFacebook color='#1877F2' size='23'className='logoicon'/> <span className='google-login'>Continue with Facebook</span></a>
+                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle size='18' className='logoicon'/> <span className='google-login'>Continue with Google</span></a>
+                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FaApple size='21' className='logoicon'/> <span className='google-login'>Continue with Apple</span></a>
+                {/* <div id="signInDiv"></div> */}
                 <button className='Demouser-login' onClick={DemoUserLogin}>
-                    Log in as Demo User
+                    Log in as Robert Crawley
                 </button>
                 <button className='Demouser-login' onClick={DemoUserLogin2}>
-                    Log in as Demo User 2
+                    Log in as Matthew Crawley
                 </button>
             </form>
         </div>

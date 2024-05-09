@@ -4,6 +4,10 @@ import { useModal } from "../../context/Modal";
 // import { Navigate } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 
+import { FcGoogle } from "react-icons/fc";
+import { AiFillFacebook } from "react-icons/ai";
+import { FaApple } from "react-icons/fa";
+
 import './SignupForm.css';
 
 function SignupFormModal() {
@@ -138,7 +142,11 @@ function SignupFormModal() {
 
         {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
         <button type="submit" className="startButton" disabled={diabledSignup}>{formType}</button>
+      <a className="oauth-button" href={`${window.origin}/facebook`}><AiFillFacebook color='#1877F2' size='23'className='logoicon'/> <span className='google-login'>Continue with Facebook</span></a>
+      <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle size='18' className='logoicon'/> <span className='google-login'>Continue with Google</span></a>
+      <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FaApple size='21' className='logoicon'/> <span className='google-login'>Continue with Apple</span></a>
       </form>
+
     </div>
   );
 }
