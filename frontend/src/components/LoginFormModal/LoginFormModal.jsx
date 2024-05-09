@@ -3,7 +3,8 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { FcGoogle } from "react-icons/fc";
-import { AiFillFacebook } from "react-icons/ai";
+// import { AiFillFacebook } from "react-icons/ai";
+import { FaFacebookSquare } from "react-icons/fa"
 import { FaApple } from "react-icons/fa";
 // import { Navigate } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
@@ -115,9 +116,9 @@ function LoginFormModal() {
                     disabled={disabledButton}>
                     {formType}
                 </button>
-                <a className="oauth-button" href={`${window.origin}/facebook`}><AiFillFacebook color='#1877F2' size='23'className='logoicon'/> <span className='google-login'>Continue with Facebook</span></a>
-                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle size='18' className='logoicon'/> <span className='google-login'>Continue with Google</span></a>
-                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FaApple size='21' className='logoicon'/> <span className='google-login'>Continue with Apple</span></a>
+                <a className="oauth-button" href={`${window.origin}/facebook`}><FaFacebookSquare color='#1877F2' size='20'className='logoicon'/> <span className='google-login'>Continue with Facebook</span></a>
+                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle size='20' className='logoicon'/> <span className='google-login'>Continue with Google</span></a>
+                <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FaApple size='20' className='logoicon'/> <span className='google-login'>Continue with Apple</span></a>
                 {/* <div id="signInDiv"></div> */}
                 <button className='Demouser-login' onClick={DemoUserLogin}>
                     Log in as Robert Crawley
