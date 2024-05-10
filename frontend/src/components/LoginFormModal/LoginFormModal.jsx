@@ -116,6 +116,7 @@ function LoginFormModal() {
                     disabled={disabledButton}>
                     {formType}
                 </button>
+                <div className='div-or'><span>or</span></div>
                 <a className="oauth-button" href={`${window.origin}/facebook`}><FaFacebookSquare color='#1877F2' size='20'className='logoicon'/> <span className='google-login'>Continue with Facebook</span></a>
                 <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FcGoogle size='20' className='logoicon'/> <span className='google-login'>Continue with Google</span></a>
                 <a className="oauth-button" href={`${window.origin}/api/oauth/googleOauthLogin`}><FaApple size='20' className='logoicon'/> <span className='google-login'>Continue with Apple</span></a>

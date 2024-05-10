@@ -85,7 +85,7 @@
     font-size:16px;
     height: 35px;
     border-style: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: rgb(255, 255, 255);
     /* background: linear-gradient(90deg, rgb(229, 30, 78), rgb(214, 4, 101)); */
     background-color: var(--rausch-color);
@@ -117,11 +117,18 @@
     text-decoration: underline;
     border: none;
     background: none;
+    height: 30px;
 
 }
 
 .Demouser-login:hover{
     cursor: pointer;
+    background-color: var(--darkred-color);
+    border-style: none;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    text-decoration: unset;
+
 }
 
 .oauth-button {
@@ -144,6 +151,10 @@
     margin-top: 10px;
 }
 
+.oauth-button:hover {
+    background-color: rgb(245, 245, 245);
+}
+
 
 .logoicon {
     padding-left: 5px;
@@ -156,3 +167,48 @@
     /* text-decoration: none; */
 
 }
+
+
+/* .div-or {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid black;
+    line-height: 0.1em;
+    margin: 10px 0 10px;
+ }
+
+ .div-or span {
+    background:#fff;
+    padding: 0 10px;
+} */
+
+.div-or {
+    overflow: hidden;
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  .div-or span {
+    padding: 0 5px;
+  }
+
+  .div-or::before,
+  .div-or::after {
+    background-color: #000;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 49%;
+  }
+
+  .div-or::before {
+    right: 0.5px;
+    margin-left: -50%;
+  }
+
+  .div-or::after {
+    left: 0.5px;
+    margin-right: -50%;
+  }
