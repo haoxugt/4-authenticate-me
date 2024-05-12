@@ -20,6 +20,9 @@ function SpotForm({ spot, formType }) {
     const [spotImage3, setSpotImage3] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[2]?.url || "");
     const [spotImage4, setSpotImage4] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[3]?.url || "");
     const [spotImage5, setSpotImage5] = useState(spot && spot.SpotImages && spot.SpotImages.length && spot.SpotImages[4]?.url || "");
+
+    const [image, setImage] = useState(null);
+
     const disabledImageUpdate = formType === 'Edit a spot';
     const formTitle = formType === 'Edit a spot' ? 'Update your Spot' : 'Create a New Spot';
     const formButton = formType === 'Edit a spot' ? 'Update your Spot' : 'Create Spot';
@@ -49,7 +52,8 @@ function SpotForm({ spot, formType }) {
             price
         }
 
-        let spotImage1Obj = { url: spotImage1, preview: true};
+        let spotImage1Obj = { image, preview: true};
+        console.log("image =====> ", image, spotImage1Obj )
         let spotImage2Obj = spotImage2 && { url: spotImage2, preview: false};
         let spotImage3Obj = spotImage3 && { url: spotImage3, preview: false};
         let spotImage4Obj = spotImage4 && { url: spotImage4, preview: false};
@@ -84,7 +88,9 @@ function SpotForm({ spot, formType }) {
             let newSpotId;
             dispatch(createSpot(spot))
                 .then(res => newSpotId = res.id)
+                // .then(spotId => dispatch(createSpotImageThunk(spotId, spotImage1Obj)))
                 .then(spotId => dispatch(createSpotImageThunk(spotId, spotImage1Obj)))
+                // .then(() => dispatch(createSpotImageThunk(newSpotId, image)))
                 .then(() => spotImage2 && dispatch(createSpotImageThunk(newSpotId, spotImage2Obj)))
                 .then(() => spotImage3 && dispatch(createSpotImageThunk(newSpotId, spotImage3Obj)))
                 .then(() => spotImage4 && dispatch(createSpotImageThunk(newSpotId, spotImage4Obj)))
@@ -110,6 +116,15 @@ function SpotForm({ spot, formType }) {
             url.toLowerCase().endsWith("jpg") ||
             url.toLowerCase().endsWith("jpeg")
     }
+
+    const updateFile = e => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            setSpotImage1(file);
+            console.log("file =====> ", file)
+        }
+    };
 
     useEffect(() => {
         const err = {};
@@ -294,13 +309,22 @@ function SpotForm({ spot, formType }) {
                             {formType === 'Edit a spot' && <span className='update-image-info'> Not suppoted for updating.</span>}
                         </p>
 
-                        <input
+                        {/* <input
                             className='spotimage-input'
                             type="text"
                             onChange={(e) => setSpotImage1(e.target.value)}
                             value={spotImage1}
                             placeholder='Preview Image URL'
                             disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.previewImage && errors.previewImage}</p> */}
+                         <input
+                            className='spotimage-input'
+                            type="file"
+                            onChange={updateFile}
+                            // value={image}
+                            // placeholder='Image File (optional)'
+                            // disabled={disabledImageUpdate}
                         />
                         <p className='errors'>{hasSubmitted && errors.previewImage && errors.previewImage}</p>
                         <input
@@ -339,6 +363,15 @@ function SpotForm({ spot, formType }) {
                             disabled={disabledImageUpdate}
                         />
                         <p className='errors'>{hasSubmitted && errors.spotImage5 && errors.spotImage5}</p>
+                        {/* <input
+                            className='spotimage-input'
+                            type="file"
+                            onChange={updateFile}
+                            // value={image}
+                            // placeholder='Image File (optional)'
+                            // disabled={disabledImageUpdate}
+                        />
+                        <p className='errors'>{hasSubmitted && errors.spotImage5 && errors.spotImage5}</p> */}
                     </div>
                     {/* } */}
                 </div>

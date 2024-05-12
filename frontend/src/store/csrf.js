@@ -10,12 +10,19 @@ export async function csrfFetch(url, options = {}) {
     // "application/json", and set the "XSRF-TOKEN" header to the value of the
     // "XSRF-TOKEN" cookie
     if (options.method.toUpperCase() !== 'GET') {
+        console.log("csrf 1 ========")
         if (options.headers["Content-Type"] === "multipart/form-data") {
+            console.log("csrf 2 ========")
             delete options.headers["Content-Type"];
         } else {
-            options.headers['Content-Type'] =
-                options.headers['Content-Type'] || 'application/json';
+            // options.headers['Content-Type'] =
+            //     options.headers['Content-Type'] || 'application/json';
+            console.log("csrf 3 ========")
+            if (!options.headers["Content-Type"] && !(options.body instanceof FormData)) {
+                options.headers["Content-Type"] = "application/json";
+              }
         }
+        console.log("options.headers ========", options.headers)
         options.headers['XSRF-Token'] = Cookies.get('XSRF-TOKEN');
     }
 

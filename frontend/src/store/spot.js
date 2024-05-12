@@ -124,15 +124,23 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 
 // create spot image thunk creator
 export const createSpotImageThunk = (spotId, spotImage) => async () => {
-  const { url, preview } = spotImage;
+  const { image, preview } = spotImage;
+  console.log("image, preview ====> ", image, preview )
+  const formData = new FormData();
+  console.log("formData 1 ====> ", formData)
+  formData.append("preview", preview)
+  if (image) formData.append("image", image);
+  console.log("formData 2 ====> ", formData)
   const response = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: 'POST',
-    headers: { "Content-Type": "application/json"},
-    body: JSON.stringify({
-      url,
-      preview
-    })
+    // headers: { "Content-Type": "application/json"},
+    // body: JSON.stringify({
+    //   url,
+    //   preview
+    // })
+    body: formData
   });
+  console.log("response ====> ", response)
   if (response.ok) {
     const data = await response.json();
     return data;

@@ -16,6 +16,8 @@ const { checkAuthorization } = require('../../utils/authorization.js');
 const { formatDate, getSpotsInfo, getReviewsInfo } = require('../../utils/subroutines.js');
 const { assembleQueryObj } = require('../../utils/othermiddlewares.js')
 
+const {singleFileUpload, singleMulterUpload} = require("../../awsS3.js")
+
 
 // routers
 // Get all spots
@@ -153,12 +155,23 @@ router.post('/:spotId/reviews', requireAuth, validateSpotId, hasReview, validate
 });
 
 // Create a spot image based on a spot Id
-router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization, async (req, res) => {
-    const { url, preview } = req.body;
+router.post('/:spotId/images', requireAuth, validateSpotId, checkAuthorization,
+    singleMulterUpload("image"), async (req, res) => {
+
+    // const { url, preview } = req.body;
+    const { image, preview } = req.body;
+    console.log("req.body =======>", req.body)
+    const imageUrl = req.file ?
+        await singleFileUpload({ file: req.file, public: true }) :
+        null;
+
+
+    console.log("req.file =====>", req.file)
     const spot = await Spot.findByPk(req.params.spotId);
 
     const spotImage = await spot.createSpotImage({
-        url, preview
+        url: imageUrl,
+        preview
     });
 
     return res.json({
